@@ -1,0 +1,62 @@
+﻿@using PagedList.Mvc
+@using FirstProject.Models
+@model PagedList.IPagedList<Person>
+<table class="table">
+    <tr>
+        <th>
+            <p>Name</p>
+        </th>
+        <th>
+            <p>Phone</p>
+        </th>
+        <th>
+            <p>E-mail</p>
+        </th>
+        <th>
+            <p>Title</p>
+        </th>
+        <th>
+            <p>Country</p>
+        </th>
+        <th>
+            <p>City</p>
+        </th>
+        <th>
+           <p>Actions</p>
+        </th>
+    </tr>
+
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>
+            @{
+                var fullName = p.FirstName + " " + p.LastName;
+                @Html.DisplayFor(modelItem => fullName)
+            }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Comments)
+            </td>
+            <td>
+                @Html.ActionLink("Comments", "Comments", new { id = p.PersonId }, new { @class = "CommentPopUp" }) |
+                @Html.ActionLink("Edit", "Edit", new { id = p.PersonId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = p.PersonId }, new { @class = "DeletePopUp" })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
