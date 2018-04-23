@@ -1,12 +1,13 @@
-﻿@using FirstProject.Models
-@model IEnumerable<Person>
+﻿@using X.PagedList
+@using MVCWebProject.ViewModels
+@model IPagedList<UsersListingViewModel>
 <h2>Users</h2>
 <div class="row">
     <div class="col-md-4">
         <a class="btn btn-primary" href="@Url.Action("Create", "Users")" role="button">Create</a>
     </div>
     <div class="col-md-4 col-md-offset-4">
-        <input id="SearchString" name="SearchString"  type="search"  aria-label="Search" class="form-control mr-sm-2" placeholder="Search" />
+        <input id="SearchString" name="SearchString" type="search" aria-label="Search" class="form-control mr-sm-2" placeholder="Search" />
         @*<input class="btn btn-primary" type="button" value="Search" id="btnSearch" />*@
     </div>
 </div>
@@ -75,8 +76,116 @@
                     search();
                 }
             });
-        });
 
+            $('body').on('click', '#Listing .table a', function (event) {
+
+                event.preventDefault();
+
+                var searchString = $('#SearchString').val();
+                if (searchString == undefined || searchString == '') {
+                    searchString = '';
+                } else {
+                    searchString = '&searchString=' + searchString;
+                }
+
+                var columnToSort = $(this).text();
+                var currentSortOption = getUrlVars()['sortOption'];
+                console.log(currentSortOption);
+                var sort;
+                switch (currentSortOption) {
+                    case "name_acs":
+                        sort = 'sortOption=name_desc';
+                        break;
+                    case "name_desc":
+                        sort = 'sortOption=name_acs';
+                        break;
+                    case "phone_acs":
+                        sort = 'sortOption=phone_desc';
+                        break;
+                    case "phone_desc":
+                        sort = 'sortOption=phone_acs';
+                        break;
+                    case "email_acs":
+                        sort = 'sortOption=email_desc';
+                        break;
+                    case "email_desc":
+                        sort = 'sortOption=email_acs';
+                        break;
+                    case "title_acs":
+                        sort = 'sortOption=title_desc';
+                        break;
+                    case "title_desc":
+                        sort = 'sortOption=title_acs';
+                        break;
+                    case "country_acs":
+                        sort = 'sortOption=country_desc';
+                        break;
+                    case "country_desc":
+                        sort = 'sortOption=country_acs';
+                        break;
+                    case "city_acs":
+                        sort = 'sortOption=city_desc';
+                        break;
+                    case "city_desc":
+                        sort = 'sortOption=city_acs';
+                        break;
+                    default:
+                        sort = '';
+                        break;
+                }
+
+
+                switch (columnToSort) {
+                    case 'Name':
+                        if (currentSortOption != 'name_acs' && currentSortOption != 'name_desc') {
+                            sort = 'sortOption=name_acs';
+                        }
+                        break;
+                    case 'Phone':
+                        if (currentSortOption != 'phone_acs' && currentSortOption != 'phone_desc') {
+                            sort = 'sortOption=phone_acs';
+                        }
+                        break;
+                    case 'E-mail':
+                        if (currentSortOption != 'email_acs' && currentSortOption != 'email_decs') {
+                            sort = 'sortOption=email_acs';
+                        }
+                        break;
+                    case 'Title':
+                        if (currentSortOption != 'title_acs' && currentSortOption != 'title_decs') {
+                            sort = 'sortOption=title_acs';
+                        }
+                        break;
+                    case 'Country':
+                        if (currentSortOption != 'country_acs' && currentSortOption != 'coutntry_decs') {
+                            sort = 'sortOption=country_acs';
+                        }
+                        break;
+                    case 'City':
+                        if (currentSortOption != 'city_acs' && currentSortOption != 'city_decs') {
+                            sort = 'sortOption=city_acs';
+                        }
+                        break;
+                    default:
+                        sort = '';
+                        break;
+
+                }
+                if (sort != '' & searchString != '') {
+                    sort = '&' + sort;
+                }
+                var url = '/Users/Index?' + searchString + sort;
+                $.ajax({
+                    url: url,
+                    success: function (result) {
+                        ChangeUrl('index', url);
+                        $('#Listing').html(result);
+                    }
+                });
+            });
+
+        });
+       
         $(function () {
             $.ajaxSetup({ cache: false });
             $(".CommentPopUp").click(function (e) {

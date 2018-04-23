@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FirstProject.Models
+namespace MVCWebProject.Models
 {
     public class Person
     {

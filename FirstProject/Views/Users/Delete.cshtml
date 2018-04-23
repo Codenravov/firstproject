@@ -1,5 +1,5 @@
-﻿@using FirstProject.Models
-@model Person
+﻿@using MVCWebProject.ViewModels
+@model UsersDeleteViewModel
 
 <div class="modal-content">
     <div class="modal-header">
@@ -9,7 +9,7 @@
         </button>
     </div>
     <div class="modal-body">
-        <p>Are you sure you want to delete @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)?</p>
+        <p>Are you sure you want to delete @Html.DisplayFor(model => model.Name)?</p>
     </div>
     <div class="modal-footer">
         @using (Html.BeginForm()) {<input type="submit" value="Delete" class="btn btn-danger"/>}

@@ -1,61 +1,60 @@
-﻿@using PagedList.Mvc
-@using FirstProject.Models
-@model PagedList.IPagedList<Person>
+﻿@using X.PagedList
+@using X.PagedList.Mvc
+@using MVCWebProject.ViewModels
+@model IPagedList<UsersListingViewModel>
 <table class="table">
     <tr>
         <th>
-            <p>Name</p>
+            @Html.ActionLink("Name", "Index")
         </th>
         <th>
-            <p>Phone</p>
+            @Html.ActionLink("Phone", "Index")
         </th>
         <th>
-            <p>E-mail</p>
+            @Html.ActionLink("E-mail", "Index")
         </th>
         <th>
-            <p>Title</p>
+            @Html.ActionLink("Title", "Index")
         </th>
         <th>
-            <p>Country</p>
+            @Html.ActionLink("Country", "Index")
         </th>
         <th>
-            <p>City</p>
+            @Html.ActionLink("City", "Index")
         </th>
         <th>
-           <p>Actions</p>
+            <p>Actions</p>
         </th>
     </tr>
 
     @foreach (var p in Model)
     {
-        <tr>
-            <td>
-            @{
-                var fullName = p.FirstName + " " + p.LastName;
-                @Html.DisplayFor(modelItem => fullName)
-            }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Comments)
-            </td>
-            <td>
-                @Html.ActionLink("Comments", "Comments", new { id = p.PersonId }, new { @class = "CommentPopUp" }) |
-                @Html.ActionLink("Edit", "Edit", new { id = p.PersonId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = p.PersonId }, new { @class = "DeletePopUp" })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => p.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Country)
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.City)
+        </td>
+        <td>
+            @Html.ActionLink("Comments", "Comments", new { id = p.Id }, new { @class = "CommentPopUp" }) |
+            @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { @class = "DeletePopUp" })
+        </td>
+    </tr>
     }
 
 </table>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVCWebProject.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,15 +7,17 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace FirstProject
+namespace MVCWebProject
 {
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new PersonDbInitializer());
+            //Database.SetInitializer(new PersonDbInitializer());
+            AutofacConfig.ConfigureContainer();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutoMappingConfig.Configure();
         }
     }
 }

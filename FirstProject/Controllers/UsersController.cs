@@ -1,31 +1,73 @@
-﻿using FirstProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using PagedList;
+using X.PagedList;
+using MVCWebProject.DAL.Interfaces;
+using MVCWebProject.DAL;
+using MVCWebProject.ViewModels;
+using AutoMapper;
+using System.Collections.Generic;
 
-namespace FirstProject.Controllers
+namespace MVCWebProject.Controllers
 {
     public class UsersController : Controller
     {
-        PersonContext db = new PersonContext();
+        private readonly IRepository<Person> _repository;
 
-        public ActionResult Index(string searchString, int page = 1)
+        public UsersController(IRepository<Person> _repository)
         {
-            var people = db.People.AsQueryable();
-            int pageSize = 3;
-            
-            if (!String.IsNullOrEmpty(searchString))
+            this._repository = _repository;
+        }
+
+        public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
+        {
+            var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), s => s.OrderBy(f => f.Id), page: page);
+            IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
+            switch (sortOption)
             {
-                people = db.People.Where(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString));
+                case "name_acs":
+                    source = source.OrderBy(p => p.Name);
+                    break;
+                case "name_desc":
+                    source = source.OrderByDescending(p => p.Name);
+                    break;
+                case "phone_acs":
+                    source = source.OrderBy(p => p.Phone);
+                    break;
+                case "phone_desc":
+                    source = source.OrderByDescending(p => p.Phone);
+                    break;
+                case "email_acs":
+                    source = source.OrderBy(p => p.Email);
+                    break;
+                case "email_desc":
+                    source = source.OrderByDescending(p => p.Email);
+                    break;
+                case "title_acs":
+                    source = source.OrderBy(p => p.Title);
+                    break;
+                case "title_desc":
+                    source = source.OrderByDescending(p => p.Title);
+                    break;
+                case "country_acs":
+                    source = source.OrderBy(p => p.Country);
+                    break;
+                case "country_desc":
+                    source = source.OrderByDescending(p => p.Country);
+                    break;
+                case "city_acs":
+                    source = source.OrderBy(p => p.City);
+                    break;
+                case "city_desc":
+                    source = source.OrderByDescending(p => p.City);
+                    break;
+                default:
+                    source = source.OrderBy(p => p.Id);
+                    break;
             }
-            //return View(people.OrderBy(p => p.PersonId).ToPagedList(page, pageSize
+            IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
             return Request.IsAjaxRequest()
-                ? (ActionResult)PartialView("Listing", people.OrderBy(p => p.PersonId).ToPagedList(page, pageSize))
-                : View(people.OrderBy(p => p.PersonId).ToPagedList(page, pageSize));
+                ? (ActionResult)PartialView("Listing", model)
+                : View(model);
         }
 
         [HttpGet]
@@ -35,13 +77,13 @@ namespace FirstProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Person person)
+        public ActionResult Create(UsersCreatViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.People.Add(person);
-                db.SaveChanges();
-
+                var person = Mapper.Map<UsersCreatViewModel, Person>(model);
+                _repository.Add(person);
+                _repository.Save();
                 return RedirectToAction("Index");
             }
             return View();
@@ -54,27 +96,29 @@ namespace FirstProject.Controllers
             {
                 return HttpNotFound();
             }
-            Person person = db.People.Find(id);
-            if (person == null)
+            int Id = id.Value;
+            if (_repository.IsExist(p => p.Id == Id))
             {
-                return HttpNotFound();
+                Person person = _repository.GetById(Id);
+                var model = Mapper.Map<Person, UsersEditViewModel>(person);
+                return View(model);
             }
-
-            return View(person);
+            return HttpNotFound();
         }
-
         [HttpPost]
-        public ActionResult Edit(Person person)
+        public ActionResult Edit(UsersEditViewModel model)
         {
-
             if (ModelState.IsValid)
             {
-                db.Entry(person).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (_repository.IsExist(p => p.Id == model.Id))
+                {
+                    var person = Mapper.Map<UsersEditViewModel, Person>(model, _repository.GetById(model.Id));
+                    _repository.Update(person);
+                    _repository.Save();
+                    return RedirectToAction("Index");
+                }
             }
-
-            return View(person);
+            return View(model);
         }
 
         [HttpGet]
@@ -84,25 +128,26 @@ namespace FirstProject.Controllers
             {
                 return HttpNotFound();
             }
-            Person person = db.People.Find(id);
-            if (person == null)
+            int Id = id.Value;
+            if (_repository.IsExist(p => p.Id == Id))
             {
-                return HttpNotFound();
+                var person = _repository.GetById(Id);
+                var model = Mapper.Map<Person, UsersDeleteViewModel>(person);
+                return PartialView(model);
             }
-            return PartialView(person);
+            return HttpNotFound();
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmend(int id)
         {
-            Person person = db.People.Find(id);
-            if (person == null)
+            if (_repository.IsExist(p => p.Id == id))
             {
-                return HttpNotFound();
+                _repository.Delete(p => p.Id == id);
+                _repository.Save();
+                return RedirectToAction("Index");
             }
-            db.People.Remove(person);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return HttpNotFound();
         }
         public ActionResult Comments(int? id)
         {
@@ -110,19 +155,21 @@ namespace FirstProject.Controllers
             {
                 return HttpNotFound();
             }
-            Person person = db.People.Find(id);
-            if (person == null)
+            int Id = id.Value;
+            if (_repository.IsExist(p => p.Id == id))
             {
-                return HttpNotFound();
+                var person = _repository.GetById(Id);
+                var model = Mapper.Map<Person, UsersCommentsViewModel>(person);
+                return PartialView(model);
             }
-            return PartialView(person);
+            return HttpNotFound();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
+        //protected override void Dispose(bool disposing)
+        //{
+        //    db.Dispose();
+        //    base.Dispose(disposing);
 
-        }
+        //}
     }
 }

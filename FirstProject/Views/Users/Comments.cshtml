@@ -1,9 +1,9 @@
-﻿@using FirstProject.Models
-@model Person
+﻿@using MVCWebProject.ViewModels
+@model UsersCommentsViewModel
 
 <div class="modal-content">
     <div class="modal-header">
-        <h4 class="modal-title">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h4>
+        <h4 class="modal-title">@Html.DisplayFor(model => model.Name)</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

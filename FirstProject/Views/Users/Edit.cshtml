@@ -1,5 +1,5 @@
-﻿@using FirstProject.Models
-@model Person
+﻿@using MVCWebProject.ViewModels
+@model UsersEditViewModel
 
 <h2>Edit</h2>
 
@@ -7,11 +7,11 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
 
-        @Html.HiddenFor(model => model.PersonId)
+        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
