@@ -3,7 +3,7 @@
 @using MVCWebProject.ViewModels
 @model IPagedList<UsersListingViewModel>
 <table class="table">
-    <tr>
+    <tr class="orderBy">
         <th>
             @Html.ActionLink("Name", "Index")
         </th>
@@ -50,9 +50,9 @@
             @Html.DisplayFor(modelItem => p.City)
         </td>
         <td>
-            @Html.ActionLink("Comments", "Comments", new { id = p.Id }, new { @class = "CommentPopUp" }) |
+            @Html.ActionLink("Comments", "Comments", new { id = p.Id }, new { @class = "PopUp" }) |
             @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { @class = "DeletePopUp" })
+            @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { @class = "PopUp" })
         </td>
     </tr>
     }
