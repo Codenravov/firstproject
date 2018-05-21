@@ -2,34 +2,10 @@
 @using X.PagedList.Mvc
 @using MVCWebProject.ViewModels
 @model IPagedList<UsersListingViewModel>
-<table class="table">
-    <tr class="orderBy">
-        <th>
-            @Html.ActionLink("Name", "Index")
-        </th>
-        <th>
-            @Html.ActionLink("Phone", "Index")
-        </th>
-        <th>
-            @Html.ActionLink("E-mail", "Index")
-        </th>
-        <th>
-            @Html.ActionLink("Title", "Index")
-        </th>
-        <th>
-            @Html.ActionLink("Country", "Index")
-        </th>
-        <th>
-            @Html.ActionLink("City", "Index")
-        </th>
-        <th>
-            <p>Actions</p>
-        </th>
-    </tr>
-
+<table>
     @foreach (var p in Model)
     {
-    <tr>
+    <tr class="table">
         <td>
             @Html.DisplayFor(modelItem => p.Name)
         </td>

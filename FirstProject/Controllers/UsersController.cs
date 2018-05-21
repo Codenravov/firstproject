@@ -21,6 +21,7 @@ namespace MVCWebProject.Controllers
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
         {
             var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), s => s.OrderBy(f => f.Id), page: page);
+
             IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
             switch (sortOption)
             {
@@ -64,6 +65,18 @@ namespace MVCWebProject.Controllers
                     source = source.OrderBy(p => p.Id);
                     break;
             }
+            IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
+            return Request.IsAjaxRequest()
+                ? (ActionResult)PartialView("Listing", model)
+                : View(model);
+        }
+
+        public ActionResult Test(string searchString = "", int page = 1, string sortOption = "Name")
+        {
+            var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), s => s.OrderBy(f => f.Id), page: page);
+            IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
+            //(orderBy(query)
+            //source = source.OrderBy(p => p.GetType().GetProperty("Name").GetValue(p, null));
             IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)

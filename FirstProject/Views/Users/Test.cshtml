@@ -1,0 +1,38 @@
+﻿@using X.PagedList
+@using MVCWebProject.ViewModels
+@model IPagedList<UsersListingViewModel>
+
+@using (Ajax.BeginForm("Test", new AjaxOptions { UpdateTargetId = "Listing"}))
+{
+    <input type="text" name="searchString" />
+    <input type="submit" value="Поиск" />
+}
+    <table class="table">
+        <tr class="orderBy">
+            <th>
+                @Ajax.ActionLink("Name", "Test", new { sortOption = "Name" }, new AjaxOptions { UpdateTargetId = "Listing" }))
+            </th>
+            <th>
+                @Ajax.ActionLink("Phone", "Test", new { sortOption = "Phone" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            </th>
+            <th>
+                @Ajax.ActionLink("E-mail", "Test", new { sortOption = "Email" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            </th>
+            <th>
+                @Ajax.ActionLink("Title", "Test", new { sortOption = "Title" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            </th>
+            <th>
+                @Ajax.ActionLink("Country", "Test", new { sortOption = "Country" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            </th>
+            <th>
+                @Ajax.ActionLink("City", "Test", new { sortOption = "City" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            </th>
+            <th>
+                <p>Actions</p>
+            </th>
+        </tr>
+    </table>
+    <div id="Listing">
+        @Html.Partial("Listing", Model)
+    </div>
+    

@@ -54,7 +54,8 @@ namespace MVCWebProject.DAL.Repositories
 
             if (orderBy != null)
             {
-                return new PagedList<T>(orderBy(query), page, size);
+                query = query.OrderBy(p => p.GetType().GetProperty("FirstName").GetValue(p, null));
+                return new PagedList<T>(query, page, size);
             }
             else
             {
