@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Linq.Dynamic;
 using System.Web.Mvc;
 using X.PagedList;
 using MVCWebProject.DAL.Interfaces;
@@ -20,63 +21,9 @@ namespace MVCWebProject.Controllers
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
         {
-            var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), s => s.OrderBy(f => f.Id), page: page);
-
+            var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString),
+                orderBy: s => s.OrderBy(sortOption), page: page);
             IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
-            switch (sortOption)
-            {
-                case "name_acs":
-                    source = source.OrderBy(p => p.Name);
-                    break;
-                case "name_desc":
-                    source = source.OrderByDescending(p => p.Name);
-                    break;
-                case "phone_acs":
-                    source = source.OrderBy(p => p.Phone);
-                    break;
-                case "phone_desc":
-                    source = source.OrderByDescending(p => p.Phone);
-                    break;
-                case "email_acs":
-                    source = source.OrderBy(p => p.Email);
-                    break;
-                case "email_desc":
-                    source = source.OrderByDescending(p => p.Email);
-                    break;
-                case "title_acs":
-                    source = source.OrderBy(p => p.Title);
-                    break;
-                case "title_desc":
-                    source = source.OrderByDescending(p => p.Title);
-                    break;
-                case "country_acs":
-                    source = source.OrderBy(p => p.Country);
-                    break;
-                case "country_desc":
-                    source = source.OrderByDescending(p => p.Country);
-                    break;
-                case "city_acs":
-                    source = source.OrderBy(p => p.City);
-                    break;
-                case "city_desc":
-                    source = source.OrderByDescending(p => p.City);
-                    break;
-                default:
-                    source = source.OrderBy(p => p.Id);
-                    break;
-            }
-            IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
-            return Request.IsAjaxRequest()
-                ? (ActionResult)PartialView("Listing", model)
-                : View(model);
-        }
-
-        public ActionResult Test(string searchString = "", int page = 1, string sortOption = "Name")
-        {
-            var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), s => s.OrderBy(f => f.Id), page: page);
-            IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
-            //(orderBy(query)
-            //source = source.OrderBy(p => p.GetType().GetProperty("Name").GetValue(p, null));
             IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)

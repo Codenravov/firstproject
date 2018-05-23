@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Linq.Dynamic;
 using System.Web;
 
 namespace MVCWebProject.DAL.Repositories
@@ -23,7 +24,7 @@ namespace MVCWebProject.DAL.Repositories
         }
 
 
-        public virtual List<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
+        public virtual List<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null)
         {
             IQueryable<T> query = _dbset;
 
@@ -42,7 +43,7 @@ namespace MVCWebProject.DAL.Repositories
             }
         }
 
-        public PagedList<T> GetWithPaging(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, int page = 1,
+        public PagedList<T> GetWithPaging(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null, int page = 1,
             int size = 3)
         {
             IQueryable<T> query = _dbset;
@@ -54,8 +55,15 @@ namespace MVCWebProject.DAL.Repositories
 
             if (orderBy != null)
             {
-                query = query.OrderBy(p => p.GetType().GetProperty("FirstName").GetValue(p, null));
-                return new PagedList<T>(query, page, size);
+                try
+                {
+                    return new PagedList<T>(orderBy(query), page, size);
+                }
+                catch (ParseException)
+                {
+                    orderBy = x => x.OrderBy("FirstName");
+                    return new PagedList<T>(orderBy(query), page, size);
+                }
             }
             else
             {

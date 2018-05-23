@@ -2,10 +2,33 @@
 @using X.PagedList.Mvc
 @using MVCWebProject.ViewModels
 @model IPagedList<UsersListingViewModel>
-<table>
+<table class = "table">
+    <tr>
+        <th>
+            @Ajax.ActionLink("Name", "Index", new { sortOption = "Name" }, new AjaxOptions { UpdateTargetId = "Listing" })
+        </th>
+        <th>
+            @Ajax.ActionLink("Phone", "Index", new { sortOption = "Phone" }, new AjaxOptions { UpdateTargetId = "Listing" })
+        </th>
+        <th>
+            @Ajax.ActionLink("E-mail", "Index", new { sortOption = "Email" }, new AjaxOptions { UpdateTargetId = "Listing" })
+        </th>
+        <th>
+            @Ajax.ActionLink("Title", "Index", new { sortOption = "Title" }, new AjaxOptions { UpdateTargetId = "Listing" })
+        </th>
+        <th>
+            @Ajax.ActionLink("Country", "Index", new { sortOption = "Country" }, new AjaxOptions { UpdateTargetId = "Listing" })
+        </th>
+        <th>
+            @Ajax.ActionLink("City", "Index", new { sortOption = "City" }, new AjaxOptions { UpdateTargetId = "Listing" })
+        </th>
+        <th>
+            <p>Actions</p>
+        </th>
+    </tr>
     @foreach (var p in Model)
     {
-    <tr class="table">
+    <tr>
         <td>
             @Html.DisplayFor(modelItem => p.Name)
         </td>
@@ -32,6 +55,6 @@
         </td>
     </tr>
     }
-
 </table>
+
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

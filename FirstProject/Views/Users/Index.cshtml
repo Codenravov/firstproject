@@ -2,227 +2,24 @@
 @using MVCWebProject.ViewModels
 @model IPagedList<UsersListingViewModel>
 <h2>Users</h2>
-<div class="row">
-    <div class="col-md-4">
-        <a class="btn btn-primary" href="@Url.Action("Create", "Users")" role="button">Create</a>
-    </div>
-    <div class="col-md-4 col-md-offset-4">
-        <input id="SearchString" name="SearchString" type="search" aria-label="Search" class="form-control mr-sm-2" placeholder="Search" />
-
-    </div>
-</div>
-<p></p>
-<div id="Listing">
-    @Html.Partial("Listing", Model)
-
-</div>
-<div id="modDialog" class="modal fade">
-    <div id="dialogContent" class="modal-dialog">
-
-    </div>
-</div>
-@section scripts
-{
-
-    <script type="text/javascript">
-
-
-        window.addEventListener("popstate", function (e) {
-            $.ajax({
-                url: location.href,
-                success: function (result) {
-                    $('#Listing').html(result);
-                }
-            });
-        });
-
-        function ChangeUrl(page, url) {
-            if (typeof (history.pushState) != "undefined") {
-                var obj = { Page: page, Url: url };
-                history.pushState(null, obj.Page, obj.Url);
-            } else {
-                alert("Browser does not support HTML5.");
+    <div class="row">
+        <div class="col-md-4">
+            <a class="btn btn-primary" href="@Url.Action("Create", "Users")" role="button">Create</a>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+            @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
+            {
+                <input type="text" name="searchString" aria-label="Search" class="form-control mr-sm-2" placeholder="Search"/>
+                <input type="submit" value="Поиск" class="btn btn-primary"/>
             }
-        }
+        </div>
+    </div>
+    <p></p>
+    <div id="Listing">
+        @Html.Partial("Listing", Model)
+    </div>
 
-        function getUrlVars() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for (var i = 0; i < hashes.length; i++) {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        }
+        @*<div id="modDialog" class="modal fade">
+            <div id="dialogContent" class="modal-dialog">
 
-        function search() {
-            $.ajax({
-                url: "/Users/Index?searchString=" + $('#SearchString').val(),
-                success: function (result) {
-                    ChangeUrl("index", "/Users/Index?searchString=" + $('#SearchString').val());
-                    $('#Listing').html(result);
-                }
-            });
-        }
-
-        $(function () {
-            $("#SearchString").keypress(function (e) {
-                if (e.keyCode == 13) {
-                    search();
-                }
-            });
-            $('body').on('click', '#Listing .pagination a', function (event) {
-                event.preventDefault();
-                console.log('page');
-                var searchString = $('#SearchString').val();
-                var currentSortOption = getUrlVars()['sortOption'];
-                if (searchString == undefined || searchString == '') {
-                    searchString = '';
-                } else {
-                    searchString = '&searchString=' + searchString;
-                }
-                if (currentSortOption == undefined || currentSortOption == '') {
-                    currentSortOption = '';
-                } else {
-                    currentSortOption = '&sortOption=' + currentSortOption;
-                }
-                var url = $(this).attr('href') + searchString + currentSortOption;
-                console.log(url);
-                $.ajax({
-                    url: url,
-                    success: function (result) {
-                        ChangeUrl('index', url);
-                        $('#Listing').html(result);
-                    }
-                });
-            });
-            $('body').on('click', '#Listing .orderBy a', function (event) {
-
-                event.preventDefault();
-
-                var searchString = $('#SearchString').val();
-                if (searchString == undefined || searchString == '') {
-                    searchString = '';
-                } else {
-                    searchString = '&searchString=' + searchString;
-                }
-                var currentPage = getUrlVars()['page'];
-                if (currentPage == undefined || currentPage == '') {
-                    currentPage = '';
-                } else {
-                    currentPage = '&page=' + currentPage;
-                }
-
-                var columnToSort = $(this).text();
-                var currentSortOption = getUrlVars()['sortOption'];
-                console.log(currentSortOption);
-                var sort;
-                switch (currentSortOption) {
-                    case "name_acs":
-                        sort = 'sortOption=name_desc';
-                        break;
-                    case "name_desc":
-                        sort = 'sortOption=name_acs';
-                        break;
-                    case "phone_acs":
-                        sort = 'sortOption=phone_desc';
-                        break;
-                    case "phone_desc":
-                        sort = 'sortOption=phone_acs';
-                        break;
-                    case "email_acs":
-                        sort = 'sortOption=email_desc';
-                        break;
-                    case "email_desc":
-                        sort = 'sortOption=email_acs';
-                        break;
-                    case "title_acs":
-                        sort = 'sortOption=title_desc';
-                        break;
-                    case "title_desc":
-                        sort = 'sortOption=title_acs';
-                        break;
-                    case "country_acs":
-                        sort = 'sortOption=country_desc';
-                        break;
-                    case "country_desc":
-                        sort = 'sortOption=country_acs';
-                        break;
-                    case "city_acs":
-                        sort = 'sortOption=city_desc';
-                        break;
-                    case "city_desc":
-                        sort = 'sortOption=city_acs';
-                        break;
-                    default:
-                        sort = '';
-                        break;
-                }
-
-
-                switch (columnToSort) {
-                    case 'Name':
-                        if (currentSortOption != 'name_acs' && currentSortOption != 'name_desc') {
-                            sort = 'sortOption=name_acs';
-                        }
-                        break;
-                    case 'Phone':
-                        if (currentSortOption != 'phone_acs' && currentSortOption != 'phone_desc') {
-                            sort = 'sortOption=phone_acs';
-                        }
-                        break;
-                    case 'E-mail':
-                        if (currentSortOption != 'email_acs' && currentSortOption != 'email_decs') {
-                            sort = 'sortOption=email_acs';
-                        }
-                        break;
-                    case 'Title':
-                        if (currentSortOption != 'title_acs' && currentSortOption != 'title_decs') {
-                            sort = 'sortOption=title_acs';
-                        }
-                        break;
-                    case 'Country':
-                        if (currentSortOption != 'country_acs' && currentSortOption != 'coutntry_decs') {
-                            sort = 'sortOption=country_acs';
-                        }
-                        break;
-                    case 'City':
-                        if (currentSortOption != 'city_acs' && currentSortOption != 'city_decs') {
-                            sort = 'sortOption=city_acs';
-                        }
-                        break;
-                    default:
-                        sort = '';
-                        break;
-
-                }
-                if (sort != '' & searchString != '') {
-                    sort = '&' + sort;
-                }
-                var url = '/Users/Index?' + searchString + sort + currentPage;
-                $.ajax({
-                    url: url,
-                    success: function (result) {
-                        ChangeUrl('index', url);
-                        $('#Listing').html(result);
-                    }
-                });
-            });
-        });
-
-        $(function () {
-            $.ajaxSetup({ cache: false });
-            $(".PopUp").click(function (e) {
-
-                e.preventDefault();
-                $.get(this.href, function (data) {
-                    $('#dialogContent').html(data);
-                    $('#modDialog').modal('show');
-                });
-            });
-        })
-
-    </script>
-
-}
+            </div>*@
