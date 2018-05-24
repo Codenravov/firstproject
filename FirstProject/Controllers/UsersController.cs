@@ -25,6 +25,9 @@ namespace MVCWebProject.Controllers
                 orderBy: s => s.OrderBy(sortOption), page: page);
             IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
             IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
+            ViewBag.searchString = searchString;
+            ViewBag.page = page;
+            ViewBag.sortOption = sortOption;
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)
                 : View(model);

@@ -5,22 +5,28 @@
 <table class = "table">
     <tr>
         <th>
-            @Ajax.ActionLink("Name", "Index", new { sortOption = "Name" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Name", "Index", new { sortOption = "Name",
+            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Phone", "Index", new { sortOption = "Phone" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Phone", "Index", new { sortOption = "Phone",
+            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("E-mail", "Index", new { sortOption = "Email" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Email", "Index", new { sortOption = "Email",
+            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Title", "Index", new { sortOption = "Title" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Title", "Index", new { sortOption = "Title",
+            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Country", "Index", new { sortOption = "Country" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Country", "Index", new { sortOption = "Country",
+            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("City", "Index", new { sortOption = "City" }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("City", "Index", new { sortOption = "City",
+            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             <p>Actions</p>
@@ -43,18 +49,17 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => p.Country)
-
         </td>
         <td>
             @Html.DisplayFor(modelItem => p.City)
         </td>
         <td>
-            @Html.ActionLink("Comments", "Comments", new { id = p.Id }, new { @class = "PopUp" }) |
+            @Ajax.ActionLink("Comments", "Comments", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
             @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = p.Id }, new { @class = "PopUp" })
+            @Ajax.ActionLink("Delete", "Delete", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
         </td>
     </tr>
     }
 </table>
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.searchString, sortOption = ViewBag.sortOption}))

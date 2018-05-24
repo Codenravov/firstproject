@@ -2,24 +2,34 @@
 @using MVCWebProject.ViewModels
 @model IPagedList<UsersListingViewModel>
 <h2>Users</h2>
-    <div class="row">
-        <div class="col-md-4">
+<div class="row">
+    <div class="col-md-4">
+        <div class="input-group">
             <a class="btn btn-primary" href="@Url.Action("Create", "Users")" role="button">Create</a>
         </div>
-        <div class="col-md-4 col-md-offset-4">
-            @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
-            {
-                <input type="text" name="searchString" aria-label="Search" class="form-control mr-sm-2" placeholder="Search"/>
-                <input type="submit" value="Поиск" class="btn btn-primary"/>
-            }
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+        @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
+        {
+        <div class="input-group">
+            <span class="input-group-btn">
+                <input type="submit" value="Go" class="btn btn-primary" />
+            </span>
+            <input type="text" name="searchString" class="form-control" placeholder="Search for..." />
         </div>
-    </div>
-    <p></p>
-    <div id="Listing">
-        @Html.Partial("Listing", Model)
-    </div>
+        }
+</div>
+</div>
+<p></p>
+<div id="Listing">
+    @Html.Partial("Listing", Model)
+</div>
+<div id="Modal" class="modal fade">
+    <div id="Dialog" class="modal-dialog"></div>
+</div>
 
-        @*<div id="modDialog" class="modal fade">
-            <div id="dialogContent" class="modal-dialog">
-
-            </div>*@
+<script type="text/javascript">
+    function OnSuccess() {
+        $("#Modal").modal('show');
+    };
+</script>
