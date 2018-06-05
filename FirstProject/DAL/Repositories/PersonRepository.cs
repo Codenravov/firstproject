@@ -1,5 +1,4 @@
 ﻿using MVCWebProject.DAL.Interfaces;
-using X.PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,8 +10,6 @@ using System.Web;
 namespace MVCWebProject.DAL.Repositories
 {
     public class PersonRepository<T> : IRepository<T> where T : class
-    //where T : class
-    //where C : DbContext
     {
         private PersonContext _dataContext;
         private readonly DbSet<T> _dbset;
@@ -42,35 +39,6 @@ namespace MVCWebProject.DAL.Repositories
                 return query.ToList();
             }
         }
-
-        public PagedList<T> GetWithPaging(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null, int page = 1,
-            int size = 3)
-        {
-            IQueryable<T> query = _dbset;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (orderBy != null)
-            {
-                try
-                {
-                    return new PagedList<T>(orderBy(query), page, size);
-                }
-                catch (ParseException)
-                {
-                    orderBy = x => x.OrderBy("FirstName");
-                    return new PagedList<T>(orderBy(query), page, size);
-                }
-            }
-            else
-            {
-                throw new Exception("Get With Paging query must be sorted");
-            }
-        }
-
         public virtual void Add(T entity)
         {
             _dbset.Add(entity);

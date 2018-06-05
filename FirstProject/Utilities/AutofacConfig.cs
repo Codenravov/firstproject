@@ -22,6 +22,7 @@ namespace MVCWebProject.Utilities
             //builder.RegisterType(typeof(PersonRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new PersonContext());
 
             builder.RegisterGeneric(typeof(PersonRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new PersonContext());
+            builder.RegisterGeneric(typeof(PagedList<>)).As(typeof(IPagingList<>));
 
             var container = builder.Build();
 

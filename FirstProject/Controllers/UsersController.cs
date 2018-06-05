@@ -1,33 +1,34 @@
 ﻿using System.Linq;
 using System.Linq.Dynamic;
 using System.Web.Mvc;
-using X.PagedList;
 using MVCWebProject.DAL.Interfaces;
 using MVCWebProject.DAL;
 using MVCWebProject.ViewModels;
 using AutoMapper;
 using System.Collections.Generic;
+using MVCWebProject.Utilities;
+using MVCWebProject.ViewModels.Users;
 
 namespace MVCWebProject.Controllers
 {
     public class UsersController : Controller
     {
         private readonly IRepository<Person> _repository;
+        private readonly IPagingList<UsersListingViewModel> _pagingList;
 
-        public UsersController(IRepository<Person> _repository)
+        public UsersController(IRepository<Person> _repository, IPagingList<UsersListingViewModel> _pagingList)
         {
             this._repository = _repository;
+            this._pagingList = _pagingList;
+
         }
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
         {
-            var people = _repository.GetWithPaging(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString),
-                orderBy: s => s.OrderBy(sortOption), page: page);
-            IEnumerable<UsersListingViewModel> source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
-            IPagedList<UsersListingViewModel> model = new StaticPagedList<UsersListingViewModel>(source, people.GetMetaData());
-            ViewBag.searchString = searchString;
-            ViewBag.page = page;
-            ViewBag.sortOption = sortOption;
+            var people = _repository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), orderBy: s => s.OrderBy(p => p.City));
+            var source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
+            _pagingList.CreatePage(source, page, 3);
+            UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, _pagingList);
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)
                 : View(model);

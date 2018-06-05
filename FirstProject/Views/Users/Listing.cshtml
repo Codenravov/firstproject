@@ -1,65 +1,89 @@
-﻿@using X.PagedList
-@using X.PagedList.Mvc
-@using MVCWebProject.ViewModels
-@model IPagedList<UsersListingViewModel>
-<table class = "table">
+﻿@using MVCWebProject.ViewModels.Users
+@using MVCWebProject.Views.Helpers
+@model UsersListingDataViewModel
+<table class="table">
     <tr>
         <th>
-            @Ajax.ActionLink("Name", "Index", new { sortOption = "Name",
-            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Name", "Index", new
+            {
+                sortOption = "Name",
+                searchString = Model.searchString,
+                page = Model.page
+            }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Phone", "Index", new { sortOption = "Phone",
-            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Phone", "Index", new
+            {
+                sortOption = "Phone",
+                searchString = Model.searchString,
+                page = Model.page
+            }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Email", "Index", new { sortOption = "Email",
-            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Email", "Index", new
+            {
+                sortOption = "Email",
+                searchString = Model.searchString,
+                page = Model.page
+            }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Title", "Index", new { sortOption = "Title",
-            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Title", "Index", new
+            {
+                sortOption = "Title",
+                searchString = Model.searchString,
+                page = Model.page
+            }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("Country", "Index", new { sortOption = "Country",
-            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("Country", "Index", new
+            {
+                sortOption = "Country",
+                searchString = Model.searchString,
+                page = Model.page
+            }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
-            @Ajax.ActionLink("City", "Index", new { sortOption = "City",
-            searchString = ViewBag.searchString, page = ViewBag.page }, new AjaxOptions { UpdateTargetId = "Listing" })
+            @Ajax.ActionLink("City", "Index", new
+            {
+                sortOption = "City",
+                searchString = Model.searchString,
+                page = Model.page
+            }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             <p>Actions</p>
         </th>
     </tr>
-    @foreach (var p in Model)
+    @foreach (var p in Model.pagingList.Items)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => p.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => p.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => p.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => p.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => p.Country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => p.City)
-        </td>
-        <td>
-            @Ajax.ActionLink("Comments", "Comments", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
-            @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
-            @Ajax.ActionLink("Delete", "Delete", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => p.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => p.City)
+            </td>
+            <td>
+                @Ajax.ActionLink("Comments", "Comments", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
+                @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
+                @Ajax.ActionLink("Delete", "Delete", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
+            </td>
+        </tr>
     }
 </table>
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.searchString, sortOption = ViewBag.sortOption}))
+@Html.Paging(Model.pagingList.CurrentPage, Model.pagingList.TotalPage, Model.pagingList.HasPreviousPage, Model.pagingList.HasNextPage, "Index", "Users",
+    new { searchString = Model.pagingList, sortOption = Model.sortOption }, null)

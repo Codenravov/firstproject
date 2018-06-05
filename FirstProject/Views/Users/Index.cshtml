@@ -1,6 +1,6 @@
-﻿@using X.PagedList
-@using MVCWebProject.ViewModels
-@model IPagedList<UsersListingViewModel>
+﻿@using MVCWebProject.ViewModels
+@using MVCWebProject.ViewModels.Users
+@model UsersListingDataViewModel
 <h2>Users</h2>
 <div class="row">
     <div class="col-md-4">
@@ -11,14 +11,14 @@
     <div class="col-md-4 col-md-offset-4">
         @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
         {
-        <div class="input-group">
-            <span class="input-group-btn">
-                <input type="submit" value="Go" class="btn btn-primary" />
-            </span>
-            <input type="text" name="searchString" class="form-control" placeholder="Search for..." />
-        </div>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <input type="submit" value="Go" class="btn btn-primary" />
+                </span>
+                <input type="text" name="searchString" class="form-control" placeholder="Search for..." />
+            </div>
         }
-</div>
+    </div>
 </div>
 <p></p>
 <div id="Listing">

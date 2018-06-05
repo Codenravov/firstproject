@@ -1,5 +1,4 @@
-﻿using X.PagedList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,8 +9,6 @@ namespace MVCWebProject.DAL.Interfaces
     public interface IRepository<T>
     {
         List<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null);
-
-        PagedList<T> GetWithPaging(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null, int page = 1, int size = 3);
 
         void Add(T entity);
 
