@@ -4,10 +4,10 @@ using System.Web.Mvc;
 using MVCWebProject.DAL.Interfaces;
 using MVCWebProject.DAL;
 using MVCWebProject.ViewModels;
-using AutoMapper;
 using System.Collections.Generic;
 using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels.Users;
+using AutoMapper;
 
 namespace MVCWebProject.Controllers
 {
@@ -15,18 +15,20 @@ namespace MVCWebProject.Controllers
     {
         private readonly IRepository<Person> _repository;
         private readonly IPagingList<UsersListingViewModel> _pagingList;
+        private readonly IMapper _mapper;
 
-        public UsersController(IRepository<Person> _repository, IPagingList<UsersListingViewModel> _pagingList)
+        public UsersController(IRepository<Person> _repository, IPagingList<UsersListingViewModel> _pagingList, IMapper _mapper)
         {
             this._repository = _repository;
             this._pagingList = _pagingList;
+            this._mapper = _mapper;
 
         }
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
         {
             var people = _repository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), orderBy: s => s.OrderBy(p => p.City));
-            var source = Mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
+            var source = _mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
             _pagingList.CreatePage(source, page, 3);
             UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, _pagingList);
             return Request.IsAjaxRequest()
@@ -45,7 +47,7 @@ namespace MVCWebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var person = Mapper.Map<UsersCreatViewModel, Person>(model);
+                var person = _mapper.Map<UsersCreatViewModel, Person>(model);
                 _repository.Add(person);
                 _repository.Save();
                 return RedirectToAction("Index");
@@ -64,7 +66,7 @@ namespace MVCWebProject.Controllers
             if (_repository.IsExist(p => p.Id == Id))
             {
                 Person person = _repository.GetById(Id);
-                var model = Mapper.Map<Person, UsersEditViewModel>(person);
+                var model = _mapper.Map<Person, UsersEditViewModel>(person);
                 return View(model);
             }
             return HttpNotFound();
@@ -76,7 +78,7 @@ namespace MVCWebProject.Controllers
             {
                 if (_repository.IsExist(p => p.Id == model.Id))
                 {
-                    var person = Mapper.Map<UsersEditViewModel, Person>(model, _repository.GetById(model.Id));
+                    var person = _mapper.Map<UsersEditViewModel, Person>(model, _repository.GetById(model.Id));
                     _repository.Update(person);
                     _repository.Save();
                     return RedirectToAction("Index");
@@ -96,7 +98,7 @@ namespace MVCWebProject.Controllers
             if (_repository.IsExist(p => p.Id == Id))
             {
                 var person = _repository.GetById(Id);
-                var model = Mapper.Map<Person, UsersDeleteViewModel>(person);
+                var model = _mapper.Map<Person, UsersDeleteViewModel>(person);
                 return PartialView(model);
             }
             return HttpNotFound();
@@ -123,17 +125,10 @@ namespace MVCWebProject.Controllers
             if (_repository.IsExist(p => p.Id == id))
             {
                 var person = _repository.GetById(Id);
-                var model = Mapper.Map<Person, UsersCommentsViewModel>(person);
+                var model = _mapper.Map<Person, UsersCommentsViewModel>(person);
                 return PartialView(model);
             }
             return HttpNotFound();
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    db.Dispose();
-        //    base.Dispose(disposing);
-
-        //}
     }
 }

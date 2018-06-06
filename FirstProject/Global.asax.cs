@@ -14,10 +14,9 @@ namespace MVCWebProject
         protected void Application_Start()
         {
             //Database.SetInitializer(new PersonDbInitializer());
-            AutofacConfig.ConfigureContainer();
+            AutofacConfig.Register();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            AutoMappingConfig.Configure();
         }
     }
 }
