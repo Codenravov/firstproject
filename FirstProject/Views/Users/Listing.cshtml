@@ -1,5 +1,5 @@
-﻿@using MVCWebProject.ViewModels.Users
-@using MVCWebProject.Views.Helpers
+﻿@using MVCWebProject.Views.Helpers
+@using MVCWebProject.ViewModels.Users
 @model UsersListingDataViewModel
 <table class="table">
     <tr>
@@ -7,7 +7,7 @@
             @Ajax.ActionLink("Name", "Index", new
             {
                 sortOption = "Name",
-                searchString = Model.searchString,
+                searchString = Model.search,
                 page = Model.page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
@@ -15,7 +15,7 @@
             @Ajax.ActionLink("Phone", "Index", new
             {
                 sortOption = "Phone",
-                searchString = Model.searchString,
+                searchString = Model.search,
                 page = Model.page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
@@ -23,7 +23,7 @@
             @Ajax.ActionLink("Email", "Index", new
             {
                 sortOption = "Email",
-                searchString = Model.searchString,
+                searchString = Model.search,
                 page = Model.page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
@@ -31,7 +31,7 @@
             @Ajax.ActionLink("Title", "Index", new
             {
                 sortOption = "Title",
-                searchString = Model.searchString,
+                searchString = Model.search,
                 page = Model.page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
@@ -39,7 +39,7 @@
             @Ajax.ActionLink("Country", "Index", new
             {
                 sortOption = "Country",
-                searchString = Model.searchString,
+                searchString = Model.search,
                 page = Model.page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
@@ -47,7 +47,7 @@
             @Ajax.ActionLink("City", "Index", new
             {
                 sortOption = "City",
-                searchString = Model.searchString,
+                searchString = Model.search,
                 page = Model.page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
@@ -57,33 +57,34 @@
     </tr>
     @foreach (var p in Model.pagingList.Items)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => p.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.Country)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => p.City)
-            </td>
-            <td>
-                @Ajax.ActionLink("Comments", "Comments", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
-                @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
-                @Ajax.ActionLink("Delete", "Delete", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => p.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => p.City)
+        </td>
+        <td>
+            @Ajax.ActionLink("Comments", "Comments", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
+            @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
+            @Ajax.ActionLink("Delete", "Delete", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
+        </td>
+    </tr>
     }
 </table>
-
-@Html.Paging(Model.pagingList.CurrentPage, Model.pagingList.TotalPage, Model.pagingList.HasPreviousPage, Model.pagingList.HasNextPage, "Index", "Users",
-    new { searchString = Model.pagingList, sortOption = Model.sortOption }, null)
+<div class="Paging">
+    @Html.Paging(Model.pagingList.CurrentPage, Model.pagingList.TotalPage, Model.pagingList.HasPreviousPage, Model.pagingList.HasNextPage, "Index", "Users",
+                        new { searchString = Model.search, sortOption = Model.sortOption }, null)
+</div>
