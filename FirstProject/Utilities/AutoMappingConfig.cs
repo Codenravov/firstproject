@@ -29,7 +29,7 @@ public class CreatUserProfile : Profile
 }
 public class ListingUsersProfile : Profile
 {
-    public ListingUsersProfile() => CreateMap<Person, UsersListingViewModel>().ForMember("Name", opt => opt.MapFrom(c => c.FirstName + " " + c.LastName));
+    public ListingUsersProfile() => CreateMap<Person, UsersListingViewModel>();
 }
 public class EditUserProfile : Profile
 {
@@ -37,9 +37,9 @@ public class EditUserProfile : Profile
 }
 public class DeleteUserProfile : Profile
 {
-    public DeleteUserProfile() => CreateMap<Person, UsersDeleteViewModel>().ForMember("Name", opt => opt.MapFrom(c => c.FirstName + " " + c.LastName));
+    public DeleteUserProfile() => CreateMap<Person, UsersDeleteViewModel>();
 }
 public class CommentsUserProfile : Profile
 {
-    public CommentsUserProfile() => CreateMap<Person, UsersCommentsViewModel>().ForMember("Name", opt => opt.MapFrom(c => c.FirstName + " " + c.LastName));
+    public CommentsUserProfile() => CreateMap<Person, UsersCommentsViewModel>();
 }

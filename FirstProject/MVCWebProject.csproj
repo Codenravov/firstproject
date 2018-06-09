@@ -209,7 +209,6 @@
     <Compile Include="ViewModels\UsersEditViewModel.cs" />
     <Compile Include="ViewModels\UsersListingDataViewModel.cs" />
     <Compile Include="ViewModels\UsersListingViewModel.cs" />
-    <Compile Include="ViewModels\ViewExemple.cs" />
     <Compile Include="Views\Helpers\Paginghelper.cs" />
   </ItemGroup>
   <ItemGroup>

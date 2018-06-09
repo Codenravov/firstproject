@@ -2,7 +2,12 @@
 {
     public class UsersCommentsViewModel
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Comments { get; set; }
+        public string Name
+        {
+            get { return FirstName + " " + LastName; }
+        }
     }
 }

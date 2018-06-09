@@ -29,15 +29,15 @@ namespace MVCWebProject.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "Title*")]
-        [Required(ErrorMessage = "You must provide a Title")]
+        [EnumDataType(typeof(Title), ErrorMessage = "You must provide a Title")]
         public Title Title { get; set; }
 
         [Display(Name = "Country*")]
-        [Required(ErrorMessage = "You must provide a Country")]
+        [EnumDataType(typeof(Countries), ErrorMessage = "You must provide a Country")]
         public Countries Country { get; set; }
 
         [Display(Name = "City*")]
-        [Required(ErrorMessage = "You must provide a City")]
+        [EnumDataType(typeof(Cities), ErrorMessage = "You must provide a City")]
         public Cities City { get; set; }
 
         [Display(Name = "Comments")]
