@@ -1,4 +1,5 @@
 ﻿using MVCWebProject.DAL;
+using MVCWebProject.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,15 +8,17 @@ using System.Web;
 
 namespace MVCWebProject.DAL
 {
-    public class PersonContext : DbContext
+    public class EntitiesContext : DbContext
     {
         public DbSet<Person> People { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
 
-        public PersonContext()
+        public EntitiesContext()
         {
-            Database.SetInitializer<PersonContext>(new PersonDbInitializer());
+            Database.SetInitializer(new EntityDbInitializer());
         }
-        public PersonContext(string connectionString)
+        public EntitiesContext(string connectionString)
             : base(connectionString)
         {
 
@@ -23,9 +26,9 @@ namespace MVCWebProject.DAL
 
     }
 
-    public class PersonDbInitializer : DropCreateDatabaseAlways<PersonContext>
+    public class EntityDbInitializer : DropCreateDatabaseAlways<EntitiesContext>
     {
-        protected override void Seed(PersonContext db)
+        protected override void Seed(EntitiesContext db)
         {
             db.People.Add(new Person
             {
@@ -82,6 +85,18 @@ namespace MVCWebProject.DAL
                 City = "Munich",
                 Comments = "Comment Text5"
             });
+            db.Countries.Add(new Country { CountryName = "United States" });
+            db.Countries.Add(new Country { CountryName = "United Kingdom" });
+            db.Countries.Add(new Country { CountryName = "Canada" });
+            db.Cities.Add(new City { CountryName = "United States", CityName = "Palo Alto" });
+            db.Cities.Add(new City { CountryName = "United States", CityName = "Atlanta" });
+            db.Cities.Add(new City { CountryName = "United States", CityName = "Houston" });
+            db.Cities.Add(new City { CountryName = "United Kingdom", CityName = "Oxford" });
+            db.Cities.Add(new City { CountryName = "United Kingdom", CityName = "Cambridge" });
+            db.Cities.Add(new City { CountryName = "United Kingdom", CityName = "Edinburgh" });
+            db.Cities.Add(new City { CountryName = "Canada", CityName = "Montreal" });
+            db.Cities.Add(new City { CountryName = "Canada", CityName = "Vancouver" });
+            db.Cities.Add(new City { CountryName = "Canada", CityName = "Ottawa" });
 
             base.Seed(db);
         }

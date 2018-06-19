@@ -1,5 +1,6 @@
 ﻿@using MVCWebProject.ViewModels
 @model UsersCreatViewModel
+
 <h2>Create</h2>
 
 
@@ -53,16 +54,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Country, new SelectList(Enum.GetValues(typeof(Countries))), "Select Country", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Country, ViewBag.Countries as SelectList, "Select Country", new { @class = "form-control", id = "Countries" })
                 @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.City, new SelectList(Enum.GetValues(typeof(Cities))), "Select City", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            <div id="Cities">
             </div>
         </div>
 
@@ -73,7 +71,6 @@
                 @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -82,6 +79,24 @@
     </div>
 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Countries").change(function () {
+            var SelectCountry = $('#Countries').val();
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("Create", "Users")',
+                type: "GET",
+                dataType: 'json',
+                data: { "SelectCountry": SelectCountry },
+                success: function (partialViewResult) {
+                    $("#Cities").html(partialViewResult)},
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve counties.')
+                }
+            });
+        });
+    });
+</script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

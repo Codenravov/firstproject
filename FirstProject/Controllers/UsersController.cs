@@ -8,18 +8,24 @@ using System.Collections.Generic;
 using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels.Users;
 using AutoMapper;
+using MVCWebProject.DAL.Entities;
 
 namespace MVCWebProject.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly IRepository<Person> _repository;
+        private readonly IRepository<Person> _personRepository;
+        private readonly IRepository<Country> _countryRepository;
+        private readonly IRepository<City> _cityRepository;
         private readonly IPagingList<UsersListingViewModel> _pagingList;
         private readonly IMapper _mapper;
 
-        public UsersController(IRepository<Person> _repository, IPagingList<UsersListingViewModel> _pagingList, IMapper _mapper)
+        public UsersController(IRepository<Person> _personRepository, IRepository<Country> _countryRepository,
+            IRepository<City> _cityRepository, IPagingList<UsersListingViewModel> _pagingList, IMapper _mapper)
         {
-            this._repository = _repository;
+            this._personRepository = _personRepository;
+            this._countryRepository = _countryRepository;
+            this._cityRepository = _cityRepository;
             this._pagingList = _pagingList;
             this._mapper = _mapper;
 
@@ -27,7 +33,7 @@ namespace MVCWebProject.Controllers
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
         {
-            var people = _repository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), orderBy: s => s.OrderBy(p => p.City));
+            var people = _personRepository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), orderBy: s => s.OrderBy(p => p.City));
             var source = _mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
             _pagingList.CreatePage(source, page, 3);
             UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, _pagingList);
@@ -37,19 +43,29 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
         {
-            return View();
+            var Countries = _countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName));
+            ViewBag.Countries = new SelectList(Countries, "CountryName", "CountryName");
+            if (SelectCountry == null) { return View(); }
+            if (Countries.Any(x => x.CountryName == SelectCountry))
+            {
+                var Cities = _cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName));
+                ViewBag.Cities = new SelectList(Cities, "CityName", "CityName");
+                return PartialView("Cities");
+            }
+            else { return HttpNotFound(); }
         }
 
         [HttpPost]
         public ActionResult Create(UsersCreatViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var person = _mapper.Map<UsersCreatViewModel, Person>(model);
-                _repository.Add(person);
-                _repository.Save();
+                _personRepository.Add(person);
+                _personRepository.Save();
                 return RedirectToAction("Index");
             }
             return View();
@@ -63,9 +79,9 @@ namespace MVCWebProject.Controllers
                 return HttpNotFound();
             }
             int Id = id.Value;
-            if (_repository.IsExist(p => p.Id == Id))
+            if (_personRepository.IsExist(p => p.Id == Id))
             {
-                Person person = _repository.GetById(Id);
+                Person person = _personRepository.GetById(Id);
                 var model = _mapper.Map<Person, UsersEditViewModel>(person);
                 return View(model);
             }
@@ -76,11 +92,11 @@ namespace MVCWebProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_repository.IsExist(p => p.Id == model.Id))
+                if (_personRepository.IsExist(p => p.Id == model.Id))
                 {
-                    var person = _mapper.Map<UsersEditViewModel, Person>(model, _repository.GetById(model.Id));
-                    _repository.Update(person);
-                    _repository.Save();
+                    var person = _mapper.Map<UsersEditViewModel, Person>(model, _personRepository.GetById(model.Id));
+                    _personRepository.Update(person);
+                    _personRepository.Save();
                     return RedirectToAction("Index");
                 }
             }
@@ -95,9 +111,9 @@ namespace MVCWebProject.Controllers
                 return HttpNotFound();
             }
             int Id = id.Value;
-            if (_repository.IsExist(p => p.Id == Id))
+            if (_personRepository.IsExist(p => p.Id == Id))
             {
-                var person = _repository.GetById(Id);
+                var person = _personRepository.GetById(Id);
                 var model = _mapper.Map<Person, UsersDeleteViewModel>(person);
                 return PartialView(model);
             }
@@ -107,10 +123,10 @@ namespace MVCWebProject.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmend(int id)
         {
-            if (_repository.IsExist(p => p.Id == id))
+            if (_personRepository.IsExist(p => p.Id == id))
             {
-                _repository.Delete(p => p.Id == id);
-                _repository.Save();
+                _personRepository.Delete(p => p.Id == id);
+                _personRepository.Save();
                 return RedirectToAction("Index");
             }
             return HttpNotFound();
@@ -122,9 +138,9 @@ namespace MVCWebProject.Controllers
                 return HttpNotFound();
             }
             int Id = id.Value;
-            if (_repository.IsExist(p => p.Id == id))
+            if (_personRepository.IsExist(p => p.Id == id))
             {
-                var person = _repository.GetById(Id);
+                var person = _personRepository.GetById(Id);
                 var model = _mapper.Map<Person, UsersCommentsViewModel>(person);
                 return PartialView(model);
             }

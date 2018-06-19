@@ -19,7 +19,7 @@ namespace MVCWebProject.Utilities
 
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterModule(new AutoMapperModule());
-            builder.RegisterGeneric(typeof(PersonRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new PersonContext());
+            builder.RegisterGeneric(typeof(EntitiesRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new EntitiesContext());
             builder.RegisterGeneric(typeof(PagedList<>)).As(typeof(IPagingList<>));
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

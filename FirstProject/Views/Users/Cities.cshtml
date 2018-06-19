@@ -1,0 +1,8 @@
+﻿@using MVCWebProject.ViewModels
+@model UsersCreatViewModel
+
+@Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+    @Html.DropDownListFor(Model => Model.City, new SelectList(ViewBag.Cities, "CityName", "CityName"), "Select City", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+</div>

@@ -9,12 +9,12 @@ using System.Web;
 
 namespace MVCWebProject.DAL.Repositories
 {
-    public class PersonRepository<T> : IRepository<T> where T : class
+    public class EntitiesRepository<T> : IRepository<T> where T : class
     {
-        private PersonContext _dataContext;
+        private EntitiesContext _dataContext;
         private readonly DbSet<T> _dbset;
 
-        public PersonRepository(PersonContext context)
+        public EntitiesRepository(EntitiesContext context)
         {
             this._dataContext = context;
             this._dbset = context.Set<T>();

@@ -32,11 +32,11 @@ namespace MVCWebProject.ViewModels
 
         [Display(Name = "Country*")]
         [Required(ErrorMessage = "You must provide a Country")]
-        public Countries Country { get; set; }
+        public string Country { get; set; }
 
         [Display(Name = "City*")]
         [Required(ErrorMessage = "You must provide a City")]
-        public Cities City { get; set; }
+        public string City { get; set; }
 
         [Display(Name = "Comments")]
         [DataType(DataType.MultilineText)]
