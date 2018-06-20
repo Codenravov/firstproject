@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MVCWebProject.ViewModels
 {
@@ -42,6 +43,8 @@ namespace MVCWebProject.ViewModels
         [DataType(DataType.MultilineText)]
         [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
         public string Comments { get; set; }
+        public SelectList Countriess { get; set; }
+        public SelectList Citiess { get; set; }
 
     }
 

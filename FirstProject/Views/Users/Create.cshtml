@@ -1,6 +1,5 @@
 ﻿@using MVCWebProject.ViewModels
 @model UsersCreatViewModel
-
 <h2>Create</h2>
 
 
@@ -54,7 +53,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Country, ViewBag.Countries as SelectList, "Select Country", new { @class = "form-control", id = "Countries" })
+                @Html.DropDownListFor(model => model.Country, Model.Countriess as SelectList, "Select Country", new { @class = "form-control", id = "Countries" })
                 @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -71,6 +70,7 @@
                 @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -84,19 +84,18 @@
         $("#Countries").change(function () {
             var SelectCountry = $('#Countries').val();
             $.ajax({
-                cache: false,
                 url: '@Url.Action("Create", "Users")',
-                type: "GET",
-                dataType: 'json',
+                datatype: "json",
                 data: { "SelectCountry": SelectCountry },
-                success: function (partialViewResult) {
-                    $("#Cities").html(partialViewResult)},
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert('Failed to retrieve counties.')
+                type: "GET",
+                contenttype: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#Cities").html(data);
+                },
+                error: function (xhr) {
+                    alert('error');
                 }
             });
         });
     });
-</script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</script>  

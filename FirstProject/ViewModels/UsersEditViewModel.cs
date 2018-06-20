@@ -13,7 +13,6 @@ namespace MVCWebProject.ViewModels
 
         [Display(Name = "Last Name*")]
         [Required(ErrorMessage = "You must provide a Last name")]
-        //[StringLength(255, ErrorMessage = "Last name length longer than maximum allow (255)")]
         [RegularExpression(@"[A-Za-z]{1,30}([ .,'-][ ']{0,1}[A-Za-z]{2,30})*$", ErrorMessage = "Not a valid Last name")]
         public string LastName { get; set; }
 

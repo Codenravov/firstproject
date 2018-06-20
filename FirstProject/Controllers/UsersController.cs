@@ -45,14 +45,19 @@ namespace MVCWebProject.Controllers
         [HttpGet]
         public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
         {
-            var Countries = _countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName));
-            ViewBag.Countries = new SelectList(Countries, "CountryName", "CountryName");
-            if (SelectCountry == null) { return View(); }
-            if (Countries.Any(x => x.CountryName == SelectCountry))
+            if (SelectCountry == null)
+            {
+                var Countries = _countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName));
+                model.Countriess = new SelectList(Countries, "CountryName", "CountryName");
+                return View(model);
+            }
+            if (_countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
             {
                 var Cities = _cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName));
-                ViewBag.Cities = new SelectList(Cities, "CityName", "CityName");
-                return PartialView("Cities");
+                var Countries = _countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName));
+                model.Countriess = new SelectList(Countries, "CountryName", "CountryName");
+                model.Citiess = new SelectList(Cities, "CityName", "CityName");
+                return PartialView("Cities", model);
             }
             else { return HttpNotFound(); }
         }
