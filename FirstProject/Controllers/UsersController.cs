@@ -43,20 +43,17 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
+        public ActionResult Create(string SelectCountry = null)
         {
+            UsersCreatViewModel model = new UsersCreatViewModel();
             if (SelectCountry == null)
             {
-                var Countries = _countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName));
-                model.Countriess = new SelectList(Countries, "CountryName", "CountryName");
+                model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName");
                 return View(model);
             }
             if (_countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
             {
-                var Cities = _cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName));
-                var Countries = _countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName));
-                model.Countriess = new SelectList(Countries, "CountryName", "CountryName");
-                model.Citiess = new SelectList(Cities, "CityName", "CityName");
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
                 return PartialView("Cities", model);
             }
             else { return HttpNotFound(); }
@@ -73,7 +70,9 @@ namespace MVCWebProject.Controllers
                 _personRepository.Save();
                 return RedirectToAction("Index");
             }
-            return View();
+            model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName");
+            model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(model.Country), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
+            return View(model);
         }
 
         [HttpGet]

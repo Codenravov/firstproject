@@ -53,13 +53,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Country, Model.Countriess as SelectList, "Select Country", new { @class = "form-control", id = "Countries" })
+                @Html.DropDownListFor(model => model.Country, Model.Countries as SelectList, "Select Country", new { @class = "form-control", id = "ddlCountries" })
                 @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div id="Cities">
+            <div id="divCities">
             </div>
         </div>
 
@@ -81,16 +81,21 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#Countries").change(function () {
-            var SelectCountry = $('#Countries').val();
+        var removedCountries = false;
+        $("#ddlCountries").change(function () {
+            var SelectCountry = $('#ddlCountries').val();
+            if (!removedCountries) {
+                $(this).children().first().remove();
+                removedCountries = true;
+            }
             $.ajax({
                 url: '@Url.Action("Create", "Users")',
                 datatype: "json",
                 data: { "SelectCountry": SelectCountry },
                 type: "GET",
                 contenttype: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $("#Cities").html(data);
+                success: function (partionalView) {
+                    $("#divCities").html(partionalView);
                 },
                 error: function (xhr) {
                     alert('error');

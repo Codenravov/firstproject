@@ -43,8 +43,8 @@ namespace MVCWebProject.ViewModels
         [DataType(DataType.MultilineText)]
         [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
         public string Comments { get; set; }
-        public SelectList Countriess { get; set; }
-        public SelectList Citiess { get; set; }
+        public SelectList Countries { get; set; }
+        public SelectList Cities { get; set; }
 
     }
 
