@@ -28,15 +28,15 @@ namespace MVCWebProject.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "Title*")]
-        [Required(ErrorMessage = "You must provide a Title")]
+        [EnumDataType(typeof(Title), ErrorMessage = "You must provide a Title")]
         public Title Title { get; set; }
 
         [Display(Name = "Country*")]
-        [Required(ErrorMessage = "You must provide a Country")]
+        [Required(ErrorMessage = "You must select a Country")]
         public string Country { get; set; }
 
         [Display(Name = "City*")]
-        [Required(ErrorMessage = "You must provide a City")]
+        [Required(ErrorMessage = "You must select a City")]
         public string City { get; set; }
 
         [Display(Name = "Comments")]
@@ -58,28 +58,5 @@ namespace MVCWebProject.ViewModels
         Dr,
         Lady,
         Lord
-    }
-
-    public enum Countries
-    {
-        USA,
-        Canada,
-        UK,
-        Germany,
-        China
-    }
-
-    public enum Cities
-    {
-        Washington,
-        NewYork,
-        Toronto,
-        Ottawa,
-        London,
-        Birmingham,
-        Berlin,
-        Munich,
-        Beijing,
-        Shanghai
     }
 }

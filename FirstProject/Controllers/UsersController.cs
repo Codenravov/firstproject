@@ -43,26 +43,23 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create(string SelectCountry = null)
+        public ActionResult Create()
         {
-            UsersCreatViewModel model = new UsersCreatViewModel();
-            if (SelectCountry == null)
+            UsersCreatViewModel model = new UsersCreatViewModel
             {
-                model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName");
-                return View(model);
-            }
-            if (_countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
-            {
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
-                return PartialView("Cities", model);
-            }
-            else { return HttpNotFound(); }
+                Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName"),
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Create(UsersCreatViewModel model)
+        public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
         {
-
+            if (SelectCountry != null && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
+            {
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
+                return PartialView("CreatCities", model);
+            }
             if (ModelState.IsValid)
             {
                 var person = _mapper.Map<UsersCreatViewModel, Person>(model);
@@ -70,9 +67,9 @@ namespace MVCWebProject.Controllers
                 _personRepository.Save();
                 return RedirectToAction("Index");
             }
-            model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName");
-            model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(model.Country), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
-            return View(model);
+            return Request.IsAjaxRequest()
+                ? (ActionResult)View(model)
+                : HttpNotFound();
         }
 
         [HttpGet]
@@ -87,13 +84,21 @@ namespace MVCWebProject.Controllers
             {
                 Person person = _personRepository.GetById(Id);
                 var model = _mapper.Map<Person, UsersEditViewModel>(person);
+                model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName");
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(model.Country), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
                 return View(model);
             }
             return HttpNotFound();
         }
+
         [HttpPost]
-        public ActionResult Edit(UsersEditViewModel model)
+        public ActionResult Edit(UsersEditViewModel model, string SelectCountry = null)
         {
+            if (SelectCountry != null && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
+            {
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
+                return PartialView("EditCities", model);
+            }
             if (ModelState.IsValid)
             {
                 if (_personRepository.IsExist(p => p.Id == model.Id))
@@ -135,6 +140,7 @@ namespace MVCWebProject.Controllers
             }
             return HttpNotFound();
         }
+
         public ActionResult Comments(int? id)
         {
             if (id == null)

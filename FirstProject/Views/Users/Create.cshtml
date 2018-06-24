@@ -58,9 +58,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div id="divCities">
-            </div>
+        <div class="form-group" id="divCities">
         </div>
 
         <div class="form-group">
@@ -79,7 +77,10 @@
     </div>
 }
 
-<script type="text/javascript">
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
     $(document).ready(function () {
         var removedCountries = false;
         $("#ddlCountries").change(function () {
@@ -92,10 +93,14 @@
                 url: '@Url.Action("Create", "Users")',
                 datatype: "json",
                 data: { "SelectCountry": SelectCountry },
-                type: "GET",
+                type: "POST",
                 contenttype: 'application/json; charset=utf-8',
                 success: function (partionalView) {
                     $("#divCities").html(partionalView);
+                    $('@Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })').insertAfter('#ddlCities');
+                    $('form').removeData("validator");
+                    $("form").removeData("unobtrusiveValidation");
+                    $.validator.unobtrusive.parse(document);
                 },
                 error: function (xhr) {
                     alert('error');
@@ -103,4 +108,5 @@
             });
         });
     });
-</script>  
+    </script>
+}

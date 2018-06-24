@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MVCWebProject.ViewModels
 {
@@ -32,17 +33,19 @@ namespace MVCWebProject.ViewModels
         public Title Title { get; set; }
 
         [Display(Name = "Country*")]
-        [EnumDataType(typeof(Countries), ErrorMessage = "You must provide a Country")]
-        public Countries Country { get; set; }
+        [Required(ErrorMessage = "You must select a Country")]
+        public string Country { get; set; }
 
         [Display(Name = "City*")]
-        [EnumDataType(typeof(Cities), ErrorMessage = "You must provide a City")]
-        public Cities City { get; set; }
+        [Required(ErrorMessage = "You must select a City")]
+        public string City { get; set; }
 
         [Display(Name = "Comments")]
         [DataType(DataType.MultilineText)]
         [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
         public string Comments { get; set; }
+        public SelectList Countries { get; set; }
+        public SelectList Cities { get; set; }
 
     }
 }

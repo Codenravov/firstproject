@@ -37,8 +37,8 @@ namespace MVCWebProject.DAL
                 Phone = "(800) 555-1212",
                 Email = "dobronrav@gmail.com",
                 Title = "Mr",
-                Country = "USA",
-                City = "NewYork",
+                Country = "United States",
+                City = "Palo Alto",
                 Comments = "Comment Text1"
             });
             db.People.Add(new Person
@@ -48,8 +48,8 @@ namespace MVCWebProject.DAL
                 Phone = "(800) 555-1212",
                 Email = "Blgnrvv@gmail.com",
                 Title = "Ms",
-                Country = "UK",
-                City = "Birmingham",
+                Country = "United Kingdom",
+                City = "Oxford",
                 Comments = "Comment Text2"
             });
             db.People.Add(new Person
@@ -59,8 +59,8 @@ namespace MVCWebProject.DAL
                 Phone = "(800) 555-1212",
                 Email = "NravovnaLn@gmail.com",
                 Title = "Lord",
-                Country = "China",
-                City = "Shanghai",
+                Country = "Canada",
+                City = "Montreal",
                 Comments = "Comment Text3"
             });
             db.People.Add(new Person
@@ -70,8 +70,8 @@ namespace MVCWebProject.DAL
                 Phone = "(800) 555-1212",
                 Email = "EmosNeves@gmail.com",
                 Title = "Lady",
-                Country = "Canada",
-                City = "Ottawa",
+                Country = "United States",
+                City = "Atlanta",
                 Comments = "Comment Text4"
             });
             db.People.Add(new Person
@@ -81,8 +81,8 @@ namespace MVCWebProject.DAL
                 Phone = "(800) 555-1212",
                 Email = "mikolahr@gmail.com",
                 Title = "Sir",
-                Country = "Germany",
-                City = "Munich",
+                Country = "United Kingdom",
+                City = "Cambridge",
                 Comments = "Comment Text5"
             });
             db.Countries.Add(new Country { CountryName = "United States" });

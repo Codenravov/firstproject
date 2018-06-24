@@ -205,6 +205,7 @@
     <Compile Include="Utilities\AutofacConfig.cs" />
     <Compile Include="Utilities\AutoMappingConfig.cs" />
     <Compile Include="Utilities\Paging.cs" />
+    <Compile Include="ViewModels\Title.cs" />
     <Compile Include="ViewModels\UsersCommentsViewModel.cs" />
     <Compile Include="ViewModels\UsersCreatViewModel.cs" />
     <Compile Include="ViewModels\UsersDeleteViewModel.cs" />
@@ -231,7 +232,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Users\Listing.cshtml" />
     <Content Include="Views\Users\Comments.cshtml" />
-    <Content Include="Views\Users\Cities.cshtml" />
+    <Content Include="Views\Users\CreatCities.cshtml" />
+    <Content Include="Views\Users\EditCities.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
