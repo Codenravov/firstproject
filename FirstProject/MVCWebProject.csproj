@@ -205,7 +205,6 @@
     <Compile Include="Utilities\AutofacConfig.cs" />
     <Compile Include="Utilities\AutoMappingConfig.cs" />
     <Compile Include="Utilities\Paging.cs" />
-    <Compile Include="ViewModels\Title.cs" />
     <Compile Include="ViewModels\UsersCommentsViewModel.cs" />
     <Compile Include="ViewModels\UsersCreatViewModel.cs" />
     <Compile Include="ViewModels\UsersDeleteViewModel.cs" />

@@ -9,6 +9,7 @@ using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels.Users;
 using AutoMapper;
 using MVCWebProject.DAL.Entities;
+using System.Reflection;
 
 namespace MVCWebProject.Controllers
 {
@@ -31,9 +32,12 @@ namespace MVCWebProject.Controllers
 
         }
 
-        public ActionResult Index(string searchString = "", int page = 1, string sortOption = "")
+        public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
         {
-            var people = _personRepository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), orderBy: s => s.OrderBy(p => p.City));
+            string property = _personRepository.GetProperties().First();
+            if (!string.IsNullOrEmpty(sortOption) && _personRepository.GetProperties().Any(x => x == sortOption)) { property = sortOption; }
+            var people = _personRepository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), 
+                orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
             var source = _mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
             _pagingList.CreatePage(source, page, 3);
             UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, _pagingList);
@@ -47,7 +51,8 @@ namespace MVCWebProject.Controllers
         {
             UsersCreatViewModel model = new UsersCreatViewModel
             {
-                Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName"),
+
+                Countries = new SelectList(_countryRepository.Get(orderBy: x => x.CountryName), "CountryName", "CountryName"),
             };
             return View(model);
         }
@@ -55,9 +60,9 @@ namespace MVCWebProject.Controllers
         [HttpPost]
         public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
         {
-            if (SelectCountry != null && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
+            if (!string.IsNullOrEmpty(SelectCountry) && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
             {
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.CityName), "CityName", "CityName");
                 return PartialView("CreatCities", model);
             }
             if (ModelState.IsValid)
@@ -84,8 +89,8 @@ namespace MVCWebProject.Controllers
             {
                 Person person = _personRepository.GetById(Id);
                 var model = _mapper.Map<Person, UsersEditViewModel>(person);
-                model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.OrderBy(s => s.CountryName)), "CountryName", "CountryName");
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(model.Country), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
+                model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.CountryName), "CountryName", "CountryName");
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(model.Country), orderBy: x => x.CityName), "CityName", "CityName");
                 return View(model);
             }
             return HttpNotFound();
@@ -94,9 +99,9 @@ namespace MVCWebProject.Controllers
         [HttpPost]
         public ActionResult Edit(UsersEditViewModel model, string SelectCountry = null)
         {
-            if (SelectCountry != null && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
+            if (!string.IsNullOrEmpty(SelectCountry) && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
             {
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.OrderBy(s => s.CityName)), "CityName", "CityName");
+                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.CityName), "CityName", "CityName");
                 return PartialView("EditCities", model);
             }
             if (ModelState.IsValid)

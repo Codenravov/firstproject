@@ -8,7 +8,7 @@ namespace MVCWebProject.DAL.Interfaces
 {
     public interface IRepository<T>
     {
-        List<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null);
+        List<T> Get(Expression<Func<T, bool>> filter = null, Func<T, object> orderBy = null);
 
         void Add(T entity);
 
@@ -30,5 +30,6 @@ namespace MVCWebProject.DAL.Interfaces
         bool IsExist(Expression<Func<T, bool>> where = null);
 
         void Save();
+        List<string> GetProperties();
     }
 }

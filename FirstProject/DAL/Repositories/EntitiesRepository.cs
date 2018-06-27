@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Linq.Dynamic;
 using System.Web;
+using System.Reflection;
 
 namespace MVCWebProject.DAL.Repositories
 {
@@ -21,7 +22,7 @@ namespace MVCWebProject.DAL.Repositories
         }
 
 
-        public virtual List<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IQueryable<T>> orderBy = null)
+        public virtual List<T> Get(Expression<Func<T, bool>> filter = null, Func<T, object> orderBy = null)
         {
             IQueryable<T> query = _dbset;
 
@@ -32,7 +33,7 @@ namespace MVCWebProject.DAL.Repositories
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return query.OrderBy(orderBy).ToList();
             }
             else
             {
@@ -96,6 +97,16 @@ namespace MVCWebProject.DAL.Repositories
         public void Save()
         {
             _dataContext.SaveChanges();
+        }
+        public virtual List<string> GetProperties()
+        {
+            List<string> propertiesList = new List<string>();
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                propertiesList.Add(property.Name);
+            }
+            return propertiesList;
         }
     }
 }
