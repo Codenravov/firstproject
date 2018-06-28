@@ -1,80 +1,61 @@
-﻿using System.Linq;
-using System.Linq.Dynamic;
-using System.Web.Mvc;
-using MVCWebProject.DAL.Interfaces;
-using MVCWebProject.DAL;
+﻿using System.Web.Mvc;
 using MVCWebProject.ViewModels;
-using System.Collections.Generic;
-using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels.Users;
-using AutoMapper;
-using MVCWebProject.DAL.Entities;
-using System.Reflection;
 using MVCWebProject.Models;
+using System;
 
 namespace MVCWebProject.Controllers
 {
     public class UsersController : Controller
     {
-        //private readonly IRepository<Person> _personRepository;
-        //private readonly IRepository<Country> _countryRepository;
-        //private readonly IRepository<City> _cityRepository;
-        //private readonly IPagingList<UsersListingViewModel> _pagingList;
         private readonly IUsersService _usersService;
 
-        //public UsersController(IRepository<Person> _personRepository, IRepository<Country> _countryRepository,
-        //    IRepository<City> _cityRepository, IPagingList<UsersListingViewModel> _pagingList, IMapper _mapper)
         public UsersController(IUsersService _usersService)
         {
-            //this._personRepository = _personRepository;
-            //this._countryRepository = _countryRepository;
-            //this._cityRepository = _cityRepository;
-            //this._pagingList = _pagingList;
-            //this._mapper = _mapper;
             this._usersService = _usersService;
-
         }
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
         {
-            //string property = _personRepository.GetProperties().First();
-            //if (!string.IsNullOrEmpty(sortOption) && _personRepository.GetProperties().Any(x => x == sortOption)) { property = sortOption; }
-            //var people = _personRepository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), 
-            //    orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
-            //var source = _mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
-            //_pagingList.CreatePage(source, page, 3);
-
-            var pagedList = _usersService.GetPagedList(searchString, page, sortOption);
-            UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, pagedList);
-            return Request.IsAjaxRequest()
-                ? (ActionResult)PartialView("Listing", model)
-                : View(model);
+            try
+            {
+                var pagedList = _usersService.GetPagedList(searchString, page, sortOption);
+                UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, pagedList);
+                return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("Listing", model)
+                    : View(model);
+            }
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            UsersCreatViewModel model = new UsersCreatViewModel
-            {
-
-                Countries = new SelectList(_countryRepository.Get(orderBy: x => x.CountryName), "CountryName", "CountryName"),
-            };
+            var model = _usersService.GetCreateModel();
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
         {
-            if (!string.IsNullOrEmpty(SelectCountry) && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
+            if (!string.IsNullOrEmpty(SelectCountry))
             {
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.CityName), "CityName", "CityName");
-                return PartialView("CreatCities", model);
+                try
+                {
+                    var ViewModel = _usersService.GetCities(model, SelectCountry);
+                    return PartialView("CreatCities", ViewModel);
+                }
+                catch (Exception)
+                {
+                    return HttpNotFound();
+                }
             }
             if (ModelState.IsValid)
             {
-                var person = _mapper.Map<UsersCreatViewModel, Person>(model);
-                _personRepository.Add(person);
-                _personRepository.Save();
+                _usersService.SaveData(model);
                 return RedirectToAction("Index");
             }
             return Request.IsAjaxRequest()
@@ -90,33 +71,42 @@ namespace MVCWebProject.Controllers
                 return HttpNotFound();
             }
             int Id = id.Value;
-            if (_personRepository.IsExist(p => p.Id == Id))
+            try
             {
-                Person person = _personRepository.GetById(Id);
-                var model = _mapper.Map<Person, UsersEditViewModel>(person);
-                model.Countries = new SelectList(_countryRepository.Get(orderBy: x => x.CountryName), "CountryName", "CountryName");
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(model.Country), orderBy: x => x.CityName), "CityName", "CityName");
+                var model = _usersService.GetEditModel(Id);
                 return View(model);
             }
-            return HttpNotFound();
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
         }
 
         [HttpPost]
         public ActionResult Edit(UsersEditViewModel model, string SelectCountry = null)
         {
-            if (!string.IsNullOrEmpty(SelectCountry) && _countryRepository.GetAll().Any(x => x.CountryName == SelectCountry))
+            if (!string.IsNullOrEmpty(SelectCountry))
             {
-                model.Cities = new SelectList(_cityRepository.Get(x => x.CountryName.Contains(SelectCountry), orderBy: x => x.CityName), "CityName", "CityName");
-                return PartialView("EditCities", model);
+                try
+                {
+                    model = _usersService.GetCities(model, SelectCountry);
+                    return PartialView("EditCities", model);
+                }
+                catch (Exception)
+                {
+                    return View(model);
+                }
             }
             if (ModelState.IsValid)
             {
-                if (_personRepository.IsExist(p => p.Id == model.Id))
+                try
                 {
-                    var person = _mapper.Map<UsersEditViewModel, Person>(model, _personRepository.GetById(model.Id));
-                    _personRepository.Update(person);
-                    _personRepository.Save();
+                    _usersService.SaveData(model, model.Id);
                     return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    return View(model);
                 }
             }
             return View(model);
@@ -130,25 +120,29 @@ namespace MVCWebProject.Controllers
                 return HttpNotFound();
             }
             int Id = id.Value;
-            if (_personRepository.IsExist(p => p.Id == Id))
+            try
             {
-                var person = _personRepository.GetById(Id);
-                var model = _mapper.Map<Person, UsersDeleteViewModel>(person);
+                var model = _usersService.GetDeleteModel(Id);
                 return PartialView(model);
             }
-            return HttpNotFound();
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmend(int id)
         {
-            if (_personRepository.IsExist(p => p.Id == id))
+            try
             {
-                _personRepository.Delete(p => p.Id == id);
-                _personRepository.Save();
+                _usersService.DeleteData(id);
                 return RedirectToAction("Index");
             }
-            return HttpNotFound();
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
         }
 
         public ActionResult Comments(int? id)
@@ -158,13 +152,15 @@ namespace MVCWebProject.Controllers
                 return HttpNotFound();
             }
             int Id = id.Value;
-            if (_personRepository.IsExist(p => p.Id == id))
+            try
             {
-                var person = _personRepository.GetById(Id);
-                var model = _mapper.Map<Person, UsersCommentsViewModel>(person);
+                var model = _usersService.GetCommentsModel(Id);
                 return PartialView(model);
             }
-            return HttpNotFound();
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
         }
     }
 }
