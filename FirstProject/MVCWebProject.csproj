@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="DAL\Entities\Person.cs" />
     <Compile Include="DAL\Context\EntitiesContext.cs" />
+    <Compile Include="Models\UsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AutofacConfig.cs" />
     <Compile Include="Utilities\AutoMappingConfig.cs" />
@@ -242,7 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -3,6 +3,7 @@ using Autofac.Integration.Mvc;
 using MVCWebProject.DAL;
 using MVCWebProject.DAL.Interfaces;
 using MVCWebProject.DAL.Repositories;
+using MVCWebProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace MVCWebProject.Utilities
             builder.RegisterModule(new AutoMapperModule());
             builder.RegisterGeneric(typeof(EntitiesRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new EntitiesContext());
             builder.RegisterGeneric(typeof(PagedList<>)).As(typeof(IPagingList<>));
+            builder.RegisterType<UsersService>().As<IUsersService>();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

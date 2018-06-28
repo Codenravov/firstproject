@@ -10,37 +10,42 @@ using MVCWebProject.ViewModels.Users;
 using AutoMapper;
 using MVCWebProject.DAL.Entities;
 using System.Reflection;
+using MVCWebProject.Models;
 
 namespace MVCWebProject.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly IRepository<Person> _personRepository;
-        private readonly IRepository<Country> _countryRepository;
-        private readonly IRepository<City> _cityRepository;
-        private readonly IPagingList<UsersListingViewModel> _pagingList;
-        private readonly IMapper _mapper;
+        //private readonly IRepository<Person> _personRepository;
+        //private readonly IRepository<Country> _countryRepository;
+        //private readonly IRepository<City> _cityRepository;
+        //private readonly IPagingList<UsersListingViewModel> _pagingList;
+        private readonly IUsersService _usersService;
 
-        public UsersController(IRepository<Person> _personRepository, IRepository<Country> _countryRepository,
-            IRepository<City> _cityRepository, IPagingList<UsersListingViewModel> _pagingList, IMapper _mapper)
+        //public UsersController(IRepository<Person> _personRepository, IRepository<Country> _countryRepository,
+        //    IRepository<City> _cityRepository, IPagingList<UsersListingViewModel> _pagingList, IMapper _mapper)
+        public UsersController(IUsersService _usersService)
         {
-            this._personRepository = _personRepository;
-            this._countryRepository = _countryRepository;
-            this._cityRepository = _cityRepository;
-            this._pagingList = _pagingList;
-            this._mapper = _mapper;
+            //this._personRepository = _personRepository;
+            //this._countryRepository = _countryRepository;
+            //this._cityRepository = _cityRepository;
+            //this._pagingList = _pagingList;
+            //this._mapper = _mapper;
+            this._usersService = _usersService;
 
         }
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
         {
-            string property = _personRepository.GetProperties().First();
-            if (!string.IsNullOrEmpty(sortOption) && _personRepository.GetProperties().Any(x => x == sortOption)) { property = sortOption; }
-            var people = _personRepository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), 
-                orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
-            var source = _mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
-            _pagingList.CreatePage(source, page, 3);
-            UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, _pagingList);
+            //string property = _personRepository.GetProperties().First();
+            //if (!string.IsNullOrEmpty(sortOption) && _personRepository.GetProperties().Any(x => x == sortOption)) { property = sortOption; }
+            //var people = _personRepository.Get(p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString), 
+            //    orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
+            //var source = _mapper.Map<IEnumerable<Person>, IEnumerable<UsersListingViewModel>>(people);
+            //_pagingList.CreatePage(source, page, 3);
+
+            var pagedList = _usersService.GetPagedList(searchString, page, sortOption);
+            UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, pagedList);
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)
                 : View(model);
