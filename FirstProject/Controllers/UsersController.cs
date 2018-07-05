@@ -1,25 +1,25 @@
-﻿using System.Web.Mvc;
-using MVCWebProject.ViewModels;
-using MVCWebProject.ViewModels.Users;
-using MVCWebProject.Models;
-using System;
-
-namespace MVCWebProject.Controllers
+﻿namespace MVCWebProject.Controllers
 {
+    using System;
+    using System.Web.Mvc;
+    using MVCWebProject.Models;
+    using MVCWebProject.ViewModels;
+    using MVCWebProject.ViewModels.Users;
+
     public class UsersController : Controller
     {
-        private readonly IUsersService _usersService;
+        private readonly IUsersService usersService;
 
-        public UsersController(IUsersService _usersService)
+        public UsersController(IUsersService usersService)
         {
-            this._usersService = _usersService;
+            this.usersService = usersService;
         }
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
         {
             try
             {
-                var pagedList = _usersService.GetPagedList(searchString, page, sortOption);
+                var pagedList = this.usersService.GetPagedList(searchString, page, sortOption);
                 UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, pagedList);
                 return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("Listing", model)
@@ -34,46 +34,49 @@ namespace MVCWebProject.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = _usersService.GetCreateModel();
+            var model = this.usersService.GetCreateModel();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Create(UsersCreatViewModel model, string SelectCountry = null)
+        public ActionResult Create(UsersCreatViewModel model, string selectCountry = null)
         {
-            if (!string.IsNullOrEmpty(SelectCountry))
+            if (!string.IsNullOrEmpty(selectCountry))
             {
                 try
                 {
-                    var ViewModel = _usersService.GetCities(model, SelectCountry);
-                    return PartialView("CreatCities", ViewModel);
+                    var viewModel = this.usersService.GetCities(model, selectCountry);
+                    return PartialView("CreatCities", viewModel);
                 }
                 catch (Exception)
                 {
                     return HttpNotFound();
                 }
             }
+
             if (ModelState.IsValid)
             {
-                _usersService.SaveData(model);
+                this.usersService.SaveData(model);
                 return RedirectToAction("Index");
             }
+
             return Request.IsAjaxRequest()
                 ? (ActionResult)View(model)
                 : HttpNotFound();
         }
 
         [HttpGet]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? personId)
         {
-            if (id == null)
+            if (personId == null)
             {
                 return HttpNotFound();
             }
-            int Id = id.Value;
+
+            int id = personId.Value;
             try
             {
-                var model = _usersService.GetEditModel(Id);
+                var model = this.usersService.GetEditModel(id);
                 return View(model);
             }
             catch (Exception)
@@ -83,13 +86,13 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UsersEditViewModel model, string SelectCountry = null)
+        public ActionResult Edit(UsersEditViewModel model, string selectCountry = null)
         {
-            if (!string.IsNullOrEmpty(SelectCountry))
+            if (!string.IsNullOrEmpty(selectCountry))
             {
                 try
                 {
-                    model = _usersService.GetCities(model, SelectCountry);
+                    model = this.usersService.GetCities(model, selectCountry);
                     return PartialView("EditCities", model);
                 }
                 catch (Exception)
@@ -97,11 +100,12 @@ namespace MVCWebProject.Controllers
                     return View(model);
                 }
             }
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _usersService.SaveData(model, model.Id);
+                    this.usersService.SaveData(model, model.Id);
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -109,20 +113,22 @@ namespace MVCWebProject.Controllers
                     return View(model);
                 }
             }
+
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? personId)
         {
-            if (id == null)
+            if (personId == null)
             {
                 return HttpNotFound();
             }
-            int Id = id.Value;
+
+            int id = personId.Value;
             try
             {
-                var model = _usersService.GetDeleteModel(Id);
+                var model = this.usersService.GetDeleteModel(id);
                 return PartialView(model);
             }
             catch (Exception)
@@ -132,11 +138,11 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmend(int id)
+        public ActionResult DeleteConfirmen(int id)
         {
             try
             {
-                _usersService.DeleteData(id);
+                this.usersService.DeleteData(id);
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -145,16 +151,17 @@ namespace MVCWebProject.Controllers
             }
         }
 
-        public ActionResult Comments(int? id)
+        public ActionResult Comments(int? personId)
         {
-            if (id == null)
+            if (personId == null)
             {
                 return HttpNotFound();
             }
-            int Id = id.Value;
+
+            int id = personId.Value;
             try
             {
-                var model = _usersService.GetCommentsModel(Id);
+                var model = this.usersService.GetCommentsModel(id);
                 return PartialView(model);
             }
             catch (Exception)

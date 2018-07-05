@@ -1,8 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-
-namespace MVCWebProject.ViewModels
+﻿namespace MVCWebProject.ViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
+    public enum Title
+    {
+        Miss,
+        Ms,
+        Mr,
+        Sir,
+        Mrs,
+        Dr,
+        Lady,
+        Lord
+    }
+
     public class UsersCreatViewModel
     {
         [Display(Name = "First Name*")]
@@ -12,7 +24,6 @@ namespace MVCWebProject.ViewModels
 
         [Display(Name = "Last Name*")]
         [Required(ErrorMessage = "You must provide a Last name")]
-        //[StringLength(255, ErrorMessage = "Last name length longer than maximum allow (255)")]
         [RegularExpression(@"[A-Za-z]{1,30}([ .,'-][ ']{0,1}[A-Za-z]{2,30})*$", ErrorMessage = "Not a valid Last name")]
         public string LastName { get; set; }
 
@@ -43,20 +54,9 @@ namespace MVCWebProject.ViewModels
         [DataType(DataType.MultilineText)]
         [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
         public string Comments { get; set; }
+
         public SelectList Countries { get; set; }
+
         public SelectList Cities { get; set; }
-
-    }
-
-    public enum Title
-    {
-        Miss,
-        Ms,
-        Mr,
-        Sir,
-        Mrs,
-        Dr,
-        Lady,
-        Lord
     }
 }

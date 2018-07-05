@@ -1,30 +1,28 @@
-﻿using MVCWebProject.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Linq.Dynamic;
-using System.Web;
-using System.Reflection;
-
-namespace MVCWebProject.DAL.Repositories
+﻿namespace MVCWebProject.DAL.Repositories
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Linq.Dynamic;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using MVCWebProject.DAL.Interfaces;
+
     public class EntitiesRepository<T> : IRepository<T> where T : class
     {
-        private EntitiesContext _dataContext;
-        private readonly DbSet<T> _dbset;
+        private readonly DbSet<T> dbset;
+        private EntitiesContext dataContext;
 
         public EntitiesRepository(EntitiesContext context)
         {
-            this._dataContext = context;
-            this._dbset = context.Set<T>();
+            this.dataContext = context;
+            this.dbset = context.Set<T>();
         }
-
 
         public virtual List<T> Get(Expression<Func<T, bool>> filter = null, Func<T, object> orderBy = null)
         {
-            IQueryable<T> query = _dbset;
+            IQueryable<T> query = this.dbset;
 
             if (filter != null)
             {
@@ -40,64 +38,68 @@ namespace MVCWebProject.DAL.Repositories
                 return query.ToList();
             }
         }
+
         public virtual void Add(T entity)
         {
-            _dbset.Add(entity);
+            this.dbset.Add(entity);
         }
 
         public virtual void Update(T entity)
         {
-            _dbset.Attach(entity);
+            this.dbset.Attach(entity);
 
-            _dataContext.Entry(entity).State = EntityState.Modified;
+            this.dataContext.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(T entity)
         {
-            _dbset.Remove(entity);
+            this.dbset.Remove(entity);
         }
 
         public virtual void Delete(Expression<Func<T, bool>> where)
         {
-            IEnumerable<T> objects = _dbset.Where<T>(where).AsEnumerable();
+            IEnumerable<T> objects = this.dbset.Where<T>(where).AsEnumerable();
             foreach (T obj in objects)
-                _dbset.Remove(obj);
+            {
+                this.dbset.Remove(obj);
+            }
         }
 
         public virtual T GetById(int id)
         {
-            return _dbset.Find(id);
+            return this.dbset.Find(id);
         }
 
         public virtual IEnumerable<T> GetAll()
         {
-            return _dbset.ToList();
+            return this.dbset.ToList();
         }
 
         public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> where)
         {
-            return _dbset.Where(where).ToList();
+            return this.dbset.Where(where).ToList();
         }
 
         public T Get(Expression<Func<T, bool>> where)
         {
-            return _dbset.Where(where).FirstOrDefault<T>();
+            return this.dbset.Where(where).FirstOrDefault<T>();
         }
 
         public int Count(Expression<Func<T, bool>> where = null)
         {
-            return _dbset.Count(where);
+            return this.dbset.Count(where);
         }
 
         public bool IsExist(Expression<Func<T, bool>> where = null)
         {
-            return _dbset.FirstOrDefault(where) != null ? true : false;
+            return this.dbset.FirstOrDefault(where) != null ? true : false;
         }
 
         public void Save()
         {
-            _dataContext.SaveChanges();
+            this.dataContext.SaveChanges();
         }
+
         public virtual List<string> GetProperties()
         {
             List<string> propertiesList = new List<string>();
@@ -106,6 +108,7 @@ namespace MVCWebProject.DAL.Repositories
             {
                 propertiesList.Add(property.Name);
             }
+
             return propertiesList;
         }
     }

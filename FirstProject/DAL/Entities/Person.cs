@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MVCWebProject.DAL
+﻿namespace MVCWebProject.DAL
 {
     public class Person
     {
@@ -22,6 +20,4 @@ namespace MVCWebProject.DAL
 
         public string Comments { get; set; }
     }
-
 }
-

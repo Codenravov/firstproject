@@ -7,55 +7,55 @@
             @Ajax.ActionLink("FirstName", "Index", new
             {
                 sortOption = "Name",
-                searchString = Model.search,
-                page = Model.page
+                searchString = Model.Search,
+                page = Model.Page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             @Ajax.ActionLink("Phone", "Index", new
             {
                 sortOption = "Phone",
-                searchString = Model.search,
-                page = Model.page
+                searchString = Model.Search,
+                page = Model.Page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             @Ajax.ActionLink("Email", "Index", new
             {
                 sortOption = "Email",
-                searchString = Model.search,
-                page = Model.page
+                searchString = Model.Search,
+                page = Model.Page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             @Ajax.ActionLink("Title", "Index", new
             {
                 sortOption = "Title",
-                searchString = Model.search,
-                page = Model.page
+                searchString = Model.Search,
+                page = Model.Page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             @Ajax.ActionLink("Country", "Index", new
             {
                 sortOption = "Country",
-                searchString = Model.search,
-                page = Model.page
+                searchString = Model.Search,
+                page = Model.Page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             @Ajax.ActionLink("City", "Index", new
             {
                 sortOption = "City",
-                searchString = Model.search,
-                page = Model.page
+                searchString = Model.Search,
+                page = Model.Page
             }, new AjaxOptions { UpdateTargetId = "Listing" })
         </th>
         <th>
             <p>Actions</p>
         </th>
     </tr>
-    @foreach (var p in Model.pagingList.Items)
+    @foreach (var p in Model.PagingList.Items)
     {
     <tr>
         <td>
@@ -77,14 +77,14 @@
             @Html.DisplayFor(modelItem => p.City)
         </td>
         <td>
-            @Ajax.ActionLink("Comments", "Comments", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
-            @Html.ActionLink("Edit", "Edit", new { id = p.Id }) |
-            @Ajax.ActionLink("Delete", "Delete", new { id = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
+            @Ajax.ActionLink("Comments", "Comments", new { personId = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
+            @Html.ActionLink("Edit", "Edit", new { personId = p.Id }) |
+            @Ajax.ActionLink("Delete", "Delete", new { personId = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
         </td>
     </tr>
     }
 </table>
 <div class="Paging">
-    @Html.Paging(Model.pagingList.CurrentPage, Model.pagingList.TotalPage, Model.pagingList.HasPreviousPage, Model.pagingList.HasNextPage, "Index", "Users",
-                        new { searchString = Model.search, sortOption = Model.sortOption }, null)
+    @Html.Paging(Model.PagingList.CurrentPage, Model.PagingList.TotalPage, Model.PagingList.HasPreviousPage, Model.PagingList.HasNextPage, "Index", "Users",
+                        new { searchString = Model.Search, sortOption = Model.SortOption }, null)
 </div>

@@ -1,15 +1,11 @@
-﻿using MVCWebProject.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace MVCWebProject
+﻿namespace MVCWebProject
 {
-    public class MvcApplication : System.Web.HttpApplication
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using MVCWebProject.Utilities;
+
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {

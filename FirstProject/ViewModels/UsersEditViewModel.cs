@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-
-namespace MVCWebProject.ViewModels
+﻿namespace MVCWebProject.ViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public class UsersEditViewModel
     {
         public int Id { get; set; }
@@ -44,8 +44,9 @@ namespace MVCWebProject.ViewModels
         [DataType(DataType.MultilineText)]
         [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
         public string Comments { get; set; }
-        public SelectList Countries { get; set; }
-        public SelectList Cities { get; set; }
 
+        public SelectList Countries { get; set; }
+
+        public SelectList Cities { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using AutoMapper;
 using MVCWebProject.DAL;
 using MVCWebProject.ViewModels;
-using System.Collections.Generic;
 
 public class AutoMapperModule : Module
 {
@@ -22,24 +22,4 @@ public class AutoMapperModule : Module
             .As<IMapper>()
             .InstancePerLifetimeScope();
     }
-}
-public class CreatUserProfile : Profile
-{
-    public CreatUserProfile() => CreateMap<UsersCreatViewModel, Person>();
-}
-public class ListingUsersProfile : Profile
-{
-    public ListingUsersProfile() => CreateMap<Person, UsersListingViewModel>();
-}
-public class EditUserProfile : Profile
-{
-    public EditUserProfile() => CreateMap<UsersEditViewModel, Person>().ReverseMap();
-}
-public class DeleteUserProfile : Profile
-{
-    public DeleteUserProfile() => CreateMap<Person, UsersDeleteViewModel>();
-}
-public class CommentsUserProfile : Profile
-{
-    public CommentsUserProfile() => CreateMap<Person, UsersCommentsViewModel>();
 }

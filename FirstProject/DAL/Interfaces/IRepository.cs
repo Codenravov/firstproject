@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-
-namespace MVCWebProject.DAL.Interfaces
+﻿namespace MVCWebProject.DAL.Interfaces
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+
     public interface IRepository<T>
     {
         List<T> Get(Expression<Func<T, bool>> filter = null, Func<T, object> orderBy = null);
@@ -13,6 +11,7 @@ namespace MVCWebProject.DAL.Interfaces
         void Add(T entity);
 
         void Update(T entity);
+
         void Delete(T entity);
 
         void Delete(Expression<Func<T, bool>> where);
@@ -30,6 +29,7 @@ namespace MVCWebProject.DAL.Interfaces
         bool IsExist(Expression<Func<T, bool>> where = null);
 
         void Save();
+
         List<string> GetProperties();
     }
 }
