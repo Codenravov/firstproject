@@ -15,18 +15,8 @@
         Lord
     }
 
-    public class UsersCreatViewModel
+    public class UsersCreatViewModel : UsersViewModel
     {
-        [Display(Name = "First Name*")]
-        [Required(ErrorMessage = "You must provide a First name")]
-        [RegularExpression(@"[A-Za-z]{1,30}([ .,'-][ ']{0,1}[A-Za-z]{2,30})*", ErrorMessage = "Not a valid First name")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "Last Name*")]
-        [Required(ErrorMessage = "You must provide a Last name")]
-        [RegularExpression(@"[A-Za-z]{1,30}([ .,'-][ ']{0,1}[A-Za-z]{2,30})*$", ErrorMessage = "Not a valid Last name")]
-        public string LastName { get; set; }
-
         [Display(Name = "Phone")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]

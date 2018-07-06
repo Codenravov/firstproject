@@ -1,11 +1,7 @@
 ﻿namespace MVCWebProject.ViewModels
 {
-    public class UsersCommentsViewModel
+    public class UsersCommentsViewModel : UsersViewModel
     {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
         public string Comments { get; set; }
 
         public string Name

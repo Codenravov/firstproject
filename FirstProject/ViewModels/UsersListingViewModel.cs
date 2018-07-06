@@ -1,12 +1,8 @@
 ﻿namespace MVCWebProject.ViewModels
 {
-    public class UsersListingViewModel
+    public class UsersListingViewModel : UsersViewModel
     {
         public int Id { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
 
         public string Title { get; set; }
 

@@ -46,7 +46,7 @@
                 try
                 {
                     var viewModel = this.usersService.GetCities(model, selectCountry);
-                    return PartialView("CreatCities", viewModel);
+                    return PartialView("Cities", viewModel);
                 }
                 catch (Exception)
                 {
@@ -93,7 +93,7 @@
                 try
                 {
                     model = this.usersService.GetCities(model, selectCountry);
-                    return PartialView("EditCities", model);
+                    return PartialView("Cities", model);
                 }
                 catch (Exception)
                 {
