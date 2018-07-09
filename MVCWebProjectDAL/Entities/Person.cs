@@ -1,4 +1,4 @@
-﻿namespace MVCWebProject.DAL
+﻿namespace MVCWebProjectDAL.Entities
 {
     public class Person
     {

@@ -1,4 +1,4 @@
-﻿namespace MVCWebProject.DAL.Entities
+﻿namespace MVCWebProjectDAL.Entities
 {
     public class Country
     {

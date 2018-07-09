@@ -1,4 +1,4 @@
-﻿namespace MVCWebProject.DAL.Repositories
+﻿namespace MVCWebProjectDAL.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,8 @@
     using System.Linq.Dynamic;
     using System.Linq.Expressions;
     using System.Reflection;
-    using MVCWebProject.DAL.Interfaces;
+    using MVCWebProjectDAL.Context;
+    using MVCWebProjectDAL.Interfaces;
 
     public class EntitiesRepository<T> : IRepository<T> where T : class
     {

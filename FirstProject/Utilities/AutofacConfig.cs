@@ -3,10 +3,10 @@
     using System.Web.Mvc;
     using Autofac;
     using Autofac.Integration.Mvc;
-    using MVCWebProject.DAL;
-    using MVCWebProject.DAL.Interfaces;
-    using MVCWebProject.DAL.Repositories;
     using MVCWebProject.Models;
+    using MVCWebProjectDAL.Context;
+    using MVCWebProjectDAL.Interfaces;
+    using MVCWebProjectDAL.Repositories;
 
     public class AutofacConfig
     {

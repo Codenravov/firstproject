@@ -4,11 +4,10 @@
     using System.Linq;
     using System.Web.Mvc;
     using AutoMapper;
-    using MVCWebProject.DAL;
-    using MVCWebProject.DAL.Entities;
-    using MVCWebProject.DAL.Interfaces;
     using MVCWebProject.Utilities;
     using MVCWebProject.ViewModels;
+    using MVCWebProjectDAL.Entities;
+    using MVCWebProjectDAL.Interfaces;
 
     public interface IUsersService
     {

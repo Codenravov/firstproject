@@ -1,4 +1,4 @@
-﻿namespace MVCWebProject.DAL.Interfaces
+﻿namespace MVCWebProjectDAL.Interfaces
 {
     using System;
     using System.Collections.Generic;
