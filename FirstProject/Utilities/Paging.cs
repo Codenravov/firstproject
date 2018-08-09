@@ -54,7 +54,7 @@ namespace MVCWebProject.Utilities
             }
 
             CurrentPage = page;
-            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 0;
+            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 1;
             if (CurrentPage > TotalPage)
             {
                 throw new ArgumentOutOfRangeException("CurrentPage", "Value can not be more than total number of pages");
