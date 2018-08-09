@@ -1,21 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace MVCWebProject.ViewModels
 {
-
-    public enum Title
-    {
-        Miss,
-        Ms,
-        Mr,
-        Sir,
-        Mrs,
-        Dr,
-        Lady,
-        Lord
-    }
-
     public class UsersCreatViewModel : UsersViewModel
     {
         [Display(Name = "Phone")]
@@ -30,8 +18,8 @@ namespace MVCWebProject.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "Title*")]
-        [EnumDataType(typeof(Title), ErrorMessage = "You must provide a Title")]
-        public Title Title { get; set; }
+        [Required(ErrorMessage = "You must select a Title")]
+        public string Title { get; set; }
 
         [Display(Name = "Country*")]
         [Required(ErrorMessage = "You must select a Country")]
@@ -46,8 +34,26 @@ namespace MVCWebProject.ViewModels
         [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
         public string Comments { get; set; }
 
+        public SelectList Titles
+        {
+            get {return new SelectList(this.titles, "Text", "Value"); }
+        }
+
         public SelectList Countries { get; set; }
 
         public SelectList Cities { get; set; }
+
+        private List<SelectListItem> titles = new List<SelectListItem>()
+        {
+            new SelectListItem() {Text="Miss", Value="Miss"},
+            new SelectListItem() {Text="Ms", Value="Ms"},
+            new SelectListItem() {Text="Mr", Value="Mr"},
+            new SelectListItem() {Text="Sir", Value="Sir"},
+            new SelectListItem() {Text="Mrs", Value="Mrs"},
+            new SelectListItem() {Text="Dr", Value="Dr"},
+            new SelectListItem() {Text="Lady", Value="Lady"},
+            new SelectListItem() {Text="Lord", Value="Lord"}
+        };
+
     }
 }

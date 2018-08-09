@@ -54,7 +54,6 @@ namespace MVCWebProject.Controllers
                     return HttpNotFound();
                 }
             }
-
             if (ModelState.IsValid)
             {
                 this.usersService.SaveData(model);
