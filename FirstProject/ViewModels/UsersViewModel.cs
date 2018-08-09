@@ -1,6 +1,7 @@
-﻿namespace MVCWebProject.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MVCWebProject.ViewModels
 {
-    using System.ComponentModel.DataAnnotations;
 
     public abstract class UsersViewModel
     {

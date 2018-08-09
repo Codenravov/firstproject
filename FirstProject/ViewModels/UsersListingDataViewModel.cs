@@ -1,6 +1,7 @@
-﻿namespace MVCWebProject.ViewModels.Users
+﻿using MVCWebProject.Utilities;
+
+namespace MVCWebProject.ViewModels.Users
 {
-    using MVCWebProject.Utilities;
 
     public class UsersListingDataViewModel
     {

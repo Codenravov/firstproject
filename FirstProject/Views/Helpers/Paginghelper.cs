@@ -1,7 +1,8 @@
-﻿namespace MVCWebProject.Views.Helpers
+﻿using System.Web.Mvc;
+using System.Web.Routing;
+
+namespace MVCWebProject.Views.Helpers
 {
-    using System.Web.Mvc;
-    using System.Web.Routing;
 
     public static class Paginghelper
     {

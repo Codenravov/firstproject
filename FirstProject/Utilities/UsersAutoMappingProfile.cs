@@ -1,8 +1,9 @@
-﻿namespace MVCWebProject.Utilities
+﻿using AutoMapper;
+using MVCWebProject.ViewModels;
+using MVCWebProjectDAL.Entities;
+
+namespace MVCWebProject.Utilities
 {
-    using AutoMapper;
-    using MVCWebProject.ViewModels;
-    using MVCWebProjectDAL.Entities;
 
     public class UsersAutoMappingProfile : Profile
     {

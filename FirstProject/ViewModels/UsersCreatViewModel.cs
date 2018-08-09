@@ -1,7 +1,8 @@
-﻿namespace MVCWebProject.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
+namespace MVCWebProject.ViewModels
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
 
     public enum Title
     {

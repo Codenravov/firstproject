@@ -1,8 +1,9 @@
-﻿namespace MVCWebProjectDAL.Context
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using MVCWebProjectDAL.Entities;
+
+namespace MVCWebProjectDAL.Context
 {
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using MVCWebProjectDAL.Entities;
 
     public class EntityDbInitializer : DropCreateDatabaseAlways<EntitiesContext>
     {

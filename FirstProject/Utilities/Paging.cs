@@ -1,8 +1,9 @@
-﻿namespace MVCWebProject.Utilities
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace MVCWebProject.Utilities
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public interface IPagingList<T>
     {

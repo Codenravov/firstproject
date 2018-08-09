@@ -1,13 +1,14 @@
-﻿namespace MVCWebProject.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using AutoMapper;
+using MVCWebProject.Utilities;
+using MVCWebProject.ViewModels;
+using MVCWebProjectDAL.Entities;
+using MVCWebProjectDAL.Interfaces;
+
+namespace MVCWebProject.Models
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
-    using AutoMapper;
-    using MVCWebProject.Utilities;
-    using MVCWebProject.ViewModels;
-    using MVCWebProjectDAL.Entities;
-    using MVCWebProjectDAL.Interfaces;
 
     public interface IUsersService
     {

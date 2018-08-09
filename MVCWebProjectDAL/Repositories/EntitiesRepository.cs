@@ -1,14 +1,15 @@
-﻿namespace MVCWebProjectDAL.Repositories
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Dynamic;
+using System.Linq.Expressions;
+using System.Reflection;
+using MVCWebProjectDAL.Context;
+using MVCWebProjectDAL.Interfaces;
+
+namespace MVCWebProjectDAL.Repositories
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Linq.Dynamic;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using MVCWebProjectDAL.Context;
-    using MVCWebProjectDAL.Interfaces;
 
     public class EntitiesRepository<T> : IRepository<T> where T : class
     {

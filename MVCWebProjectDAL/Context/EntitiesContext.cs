@@ -1,8 +1,9 @@
-﻿namespace MVCWebProjectDAL.Context
+﻿using System.Data.Entity;
+using MVCWebProjectDAL.Context;
+using MVCWebProjectDAL.Entities;
+
+namespace MVCWebProjectDAL.Context
 {
-    using System.Data.Entity;
-    using MVCWebProjectDAL.Context;
-    using MVCWebProjectDAL.Entities;
 
     public class EntitiesContext : DbContext
     {

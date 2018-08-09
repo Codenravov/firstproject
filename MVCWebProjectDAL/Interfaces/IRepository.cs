@@ -1,8 +1,9 @@
-﻿namespace MVCWebProjectDAL.Interfaces
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+
+namespace MVCWebProjectDAL.Interfaces
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
 
     public interface IRepository<T>
     {

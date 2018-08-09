@@ -1,10 +1,11 @@
-﻿namespace MVCWebProject.Controllers
+﻿using System;
+using System.Web.Mvc;
+using MVCWebProject.Models;
+using MVCWebProject.ViewModels;
+using MVCWebProject.ViewModels.Users;
+
+namespace MVCWebProject.Controllers
 {
-    using System;
-    using System.Web.Mvc;
-    using MVCWebProject.Models;
-    using MVCWebProject.ViewModels;
-    using MVCWebProject.ViewModels.Users;
 
     public class UsersController : Controller
     {

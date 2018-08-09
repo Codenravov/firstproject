@@ -1,12 +1,13 @@
-﻿namespace MVCWebProject.Utilities
+﻿using System.Web.Mvc;
+using Autofac;
+using Autofac.Integration.Mvc;
+using MVCWebProject.Models;
+using MVCWebProjectDAL.Context;
+using MVCWebProjectDAL.Interfaces;
+using MVCWebProjectDAL.Repositories;
+
+namespace MVCWebProject.Utilities
 {
-    using System.Web.Mvc;
-    using Autofac;
-    using Autofac.Integration.Mvc;
-    using MVCWebProject.Models;
-    using MVCWebProjectDAL.Context;
-    using MVCWebProjectDAL.Interfaces;
-    using MVCWebProjectDAL.Repositories;
 
     public class AutofacConfig
     {
