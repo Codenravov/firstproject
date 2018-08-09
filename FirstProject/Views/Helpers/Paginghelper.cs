@@ -43,7 +43,7 @@ namespace MVCWebProject.Views.Helpers
 
                 if (!hasNextPage)
                 {
-                    previous = currentPage - 3;
+                    previous = currentPage - 2;
                     next = currentPage;
                 }
             }

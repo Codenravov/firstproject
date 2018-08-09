@@ -40,7 +40,7 @@ namespace MVCWebProject.Utilities
         {
             if (page < 1)
             {
-                throw new ArgumentOutOfRangeException("Page", "Value can not be less than 1");
+                throw new ArgumentOutOfRangeException("page", "Value can not be less than 1");
             }
 
             if (source == null)
@@ -53,13 +53,23 @@ namespace MVCWebProject.Utilities
                 throw new ArgumentOutOfRangeException("pageSize", "Value can not be less than 1");
             }
 
+            CurrentPage = page;
+            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 0;
+            if (CurrentPage > TotalPage)
+            {
+                throw new ArgumentOutOfRangeException("CurrentPage", "Value can not be more than total number of pages");
+            }
+
+            HasPreviousPage = page > 1;
+            HasNextPage = page < this.TotalPage;
+            Items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             PagedList<T> pagedList = new PagedList<T>
             {
-                CurrentPage = page,
-                TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 0,
-                HasPreviousPage = page > 1,
-                HasNextPage = page < this.TotalPage,
-                Items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
+                CurrentPage = this.CurrentPage,
+                TotalPage = this.TotalPage,
+                HasPreviousPage = this.HasPreviousPage,
+                HasNextPage = this.HasNextPage,
+                Items = this.Items
             };
             return pagedList;
         }
