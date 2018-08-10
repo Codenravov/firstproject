@@ -133,21 +133,23 @@ namespace MVCWebProject.Controllers
             }
             catch (Exception)
             {
-                return HttpNotFound();
+                throw new ArgumentOutOfRangeException("person id","Get" );
+                /*return HttpNotFound()*/;
             }
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmen(int id)
+        public ActionResult DeleteConfirmen(UsersDeleteViewModel model)
         {
             try
             {
-                this.usersService.DeleteData(id);
+                this.usersService.DeleteData(model.Id);
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                return HttpNotFound();
+                throw new ArgumentOutOfRangeException("id", "Post");
+                //return HttpNotFound();
             }
         }
 

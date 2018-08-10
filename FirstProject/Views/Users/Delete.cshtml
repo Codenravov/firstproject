@@ -12,6 +12,10 @@
         <p>Are you sure you want to delete @Html.DisplayFor(model => model.Name)?</p>
     </div>
     <div class="modal-footer">
-        @using (Html.BeginForm()) {<input type="submit" value=Delete class="btn btn-danger" />}
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(model => model.Id)
+            <input type="submit" name="Delete" value="Delete" class="btn btn-danger" />
+        }
     </div>
 </div>
