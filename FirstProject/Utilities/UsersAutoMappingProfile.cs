@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MVCWebProject.ViewModels;
-using MVCWebProjectDAL.Entities;
+using MVCWebProjectBLL.DTO;
 
 namespace MVCWebProject.Utilities
 {
@@ -9,11 +9,11 @@ namespace MVCWebProject.Utilities
     {
         public UsersAutoMappingProfile()
         {
-            CreateMap<UsersCreatViewModel, Person>();
-            CreateMap<Person, UsersListingViewModel>();
-            CreateMap<UsersEditViewModel, Person>().ReverseMap();
-            CreateMap<Person, UsersDeleteViewModel>();
-            CreateMap<Person, UsersCommentsViewModel>();
+            CreateMap<UsersCreatViewModel, PersonDTO>();
+            CreateMap<PersonDTO, UsersListingViewModel>();
+            CreateMap<UsersEditViewModel, PersonDTO>().ReverseMap();
+            CreateMap<PersonDTO, UsersDeleteViewModel>();
+            CreateMap<PersonDTO, UsersCommentsViewModel>();
         }
     }
 }

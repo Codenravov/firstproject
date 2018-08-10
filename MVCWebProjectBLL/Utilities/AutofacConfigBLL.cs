@@ -1,25 +1,21 @@
 ﻿using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using MVCWebProject.Models;
+using MVCWebProjectBLL.Services;
 using MVCWebProjectDAL.Context;
 using MVCWebProjectDAL.Interfaces;
 using MVCWebProjectDAL.Repositories;
 
-namespace MVCWebProject.Utilities
+namespace MVCWebProjectBLL.Utilities
 {
-
-    public class AutofacConfig
+    public class AutofacConfigBLL
     {
         public static void Register()
         {
             var builder = new ContainerBuilder();
-
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterModule(new AutoMapperModule());
             builder.RegisterGeneric(typeof(EntitiesRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new EntitiesContext());
-            builder.RegisterGeneric(typeof(PagedList<>)).As(typeof(IPagingList<>));
-            builder.RegisterType<UsersService>().As<IUsersService>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using MVCWebProject.Models;
+using AutoMapper;
+using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels;
 using MVCWebProject.ViewModels.Users;
+using MVCWebProjectBLL.DTO;
+using MVCWebProjectBLL.Services;
 
 namespace MVCWebProject.Controllers
 {
@@ -10,18 +14,27 @@ namespace MVCWebProject.Controllers
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly IPagingList<UsersListingViewModel> pagingList;
+        private readonly IMapper mapper;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(
+            IUsersService usersService,
+            IPagingList<UsersListingViewModel> pagingList,
+            IMapper mapper)
         {
             this.usersService = usersService;
+            this.pagingList = pagingList;
+            this.mapper = mapper;
         }
 
         public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
         {
             try
             {
-                var pagedList = this.usersService.GetPagedList(searchString, page, sortOption);
-                UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, pagedList);
+                var source = this.usersService.GetPeople(searchString, sortOption);
+                var people = this.mapper.Map<IEnumerable<PersonDTO>, IEnumerable<UsersListingViewModel>>(source);
+                var list = pagingList.CreatePage(people, page, 3);
+                UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, list);
                 return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("Listing", model)
                     : View(model);
@@ -35,7 +48,11 @@ namespace MVCWebProject.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = this.usersService.GetCreateModel();
+            SelectList countries = usersService.GetCountries();
+            UsersCreatViewModel model = new UsersCreatViewModel
+            {
+                Countries = countries
+            };
             return View(model);
         }
 
@@ -46,8 +63,9 @@ namespace MVCWebProject.Controllers
             {
                 try
                 {
-                    var viewModel = this.usersService.GetCities(model, selectCountry);
-                    return PartialView("Cities", viewModel);
+                    SelectList cities = usersService.GetCities(selectCountry);
+                    model.Cities = cities;
+                    return PartialView("Cities", model);
                 }
                 catch (Exception)
                 {
@@ -56,7 +74,8 @@ namespace MVCWebProject.Controllers
             }
             if (ModelState.IsValid)
             {
-                this.usersService.SaveData(model);
+                var person = this.mapper.Map<UsersCreatViewModel, PersonDTO>(model);
+                this.usersService.SavePerson(person);
                 return RedirectToAction("Index");
             }
 
@@ -76,7 +95,12 @@ namespace MVCWebProject.Controllers
             int id = personId.Value;
             try
             {
-                var model = this.usersService.GetEditModel(id);
+                var person = this.usersService.GetPerson(id);
+                SelectList counties = this.usersService.GetCountries();
+                SelectList cities = this.usersService.GetCities(person.Country);
+                var model = this.mapper.Map<PersonDTO, UsersEditViewModel>(person);
+                model.Countries = counties;
+                model.Cities = cities;
                 return View(model);
             }
             catch (Exception)
@@ -92,7 +116,8 @@ namespace MVCWebProject.Controllers
             {
                 try
                 {
-                    model = this.usersService.GetCities(model, selectCountry);
+                    SelectList cities = this.usersService.GetCities(selectCountry);
+                    model.Cities = cities;
                     return PartialView("Cities", model);
                 }
                 catch (Exception)
@@ -105,7 +130,8 @@ namespace MVCWebProject.Controllers
             {
                 try
                 {
-                    this.usersService.SaveData(model, model.Id);
+                    var person = this.mapper.Map<UsersEditViewModel, PersonDTO>(model);
+                    this.usersService.UpdatePerson(person);
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -128,13 +154,13 @@ namespace MVCWebProject.Controllers
             int id = personId.Value;
             try
             {
-                var model = this.usersService.GetDeleteModel(id);
+                var person = this.usersService.GetPerson(id);
+                var model = this.mapper.Map<PersonDTO, UsersEditViewModel>(person);
                 return PartialView(model);
             }
             catch (Exception)
             {
-                throw new ArgumentOutOfRangeException("person id","Get" );
-                /*return HttpNotFound()*/;
+                return HttpNotFound();
             }
         }
 
@@ -143,13 +169,12 @@ namespace MVCWebProject.Controllers
         {
             try
             {
-                this.usersService.DeleteData(model.Id);
+                this.usersService.DeletePerson(model.Id);
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                throw new ArgumentOutOfRangeException("id", "Post");
-                //return HttpNotFound();
+                return HttpNotFound();
             }
         }
 
@@ -163,7 +188,8 @@ namespace MVCWebProject.Controllers
             int id = personId.Value;
             try
             {
-                var model = this.usersService.GetCommentsModel(id);
+                var person = this.usersService.GetPerson(id);
+                var model = this.mapper.Map<PersonDTO, UsersCommentsViewModel>(person);
                 return PartialView(model);
             }
             catch (Exception)
