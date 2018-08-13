@@ -1,16 +1,8 @@
-﻿using MVCWebProjectDAL.Interfaces;
-using MVCWebProjectDAL.Entities;
+﻿using MVCWebProjectDAL.Entities;
+using MVCWebProjectDAL.Interfaces;
 
-namespace MVCWebProjectBLL.Services
+namespace MVCWebProjectDAL.Repositories
 {
-    public interface IUnitOfWork
-    {
-        IRepository<Person> Peoples { get; }
-
-        IRepository<Country> Countries { get; }
-
-        IRepository<City> Cities { get; }
-    }
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IRepository<Person> peoples;

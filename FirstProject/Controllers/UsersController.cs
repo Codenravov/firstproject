@@ -155,7 +155,7 @@ namespace MVCWebProject.Controllers
             try
             {
                 var person = this.usersService.GetPerson(id);
-                var model = this.mapper.Map<PersonDTO, UsersEditViewModel>(person);
+                var model = this.mapper.Map<PersonDTO, UsersDeleteViewModel>(person);
                 return PartialView(model);
             }
             catch (Exception)

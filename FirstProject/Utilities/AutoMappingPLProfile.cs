@@ -5,9 +5,9 @@ using MVCWebProjectBLL.DTO;
 namespace MVCWebProject.Utilities
 {
 
-    public class UsersAutoMappingProfile : Profile
+    public class AutoMappingPLProfile : Profile
     {
-        public UsersAutoMappingProfile()
+        public AutoMappingPLProfile()
         {
             CreateMap<UsersCreatViewModel, PersonDTO>();
             CreateMap<PersonDTO, UsersListingViewModel>();

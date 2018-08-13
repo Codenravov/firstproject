@@ -5,9 +5,9 @@ using MVCWebProjectDAL.Entities;
 namespace MVCWebProjectBLL.Utilities
 {
 
-    public class AutoMappingProfileBLL : Profile
+    public class AutoMappingBLLProfile : Profile
     {
-        public AutoMappingProfileBLL()
+        public AutoMappingBLLProfile()
         {
             CreateMap<PersonDTO, Person>().ReverseMap();
         }

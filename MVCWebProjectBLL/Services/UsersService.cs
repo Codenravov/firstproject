@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MVCWebProjectBLL.DTO;
-using MVCWebProjectBLL.Utilities;
 using MVCWebProjectDAL.Entities;
+using MVCWebProjectDAL.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;

@@ -202,10 +202,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\AutofacConfigPL.cs" />
-    <Compile Include="Utilities\AutoMappingConfig.cs" />
+    <Compile Include="Utilities\AutofacConfig.cs" />
+    <Compile Include="Utilities\AutoMapperModule.cs" />
     <Compile Include="Utilities\PagingList.cs" />
-    <Compile Include="Utilities\UsersAutoMappingProfile.cs" />
+    <Compile Include="Utilities\AutoFacPLModule.cs" />
+    <Compile Include="Utilities\AutoMappingPLProfile.cs" />
     <Compile Include="ViewModels\UsersCommentsViewModel.cs" />
     <Compile Include="ViewModels\UsersCreatViewModel.cs" />
     <Compile Include="ViewModels\UsersDeleteViewModel.cs" />
