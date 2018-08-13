@@ -14,7 +14,7 @@ namespace MVCWebProjectDAL.Repositories
     public class EntitiesRepository<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> dbset;
-        private EntitiesContext dataContext;
+        private readonly EntitiesContext dataContext;
 
         public EntitiesRepository(EntitiesContext context)
         {

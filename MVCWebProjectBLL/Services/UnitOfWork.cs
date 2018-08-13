@@ -13,10 +13,42 @@ namespace MVCWebProjectBLL.Services
     }
     public class UnitOfWork : IUnitOfWork
     {
-        public IRepository<Person> Peoples { get; }
+        private readonly IRepository<Person> peoples;
+        private readonly IRepository<Country> countries;
+        private readonly IRepository<City> cities;
 
-        public IRepository<Country> Countries { get; }
+        public UnitOfWork(
+            IRepository<Person> peoples,
+            IRepository<Country> countries,
+            IRepository<City> cities)
+        {
+            this.peoples = peoples;
+            this.countries = countries;
+            this.cities = cities;
+        }
 
-        public IRepository<City> Cities { get; }
+        public IRepository<Person> Peoples
+        {
+            get
+            {
+                return peoples;
+            }
+        }
+
+        public IRepository<Country> Countries
+        {
+            get
+            {
+                return countries;
+            }
+        }
+
+        public IRepository<City> Cities
+        {
+            get
+            {
+                return cities;
+            }
+        }
     }
 }
