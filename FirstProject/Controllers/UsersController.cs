@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
 using MVCWebProject.Infrastructure;
@@ -66,20 +65,12 @@ namespace MVCWebProject.Controllers
                 this.usersService.SavePerson(person);
                 return RedirectToAction("Index");
             }
-
-            return Request.IsAjaxRequest()
-                ? (ActionResult)View(model)
-                : HttpNotFound();
+            return HttpNotFound();
         }
 
         [HttpGet]
         public ActionResult Edit(int? personId)
         {
-            if (personId == null)
-            {
-                return HttpNotFound();
-            }
-
             int id = personId.Value;
             var person = this.usersService.GetPerson(id);
             SelectList counties = this.usersService.GetCountries();
@@ -91,18 +82,18 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UsersDeleteViewModel model, string selectCountry = null)
+        public ActionResult Edit(UsersEditViewModel model, string selectCountry = null)
         {
             if (!string.IsNullOrEmpty(selectCountry))
             {
                 SelectList cities = this.usersService.GetCities(selectCountry);
-                //model.Cities = cities;
+                model.Cities = cities;
                 return PartialView("Cities", model);
             }
 
             if (ModelState.IsValid)
             {
-                var person = this.mapper.Map<UsersDeleteViewModel, PersonDTO>(model);
+                var person = this.mapper.Map<UsersEditViewModel, PersonDTO>(model);
                 this.usersService.UpdatePerson(person);
                 return RedirectToAction("Index");
             }
