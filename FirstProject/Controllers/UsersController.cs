@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using AutoMapper;
 using MVCWebProject.Infrastructure;
+using MVCWebProject.Resources.Controllers;
 using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels;
 using MVCWebProject.ViewModels.Users;
@@ -27,12 +28,11 @@ namespace MVCWebProject.Controllers
             this.pagingList = pagingList;
             this.mapper = mapper;
         }
-
-        public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
+        public ActionResult Index(string searchString = "", int page = UsersControllerConst.StartPage, string sortOption = null)
         {
             var source = this.usersService.GetPeople(searchString, sortOption);
             var people = this.mapper.Map<IEnumerable<PersonDTO>, IEnumerable<UsersListingViewModel>>(source);
-            var list = pagingList.CreatePage(people, page, 3);
+            var list = pagingList.CreatePage(people, page, UsersControllerConst.PageSize);
             UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, list);
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)

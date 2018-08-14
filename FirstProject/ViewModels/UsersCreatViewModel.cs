@@ -6,32 +6,48 @@ namespace MVCWebProject.ViewModels
 {
     public class UsersCreatViewModel : UsersViewModel
     {
-        [Display(Name = "Phone")]
+        [Display(Name = "Phone",
+            ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+            ErrorMessageResourceName = "RegularErrPhone",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Phone { get; set; }
 
-        [Display(Name = "Email*")]
+        [Display(Name = "Email",
+            ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [DataType(DataType.EmailAddress)]
-        [Required(ErrorMessage = "You must provide a Email")]
-        [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessage = "Email is not valid")]
+        [Required(ErrorMessageResourceName = "RequiredErrEmail",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$",
+            ErrorMessageResourceName = "RegularErrEmail",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Email { get; set; }
 
-        [Display(Name = "Title*")]
-        [Required(ErrorMessage = "You must select a Title")]
+        [Display(Name = "Title",
+            ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [Required(ErrorMessageResourceName = "RequiredErrTitle",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Title { get; set; }
 
-        [Display(Name = "Country*")]
-        [Required(ErrorMessage = "You must select a Country")]
+        [Display(Name = "Country",
+            ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [Required(ErrorMessageResourceName = "RequiredErrCountry",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Country { get; set; }
 
-        [Display(Name = "City*")]
-        [Required(ErrorMessage = "You must select a City")]
+        [Display(Name = "City",
+            ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [Required(ErrorMessageResourceName = "RequiredErrCity",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string City { get; set; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "Comments",
+            ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [DataType(DataType.MultilineText)]
-        [StringLength(256, ErrorMessage = "Comments length longer than maximum allow (255)")]
+        [StringLength(256,
+            ErrorMessageResourceName = "LengthErrComments",
+            ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Comments { get; set; }
 
         public SelectList Titles
@@ -43,7 +59,7 @@ namespace MVCWebProject.ViewModels
 
         public SelectList Cities { get; set; }
 
-        private List<SelectListItem> titles = new List<SelectListItem>()
+        private readonly List<SelectListItem> titles = new List<SelectListItem>()
         {
             new SelectListItem() {Text="Miss", Value="Miss"},
             new SelectListItem() {Text="Ms", Value="Ms"},

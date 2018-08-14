@@ -203,6 +203,17 @@
     </Compile>
     <Compile Include="Infrastructure\ControllerExceptionsAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Controllers\UsersControllerConst.cs" />
+    <Compile Include="Resources\ViewModels\UsersCreatViewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersCreatViewModel.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ViewModels\UsersViewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersViewModel.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\AutofacConfig.cs" />
     <Compile Include="Utilities\AutoMapperModule.cs" />
     <Compile Include="Utilities\PagingList.cs" />
@@ -252,6 +263,16 @@
       <Project>{694d4f1e-a7a1-4b73-b22a-5a03f17dbba7}</Project>
       <Name>MVCWebProjectBLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ViewModels\UsersCreatViewModel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersCreatViewModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ViewModels\UsersViewModel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersViewModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
