@@ -91,18 +91,18 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UsersEditViewModel model, string selectCountry = null)
+        public ActionResult Edit(UsersDeleteViewModel model, string selectCountry = null)
         {
             if (!string.IsNullOrEmpty(selectCountry))
             {
                 SelectList cities = this.usersService.GetCities(selectCountry);
-                model.Cities = cities;
+                //model.Cities = cities;
                 return PartialView("Cities", model);
             }
 
             if (ModelState.IsValid)
             {
-                var person = this.mapper.Map<UsersEditViewModel, PersonDTO>(model);
+                var person = this.mapper.Map<UsersDeleteViewModel, PersonDTO>(model);
                 this.usersService.UpdatePerson(person);
                 return RedirectToAction("Index");
             }

@@ -236,6 +236,7 @@
     <Content Include="Views\Users\Listing.cshtml" />
     <Content Include="Views\Users\Comments.cshtml" />
     <Content Include="Views\Users\Cities.cshtml" />
+    <Content Include="Views\Exceptions\Exception.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

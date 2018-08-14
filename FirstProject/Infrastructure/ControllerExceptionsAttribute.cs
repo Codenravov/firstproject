@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace MVCWebProject.Infrastructure
 {
@@ -10,13 +6,11 @@ namespace MVCWebProject.Infrastructure
     {
         public void OnException(ExceptionContext context)
         {
-            string actionName = context.RouteData.Values["action"].ToString();
-            string exceptionStack = context.Exception.StackTrace;
-            string exceptionMessage = context.Exception.Message;
-            context.Result = new ContentResult
-            {
-                Content = $"В методе {actionName} возникло исключение: \n {exceptionMessage} \n {exceptionStack}"
-            };
+            var result = new ViewResult { ViewName = "~/Views/Exceptions/Exception.cshtml" };
+            result.ViewData.Add("Action", "Action:" + " " + context.RouteData.Values["action"]);
+            result.ViewData.Add("Exception", "Exception:" + " " + context.Exception);
+            result.ViewData.Add("Message", "Exception message:" + " " + context.Exception.Message);
+            context.Result = result;
             context.ExceptionHandled = true;
         }
     }
