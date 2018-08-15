@@ -1,7 +1,7 @@
 ﻿@using MVCWebProject.Views.Helpers
 @using MVCWebProject.ViewModels.Users
 @model UsersListingDataViewModel
-<table class="table">
+<table>
     <tr>
         <th>
             @Ajax.ActionLink("First Name", "Index", new
@@ -84,7 +84,7 @@
     </tr>
     }
 </table>
-<div class="Paging">
+<div>
     @Html.Paging(Model.PagingList.CurrentPage, Model.PagingList.TotalPage, Model.PagingList.HasPreviousPage, Model.PagingList.HasNextPage, "Index", "Users",
                         new { searchString = Model.Search, sortOption = Model.SortOption }, null)
 </div>
