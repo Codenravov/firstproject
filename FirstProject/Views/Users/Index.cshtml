@@ -1,20 +1,41 @@
 ﻿@using MVCWebProject.ViewModels
 @using MVCWebProject.ViewModels.Users
 @model UsersListingDataViewModel
-<h2>Users</h2>
-<a href="@Url.Action("Create")">Create</a>
-@using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
-{
-        <input type="submit" value="Go"/>
-        <input type="text" name="searchString" class="form-control" placeholder="Search for..." />
-}
-<p></p>
-<div id="Listing">
-    @Html.Partial("Listing", Model)
+<div id="page-header">
+    <div class="inner">Текст</div>
 </div>
-<div id="Modal">
-    <div id="Dialog"></div>
+<div id="page-wrap">
+    <div class="row">
+        <div class="col-1-3">
+            <a class="button" href="@Url.Action("Create")">Create</a>
+        </div>
+        <div class="col-1-3 right">
+            <div class="search right">
+                @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
+                {
+                    <input type="search" name="searchString" placeholder="Search for..." />
+                    <input type="submit" value="Go" />
+                }
+            </div>
+        </div>
+    </div>
+    <div id="Listing">
+        @Html.Partial("Listing", Model)
+    </div>
+    <div class="module">
+        <div id="Modal">
+            <div id="Dialog">
+
+            </div>
+        </div>
+    </div>
+        </div>
+<div id="page-footer">
+    <div class="inner">
+        dssdsdsdssd
+    </div>
 </div>
+
 @section scripts{
     <script type="text/javascript">
         function OnSuccess() {
