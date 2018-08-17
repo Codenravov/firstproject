@@ -100,7 +100,6 @@ namespace MVCWebProject.Controllers
 
             return View(model);
         }
-        /// TODO: Fix without int fall
         [HttpGet]
         public ActionResult Delete(int? personId)
         {

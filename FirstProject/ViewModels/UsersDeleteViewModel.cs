@@ -6,7 +6,7 @@
 
         public string Name
         {
-            get { return this.FirstName + " " + this.LastName; }
+            get { return $"{this.FirstName} {this.LastName}"; }
         }
     }
 }

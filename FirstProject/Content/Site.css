@@ -189,26 +189,26 @@ a.button-close:hover,
 
 .search {
     display: inline-block;
-    width: 300px; /* Ширина поля с кнопкой */
-    border: 2px solid; /* Параметры рамки */
-    min-height: 41px; /* Минимальная высота */
+    width: 300px;
+    border: 2px solid;
+    min-height: 41px;
 }
 
 .search input[type="search"] {
     padding: 10px;
-    border: none; /* Убираем рамку */
-    outline: none; /* Убираем свечение в Chrome и Safari */
-    width: 244px; /* Ширина поля */
-    vertical-align: middle; /* Выравнивание по середине */
+    border: none;
+    outline: none;
+    width: 244px;
+    vertical-align: middle;
 }
 
 .search input[type="submit"] {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-weight: 600;
     font-size: unset;
-    width: 50px; /* Ширина кнопки */
-    height: 41px; /* Высота кнопки */
-    border: none; /* Убираем рамку */
+    width: 50px;
+    height: 41px;
+    border: none;
     background: white;
     transition: background-color .3s;
 }
@@ -236,7 +236,8 @@ a.button-close:hover,
 }
 
 .pagination ul li:not(.active) a:hover {
-    background-color: #ddd;}
+    background-color: #ddd;
+}
 
 .modal-dialog {
     position: fixed;
@@ -245,6 +246,7 @@ a.button-close:hover,
     bottom: 0;
     left: 0;
     background: #000000;
+    background: rgba(0, 0, 0, 0.8);
     z-index: 99999;
     transition: opacity 400ms ease-in;
 }
