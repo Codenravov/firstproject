@@ -81,9 +81,9 @@
                             @Html.DisplayFor(modelItem => p.City)
                         </td>
                         <td>
-                            @Ajax.ActionLink("Comments", "Comments", new { personId = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" }) |
-                            @Html.ActionLink("Edit", "Edit", new { personId = p.Id }) |
-                            @Ajax.ActionLink("Delete", "Delete", new { personId = p.Id }, new AjaxOptions { OnSuccess = "OnSuccess", UpdateTargetId = "Dialog" })
+                            @Ajax.ActionLink("Comments", "Comments", new { personId = p.Id }, new AjaxOptions { UpdateTargetId = "modal" }) |
+                            @Html.ActionLink("Edit", "Edit", new { personId = p.Id}) |
+                            @Ajax.ActionLink("Delete", "Delete", new { personId = p.Id }, new AjaxOptions { UpdateTargetId = "modal" })
                         </td>
                     </tr>
                 }

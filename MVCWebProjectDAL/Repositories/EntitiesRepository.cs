@@ -33,7 +33,7 @@ namespace MVCWebProjectDAL.Repositories
 
             if (orderBy != null)
             {
-                return query.OrderBy(orderBy).ToList();
+                 return query.OrderBy(orderBy).ToList();
             }
             else
             {

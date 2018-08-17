@@ -1,8 +1,21 @@
 ﻿@using MVCWebProject.ViewModels
 @model UsersCommentsViewModel
-
-<h4>@Html.DisplayFor(model => model.Name)</h4>
-<button>
-    <span>&times;</span>
-</button>
-<p>@Html.DisplayFor(model => model.Comments)</p>
+<div class="modal-dialog">
+    <div class="modal-wrap">
+        <div class="row">
+            <div class="col-2-3">
+                <div class="head">
+                    <h3>@Html.DisplayFor(model => model.Name)'s comments</h3>
+                </div>
+            </div>
+            <div class="col-1-3">
+                <a href=" " title="Close" class="button-close right">X</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1-1">
+                <p>@Html.DisplayFor(model => model.Comments)</p>
+            </div>
+        </div>
+    </div>
+</div>

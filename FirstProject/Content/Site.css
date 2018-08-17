@@ -3,6 +3,7 @@
     box-sizing: border-box;
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 14px;
+    background: #ffffff;
 }
 
 body {
@@ -21,7 +22,9 @@ body {
 #page-header {
     top: 0;
     height: 100px;
+    padding: 0 0 0 30px;
 }
+
 
 #page-footer {
     bottom: 0;
@@ -30,17 +33,22 @@ body {
 
 #page-wrap {
     max-width: 1140px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 100px;
-    margin-bottom: 75px;
+    margin: 120px auto 75px auto;
+}
+
+.row {
+    width: auto;
+    margin: auto;
+}
+
+.row::after {
+    display: table;
+    clear: both;
+    content: '';
 }
 
 [class*='col-'] {
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px;
     float: left;
 }
 
@@ -87,15 +95,9 @@ body {
     float: right;
 }
 
-.row {
-    width: auto;
-    margin: auto;
-}
-
-.row::after {
-    display: table;
-    clear: both;
-    content: '';
+.listing-wrap {
+    width: 100%;
+    padding: 0;
 }
 
 table {
@@ -115,12 +117,12 @@ th {
     font-weight: normal;
     color: black;
     border-bottom: 2px solid;
-    padding: 30px 0px 20px 10px;
+    padding: 30px 0 20px 10px;
 }
 
 td {
     color: #669;
-    padding: 9px 10px;
+    padding: 10px 10px;
     transition: .3s linear;
 }
 
@@ -136,13 +138,54 @@ a.button {
     transition: background-color .3s;
 }
 
-a.button:hover {
+.button input[type=submit] {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-weight: 600;
+    font-size: unset;
+    width: 100px; /* Ширина кнопки */
+    height: 41px; /* Высота кнопки */
+    border: 2px solid;
+    background: white;
+    transition: background-color .3s;
+}
+
+a.button-close {
+    display: inline-block;
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    user-select: none;
+    padding: .5em 1em;
+    outline: none;
+    border: 2px solid;
+    transition: background-color .3s;
+}
+
+.button-delete {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-weight: 600;
+    font-size: unset;
+    width: 100px; /* Ширина кнопки */
+    height: 41px; /* Высота кнопки */
+    border: 2px solid;
+    background: #FF6F6F;
+    transition: background-color .3s;
+}
+
+a.button:hover,
+a.button-close:hover,
+.search input[type="submit"]:hover,
+.button input[type=submit]:hover{
     background-color: #ddd;
 }
 
-a.button:active {
-    background: white;
+.button-delete:hover {
+    background-color: #E14D43;
 }
+
+/*a.button:active {
+    background: white;
+}*/
 
 .search {
     display: inline-block;
@@ -170,10 +213,6 @@ a.button:active {
     transition: background-color .3s;
 }
 
-.search input[type="submit"]:hover {
-    background-color: #ddd;
-}
-
 .pagination ul {
     display: inline-block;
     padding: 0;
@@ -192,9 +231,74 @@ a.button:active {
     transition: background-color .3s;
 }
 
-.pagination ul li.active a {
+.pagination ul .active a {
     border-bottom: 2px solid;
 }
 
 .pagination ul li:not(.active) a:hover {
     background-color: #ddd;}
+
+.modal-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000000;
+    z-index: 99999;
+    transition: opacity 400ms ease-in;
+}
+
+.modal-dialog .modal-wrap{
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 10px;
+    background: #ffffff;
+}
+
+.modal-wrap .head {
+    border-bottom: 2px solid;
+}
+
+.form-wrap {
+    width: 1000px;
+    padding: 0;
+}
+
+.form-wrap label, .field-validation-error {
+    padding: 10px;
+    display: inline-block;
+}
+
+.form-wrap .field-validation-error {
+    color: #E14D43;
+}
+
+
+.form-wrap .single-line, select, textarea {
+    padding: 10px;
+    resize: vertical;
+    border: none;
+    background: #ddd;
+    border-bottom: 2px solid black;
+}
+
+.form-wrap .single-line, textarea {
+    width: calc(100% - 10px * 2);
+}
+
+.form-wrap select{
+    width: 100%;
+}
+
+
+/*display: inline-block;
+color: black;
+font-weight: 600;
+text-decoration: none;
+user-select: none;
+padding: .5em 2em;
+outline: none;
+border: 2px solid;
+transition: background-color .3s;*/

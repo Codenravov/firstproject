@@ -1,36 +1,105 @@
 ﻿@using MVCWebProject.ViewModels
 @model UsersCreatViewModel
-<h2>Create</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-<hr />
-@Html.LabelFor(model => model.FirstName)
-    @Html.EditorFor(model => model.FirstName)
-    @Html.ValidationMessageFor(model => model.FirstName, "")
-@Html.LabelFor(model => model.LastName)
-    @Html.EditorFor(model => model.LastName)
-    @Html.ValidationMessageFor(model => model.LastName)
-@Html.LabelFor(model => model.Phone)
-    @Html.EditorFor(model => model.Phone)
-    @Html.ValidationMessageFor(model => model.Phone, "")
-@Html.LabelFor(model => model.Email)
-    @Html.EditorFor(model => model.Email)
-    @Html.ValidationMessageFor(model => model.Email, "")
-@Html.LabelFor(model => model.Title)
-    @Html.DropDownListFor(model => model.Title, Model.Titles as SelectList, "Select Title")
-    @Html.ValidationMessageFor(model => model.Title, "")
-@Html.LabelFor(model => model.Country)
-    @Html.DropDownListFor(model => model.Country, Model.Countries as SelectList, "Select Country", new { id = "ddlCountries" })
-    @Html.ValidationMessageFor(model => model.Country, "")
-<div class="form-group" id="divCities"></div>
-@Html.LabelFor(model => model.Comments)
-    @Html.TextAreaFor(model => model.Comments, new { @rows = 5 })
-    @Html.ValidationMessageFor(model => model.Comments, "")
-    <input type="submit" value="Create" />
-}
+<div id="page-header">
+    <h1>Create</h1>
+</div>
+<div id="page-wrap">
+    <div class="form-wrap">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-1-5 text-head">
+                    @Html.LabelFor(model => model.FirstName)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.FirstName)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.FirstName, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.LastName)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.LastName)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Phone)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.Phone)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Phone, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.Email)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Email, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Title)
+                </div>
+                <div class="col-2-5">
+                    @Html.DropDownListFor(model => model.Title, Model.Titles as SelectList, "Select Title")
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Title, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Country)
+                </div>
+                <div class="col-2-5">
+                    @Html.DropDownListFor(model => model.Country, Model.Countries as SelectList, "Select Country", new { id = "ddlCountries" })
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Country, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group" id="divCities"></div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Comments)
+                </div>
+                <div class="col-2-5">
+                    @Html.TextAreaFor(model => model.Comments, new { @rows = 5 })
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Comments, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3-5">
+                    <div class="button right">
+                        <input type="submit" value="Create" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div id="page-footer">
+</div>
 
 @section scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
