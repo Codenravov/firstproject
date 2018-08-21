@@ -4,11 +4,10 @@ namespace MVCWebProjectDAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<Person> Peoples { get; }
+        ICityRepository Cities { get; }
 
-        IRepository<Country> Countries { get; }
+        ICountryRepository Countries { get; }
 
-        IRepository<City> Cities { get; }
-
+        IPersonRepository People { get; }
     }
 }

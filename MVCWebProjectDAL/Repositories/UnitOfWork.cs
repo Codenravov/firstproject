@@ -5,29 +5,29 @@ namespace MVCWebProjectDAL.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IRepository<Person> peoples;
-        private readonly IRepository<Country> countries;
-        private readonly IRepository<City> cities;
+        private readonly ICityRepository cities;
+        private readonly ICountryRepository countries;
+        private readonly IPersonRepository people;
 
         public UnitOfWork(
-            IRepository<Person> peoples,
-            IRepository<Country> countries,
-            IRepository<City> cities)
+            ICityRepository cities,
+            ICountryRepository countries,
+            IPersonRepository people)
         {
-            this.peoples = peoples;
-            this.countries = countries;
             this.cities = cities;
+            this.countries = countries;
+            this.people = people;
         }
 
-        public IRepository<Person> Peoples
+        public IPersonRepository People
         {
             get
             {
-                return peoples;
+                return people;
             }
         }
 
-        public IRepository<Country> Countries
+        public ICountryRepository Countries
         {
             get
             {
@@ -35,7 +35,7 @@ namespace MVCWebProjectDAL.Repositories
             }
         }
 
-        public IRepository<City> Cities
+        public ICityRepository Cities
         {
             get
             {

@@ -9,7 +9,9 @@ namespace MVCWebProjectDAL.Utilities
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(EntitiesRepository<>)).As(typeof(IRepository<>)).WithParameter("context", new EntitiesContext());
+            builder.RegisterType<CityRepository>().As<ICityRepository>().WithParameter("context", new EntitiesContext());
+            builder.RegisterType<CountryRepository>().As<ICountryRepository>().WithParameter("context", new EntitiesContext());
+            builder.RegisterType<PersonRepository>().As<IPersonRepository>().WithParameter("context", new EntitiesContext());
         }
     }
 }

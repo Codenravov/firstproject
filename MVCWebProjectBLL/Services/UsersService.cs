@@ -41,13 +41,13 @@ namespace MVCWebProjectBLL.Services
 
         public IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption)
         {
-            string property = this.dataBase.Peoples.GetProperties().First();
-            if (!string.IsNullOrEmpty(sortOption) && this.dataBase.Peoples.GetProperties().Any(x => x == sortOption))
+            string property = this.dataBase.People.GetPersonProperties().First();
+            if (!string.IsNullOrEmpty(sortOption) && this.dataBase.People.GetPersonProperties().Any(x => x == sortOption))
             {
                 property = sortOption;
             }
 
-            var source = this.dataBase.Peoples.Get(
+            var source = this.dataBase.People.GetPeople(
                 p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString),
                 orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
             var people = this.mapper.Map<IEnumerable<Person>, IEnumerable<PersonDTO>>(source);
@@ -56,41 +56,39 @@ namespace MVCWebProjectBLL.Services
 
         public PersonDTO GetPerson(int id)
         {
-            Person person = this.dataBase.Peoples.GetById(id);
+            Person person = this.dataBase.People.GetPersonById(id);
             var model = this.mapper.Map<Person, PersonDTO>(person);
             return model;
         }
 
+
         public SelectList GetCountries()
         {
-            SelectList countries = new SelectList(this.dataBase.Countries.Get(orderBy: x => x.CountryName), "CountryName", "CountryName");
+            SelectList countries = new SelectList(this.dataBase.Countries.GetCountries(orderBy: x => x.CountryName), "CountryName", "CountryName");
             return countries;
         }
 
         public SelectList GetCities(string country)
         {
-            SelectList cities = new SelectList(this.dataBase.Cities.Get(x => x.CountryName.Contains(country), orderBy: x => x.CityName), "CityName", "CityName");
+            SelectList cities = new SelectList(this.dataBase.Cities.GetCities(x => x.CountryName.Contains(country), orderBy: x => x.CityName), "CityName", "CityName");
             return cities;
         }
 
         public void SavePerson(PersonDTO model)
         {
             var person = this.mapper.Map<PersonDTO, Person>(model);
-            this.dataBase.Peoples.Add(person);
-            this.dataBase.Peoples.Save();
+            this.dataBase.People.AddOrUpdatePerson(person);
         }
 
         public void UpdatePerson(PersonDTO model)
         {
-            var person = this.mapper.Map<PersonDTO, Person>(model, this.dataBase.Peoples.GetById(model.Id));
-            this.dataBase.Peoples.Update(person);
-            this.dataBase.Peoples.Save();
+            var person = this.mapper.Map<PersonDTO, Person>(model, this.dataBase.People.GetPersonById(model.Id));
+            this.dataBase.People.AddOrUpdatePerson(person);
         }
 
         public void DeletePerson(int id)
         {
-            this.dataBase.Peoples.Delete(p => p.Id == id);
-            this.dataBase.Peoples.Save();
+            this.dataBase.People.DeletePersonById(id);
         }
     }
 }
