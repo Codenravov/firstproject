@@ -2,10 +2,8 @@
 using Autofac;
 using Autofac.Integration.Mvc;
 
-
 namespace MVCWebProject.Utilities
 {
-
     public class AutofacConfig
     {
         public static void Register()

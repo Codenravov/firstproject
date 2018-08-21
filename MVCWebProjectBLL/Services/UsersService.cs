@@ -1,10 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using AutoMapper;
 using MVCWebProjectBLL.DTO;
 using MVCWebProjectDAL.Entities;
 using MVCWebProjectDAL.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 
 namespace MVCWebProjectBLL.Services
 {
@@ -23,7 +23,6 @@ namespace MVCWebProjectBLL.Services
         void UpdatePerson(PersonDTO model);
 
         void DeletePerson(int id);
-
     }
 
     public class UsersService : IUsersService
@@ -60,7 +59,6 @@ namespace MVCWebProjectBLL.Services
             var model = this.mapper.Map<Person, PersonDTO>(person);
             return model;
         }
-
 
         public SelectList GetCountries()
         {

@@ -4,7 +4,6 @@ using MVCWebProjectBLL.DTO;
 
 namespace MVCWebProject.Utilities
 {
-
     public class AutoMappingPLProfile : Profile
     {
         public AutoMappingPLProfile()

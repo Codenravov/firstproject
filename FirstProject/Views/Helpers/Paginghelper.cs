@@ -3,7 +3,6 @@ using System.Web.Routing;
 
 namespace MVCWebProject.Views.Helpers
 {
-
     public static class Paginghelper
     {
         public static MvcHtmlString Paging(

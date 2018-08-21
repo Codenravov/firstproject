@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace MVCWebProject.Utilities
 {
-
     public interface IPagingList<T>
     {
         int CurrentPage { get; }
@@ -34,7 +33,10 @@ namespace MVCWebProject.Utilities
 
         public List<T> Items { get; private set; }
 
-        public PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize) => this.CreatePage(source.AsQueryable(), page, pageSize);
+        public PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize)
+        {
+            return this.CreatePage(source.AsQueryable(), page, pageSize);
+        }
 
         public PagingList<T> CreatePage(IQueryable<T> source, int page, int pageSize)
         {
@@ -54,7 +56,7 @@ namespace MVCWebProject.Utilities
             }
 
             CurrentPage = page;
-            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 0;
+            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 1;
             if (CurrentPage > TotalPage)
             {
                 throw new ArgumentOutOfRangeException("CurrentPage", "Value can not be more than total number of pages");

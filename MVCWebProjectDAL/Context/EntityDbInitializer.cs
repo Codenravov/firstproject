@@ -4,7 +4,6 @@ using MVCWebProjectDAL.Entities;
 
 namespace MVCWebProjectDAL.Context
 {
-
     public class EntityDbInitializer : DropCreateDatabaseAlways<EntitiesContext>
     {
         protected override void Seed(EntitiesContext db)

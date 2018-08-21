@@ -2,7 +2,6 @@
 
 namespace MVCWebProject.ViewModels.Users
 {
-
     public class UsersListingDataViewModel
     {
         public UsersListingDataViewModel(string search, int page, string sortOption, IPagingList<UsersListingViewModel> pagingList)

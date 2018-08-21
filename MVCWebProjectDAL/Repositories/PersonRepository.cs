@@ -1,11 +1,10 @@
-﻿using MVCWebProjectDAL.Context;
-using MVCWebProjectDAL.Entities;
-using MVCWebProjectDAL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-
+using MVCWebProjectDAL.Context;
+using MVCWebProjectDAL.Entities;
+using MVCWebProjectDAL.Interfaces;
 
 namespace MVCWebProjectDAL.Repositories
 {
@@ -13,7 +12,6 @@ namespace MVCWebProjectDAL.Repositories
     {
         public PersonRepository(EntitiesContext context) : base(context)
         {
-
         }
 
         public List<string> GetPersonProperties()
@@ -28,10 +26,11 @@ namespace MVCWebProjectDAL.Repositories
             return propertiesList;
         }
 
-        public List<Person> GetPeople(Expression<Func<Person, bool>> filter = null, Func<Person, object> orderBy =null)
+        public List<Person> GetPeople(Expression<Func<Person, bool>> filter = null, Func<Person, object> orderBy = null)
         {
             return Get(filter, orderBy);
         }
+
         public Person GetPersonById(int id)
         {
             return Get(where: P => P.Id == id);
@@ -43,11 +42,11 @@ namespace MVCWebProjectDAL.Repositories
             {
                 Update(person);
             }
-
             else
             {
                 Add(person);
             }
+
             Save();
         }
 

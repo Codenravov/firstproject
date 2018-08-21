@@ -2,7 +2,6 @@
 
 namespace MVCWebProject.ViewModels
 {
-
     public abstract class UsersViewModel
     {
         [Display(Name = "FirstName",

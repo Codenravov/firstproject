@@ -10,7 +10,6 @@ using MVCWebProjectDAL.Interfaces;
 
 namespace MVCWebProjectDAL.Repositories
 {
-
     public abstract class EntityRepository<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> dbset;
