@@ -1,18 +1,306 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html {
+    height: 100%;
+    box-sizing: border-box;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;
+    background: #ffffff;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+body {
+    height: 100%;
+    margin: 0;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+#page-header,
+#page-footer {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    background: #ccc;
 }
 
+#page-header {
+    top: 0;
+    height: 100px;
+    padding: 0 0 0 30px;
+}
+
+
+#page-footer {
+    bottom: 0;
+    height: 75px;
+}
+
+#page-wrap {
+    max-width: 1140px;
+    margin: 120px auto 75px auto;
+}
+
+.row {
+    width: auto;
+    margin: auto;
+}
+
+.row::after {
+    display: table;
+    clear: both;
+    content: '';
+}
+
+[class*='col-'] {
+    margin: 10px;
+    float: left;
+}
+
+.col-1-1 {
+    width: calc(100% - 20px);
+}
+.col-1-2, .col-2-4 {
+    width: calc(50% - 20px);
+}
+
+.col-1-3 {
+    width: calc(33.33% - 20px);
+}
+
+.col-2-3 {
+    width: calc(66.66% - 20px);
+}
+
+.col-1-4 {
+    width: calc(25% - 20px);
+}
+
+.col-3-4 {
+    width: calc(75% - 20px);
+}
+
+.col-1-5 {
+    width: calc(20% - 20px);
+}
+
+.col-2-5 {
+    width: calc(40% - 20px);
+}
+
+.col-3-5 {
+    width: calc(60% - 20px);
+}
+
+.col-4-5 {
+    width: calc(80% - 20px);
+}
+
+.right {
+    float: right;
+}
+
+.listing-wrap {
+    width: 100%;
+    padding: 0;
+}
+
+table {
+    font-size: 14px;
+    background: white;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+table a{
+    text-decoration: none;
+    color: #0066FF;
+}
+
+th {
+    font-weight: normal;
+    color: black;
+    border-bottom: 2px solid;
+    padding: 30px 0 20px 10px;
+}
+
+td {
+    color: #669;
+    padding: 10px 10px;
+    transition: .3s linear;
+}
+
+a.button {
+    display: inline-block;
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    user-select: none;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    transition: background-color .3s;
+}
+
+.button input[type=submit] {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-weight: 600;
+    font-size: unset;
+    width: 100px; /* Ширина кнопки */
+    height: 41px; /* Высота кнопки */
+    border: 2px solid;
+    background: white;
+    transition: background-color .3s;
+}
+
+a.button-close {
+    display: inline-block;
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    user-select: none;
+    padding: .5em 1em;
+    outline: none;
+    border: 2px solid;
+    transition: background-color .3s;
+}
+
+.button-delete {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-weight: 600;
+    font-size: unset;
+    width: 100px; /* Ширина кнопки */
+    height: 41px; /* Высота кнопки */
+    border: 2px solid;
+    background: #FF6F6F;
+    transition: background-color .3s;
+}
+
+a.button:hover,
+a.button-close:hover,
+.search input[type="submit"]:hover,
+.button input[type=submit]:hover{
+    background-color: #ddd;
+}
+
+.button-delete:hover {
+    background-color: #E14D43;
+}
+
+/*a.button:active {
+    background: white;
+}*/
+
+.search {
+    display: inline-block;
+    width: 300px;
+    border: 2px solid;
+    min-height: 41px;
+}
+
+.search input[type="search"] {
+    padding: 10px;
+    border: none;
+    outline: none;
+    width: 244px;
+    vertical-align: middle;
+}
+
+.search input[type="submit"] {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-weight: 600;
+    font-size: unset;
+    width: 50px;
+    height: 41px;
+    border: none;
+    background: white;
+    transition: background-color .3s;
+}
+
+.pagination ul {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+        display: inline;
+}
+
+.pagination ul li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination ul .active a {
+    border-bottom: 2px solid;
+}
+
+.pagination ul li:not(.active) a:hover {
+    background-color: #ddd;
+}
+
+.modal-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #000000;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    transition: opacity 400ms ease-in;
+}
+
+.modal-dialog .modal-wrap{
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 10px;
+    background: #ffffff;
+}
+
+.modal-wrap .head {
+    border-bottom: 2px solid;
+}
+
+.form-wrap {
+    width: 1000px;
+    padding: 0;
+}
+
+.form-wrap label, .field-validation-error {
+    padding: 10px;
+    display: inline-block;
+}
+
+.form-wrap .field-validation-error {
+    color: #E14D43;
+}
+
+
+.form-wrap .single-line, select, textarea {
+    padding: 10px;
+    resize: vertical;
+    border: none;
+    background: #ddd;
+    border-bottom: 2px solid black;
+}
+
+.form-wrap .single-line, textarea {
+    width: calc(100% - 10px * 2);
+}
+
+.form-wrap select{
+    width: 100%;
+}
+
+
+/*display: inline-block;
+color: black;
+font-weight: 600;
+text-decoration: none;
+user-select: none;
+padding: .5em 2em;
+outline: none;
+border: 2px solid;
+transition: background-color .3s;*/

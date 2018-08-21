@@ -1,36 +1,30 @@
 ﻿@using MVCWebProject.ViewModels
 @using MVCWebProject.ViewModels.Users
 @model UsersListingDataViewModel
-<h2>Users</h2>
-<div class="row">
-    <div class="col-md-4">
-        <div class="input-group">
-            <a class="btn btn-primary" href="@Url.Action("Create")" role="button">Create</a>
+<div id="page-header">
+    <h1>Users</h1>
+</div>
+<div id="page-wrap">
+    <div class="listing-wrap">
+        <div class="row">
+            <div class="col-1-3">
+                <a class="button" href="@Url.Action("Create")">Create</a>
+            </div>
+            <div class="col-1-3 right">
+                <div class="search right">
+                    @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
+                    {
+                        <input type="search" name="searchString" placeholder="Search for..." />
+                        <input type="submit" value="Go" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="Listing">
+            @Html.Partial("Listing", Model)
         </div>
     </div>
-    <div class="col-md-4 col-md-offset-4">
-        @using (Ajax.BeginForm("Index", new AjaxOptions { UpdateTargetId = "Listing" }))
-        {
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <input type="submit" value="Go" class="btn btn-primary" />
-                </span>
-                <input type="text" name="searchString" class="form-control" placeholder="Search for..." />
-            </div>
-        }
-    </div>
+    <div id="modal"></div>
 </div>
-<p></p>
-<div id="Listing">
-    @Html.Partial("Listing", Model)
+<div id="page-footer">
 </div>
-<div id="Modal" class="modal fade">
-    <div id="Dialog" class="modal-dialog"></div>
-</div>
-@section scripts{
-    <script type="text/javascript">
-        function OnSuccess() {
-            $("#Modal").modal('show');
-        };
-    </script>
-}

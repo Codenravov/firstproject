@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using AutoMapper;
-using MVCWebProject.ViewModels;
-using MVCWebProjectDAL;
 
 public class AutoMapperModule : Module
 {

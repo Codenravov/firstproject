@@ -1,92 +1,117 @@
 ﻿@using MVCWebProject.ViewModels
 @model UsersEditViewModel
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Title, Model.Titles as SelectList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Country, Model.Countries as SelectList, new { @class = "form-control", id = "ddlCountries" })
-                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div id="divCities">
-                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.City, Model.Cities as SelectList, new { @class = "form-control", id = "ddlCities" })
-                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+<div id="page-header">
+    <h1>Edit</h1>
+</div>
+<div id="page-wrap">
+    <div class="form-wrap">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            <div class="row">
+                <div class="col-1-5 text-head">
+                    @Html.LabelFor(model => model.FirstName)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.FirstName)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.FirstName, "")
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @rows = 5 })
-                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.LastName)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.LastName)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Phone)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.Phone)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Phone, "")
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="col-2-5">
+                    @Html.EditorFor(model => model.Email)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Email, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Title)
+                </div>
+                <div class="col-2-5">
+                    @Html.DropDownListFor(model => model.Title, Model.Titles as SelectList)
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Title, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Country)
+                </div>
+                <div class="col-2-5">
+                    @Html.DropDownListFor(model => model.Country, Model.Countries as SelectList, new { id = "ddlCountries" })
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Country, "")
+                </div>
+            </div>
+            <div class="row">
+                <div id="divCities">
+                    <div class="col-1-5">
+                        @Html.LabelFor(model => model.City)
+                    </div>
+                    <div class="col-2-5">
+                        @Html.DropDownListFor(model => model.City, Model.Cities as SelectList, new { id = "ddlCities" })
+                    </div>
+                    <div class="col-2-5">
+                        @Html.ValidationMessageFor(model => model.City, "")
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1-5">
+                    @Html.LabelFor(model => model.Comments)
+                </div>
+                <div class="col-2-5">
+                    @Html.TextAreaFor(model => model.Comments, new { @rows = 5 })
+                </div>
+                <div class="col-2-5">
+                    @Html.ValidationMessageFor(model => model.Comments, "")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3-5">
+                    <div class="button right">
+                        <input type="submit" value="Save" />
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-}
-
+</div>
+<div id="page-footer">
+</div>
 @section scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

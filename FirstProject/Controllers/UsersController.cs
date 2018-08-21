@@ -1,41 +1,52 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using MVCWebProject.Models;
+using AutoMapper;
+using MVCWebProject.Infrastructure;
+using MVCWebProject.Resources.Controllers;
+using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels;
 using MVCWebProject.ViewModels.Users;
+using MVCWebProjectBLL.DTO;
+using MVCWebProjectBLL.Services;
 
 namespace MVCWebProject.Controllers
 {
 
+    [ControllerExceptions]
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly IPagingList<UsersListingViewModel> pagingList;
+        private readonly IMapper mapper;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(
+            IUsersService usersService,
+            IPagingList<UsersListingViewModel> pagingList,
+            IMapper mapper)
         {
             this.usersService = usersService;
+            this.pagingList = pagingList;
+            this.mapper = mapper;
         }
-
-        public ActionResult Index(string searchString = "", int page = 1, string sortOption = null)
+        public ActionResult Index(string searchString = "", int page = UsersControllerConst.StartPage, string sortOption = null)
         {
-            try
-            {
-                var pagedList = this.usersService.GetPagedList(searchString, page, sortOption);
-                UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, pagedList);
-                return Request.IsAjaxRequest()
-                    ? (ActionResult)PartialView("Listing", model)
-                    : View(model);
-            }
-            catch (Exception)
-            {
-                return HttpNotFound();
-            }
+            var source = this.usersService.GetPeople(searchString, sortOption);
+            var people = this.mapper.Map<IEnumerable<PersonDTO>, IEnumerable<UsersListingViewModel>>(source);
+            var list = pagingList.CreatePage(people, page, UsersControllerConst.PageSize);
+            UsersListingDataViewModel model = new UsersListingDataViewModel(searchString, page, sortOption, list);
+            return Request.IsAjaxRequest()
+                ? (ActionResult)PartialView("Listing", model)
+                : View(model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            var model = this.usersService.GetCreateModel();
+            SelectList countries = usersService.GetCountries();
+            UsersCreatViewModel model = new UsersCreatViewModel
+            {
+                Countries = countries
+            };
             return View(model);
         }
 
@@ -44,45 +55,30 @@ namespace MVCWebProject.Controllers
         {
             if (!string.IsNullOrEmpty(selectCountry))
             {
-                try
-                {
-                    var viewModel = this.usersService.GetCities(model, selectCountry);
-                    return PartialView("Cities", viewModel);
-                }
-                catch (Exception)
-                {
-                    return HttpNotFound();
-                }
+                SelectList cities = usersService.GetCities(selectCountry);
+                model.Cities = cities;
+                return PartialView("Cities", model);
             }
             if (ModelState.IsValid)
             {
-                this.usersService.SaveData(model);
+                var person = this.mapper.Map<UsersCreatViewModel, PersonDTO>(model);
+                this.usersService.SavePerson(person);
                 return RedirectToAction("Index");
             }
-
-            return Request.IsAjaxRequest()
-                ? (ActionResult)View(model)
-                : HttpNotFound();
+            return HttpNotFound();
         }
 
         [HttpGet]
         public ActionResult Edit(int? personId)
         {
-            if (personId == null)
-            {
-                return HttpNotFound();
-            }
-
             int id = personId.Value;
-            try
-            {
-                var model = this.usersService.GetEditModel(id);
-                return View(model);
-            }
-            catch (Exception)
-            {
-                return HttpNotFound();
-            }
+            var person = this.usersService.GetPerson(id);
+            SelectList counties = this.usersService.GetCountries();
+            SelectList cities = this.usersService.GetCities(person.Country);
+            var model = this.mapper.Map<PersonDTO, UsersEditViewModel>(person);
+            model.Countries = counties;
+            model.Cities = cities;
+            return View(model);
         }
 
         [HttpPost]
@@ -90,65 +86,34 @@ namespace MVCWebProject.Controllers
         {
             if (!string.IsNullOrEmpty(selectCountry))
             {
-                try
-                {
-                    model = this.usersService.GetCities(model, selectCountry);
-                    return PartialView("Cities", model);
-                }
-                catch (Exception)
-                {
-                    return View(model);
-                }
+                SelectList cities = this.usersService.GetCities(selectCountry);
+                model.Cities = cities;
+                return PartialView("Cities", model);
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    this.usersService.SaveData(model, model.Id);
-                    return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    return View(model);
-                }
+                var person = this.mapper.Map<UsersEditViewModel, PersonDTO>(model);
+                this.usersService.UpdatePerson(person);
+                return RedirectToAction("Index");
             }
 
             return View(model);
         }
-
         [HttpGet]
         public ActionResult Delete(int? personId)
         {
-            if (personId == null)
-            {
-                return HttpNotFound();
-            }
-
             int id = personId.Value;
-            try
-            {
-                var model = this.usersService.GetDeleteModel(id);
-                return PartialView(model);
-            }
-            catch (Exception)
-            {
-                return HttpNotFound();
-            }
+            var person = this.usersService.GetPerson(id);
+            var model = this.mapper.Map<PersonDTO, UsersDeleteViewModel>(person);
+            return PartialView(model);
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmen(int id)
+        public ActionResult DeleteConfirmen(UsersDeleteViewModel model)
         {
-            try
-            {
-                this.usersService.DeleteData(id);
-                return RedirectToAction("Index");
-            }
-            catch (Exception)
-            {
-                return HttpNotFound();
-            }
+            this.usersService.DeletePerson(model.Id);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Comments(int? personId)
@@ -159,15 +124,9 @@ namespace MVCWebProject.Controllers
             }
 
             int id = personId.Value;
-            try
-            {
-                var model = this.usersService.GetCommentsModel(id);
-                return PartialView(model);
-            }
-            catch (Exception)
-            {
-                return HttpNotFound();
-            }
+            var person = this.usersService.GetPerson(id);
+            var model = this.mapper.Map<PersonDTO, UsersCommentsViewModel>(person);
+            return PartialView(model);
         }
     }
 }

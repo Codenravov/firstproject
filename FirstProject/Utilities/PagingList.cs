@@ -17,12 +17,12 @@ namespace MVCWebProject.Utilities
 
         List<T> Items { get; }
 
-        PagedList<T> CreatePage(IEnumerable<T> source, int page, int pageSize);
+        PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize);
 
-        PagedList<T> CreatePage(IQueryable<T> source, int page, int pageSize);
+        PagingList<T> CreatePage(IQueryable<T> source, int page, int pageSize);
     }
 
-    public class PagedList<T> : IPagingList<T>
+    public class PagingList<T> : IPagingList<T>
     {
         public int CurrentPage { get; private set; }
 
@@ -34,9 +34,9 @@ namespace MVCWebProject.Utilities
 
         public List<T> Items { get; private set; }
 
-        public PagedList<T> CreatePage(IEnumerable<T> source, int page, int pageSize) => this.CreatePage(source.AsQueryable(), page, pageSize);
+        public PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize) => this.CreatePage(source.AsQueryable(), page, pageSize);
 
-        public PagedList<T> CreatePage(IQueryable<T> source, int page, int pageSize)
+        public PagingList<T> CreatePage(IQueryable<T> source, int page, int pageSize)
         {
             if (page < 1)
             {
@@ -63,7 +63,7 @@ namespace MVCWebProject.Utilities
             HasPreviousPage = page > 1;
             HasNextPage = page < this.TotalPage;
             Items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            PagedList<T> pagedList = new PagedList<T>
+            PagingList<T> pagingList = new PagingList<T>
             {
                 CurrentPage = this.CurrentPage,
                 TotalPage = this.TotalPage,
@@ -71,7 +71,7 @@ namespace MVCWebProject.Utilities
                 HasNextPage = this.HasNextPage,
                 Items = this.Items
             };
-            return pagedList;
+            return pagingList;
         }
     }
 }
