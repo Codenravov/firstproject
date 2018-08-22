@@ -1,4 +1,4 @@
-﻿@using MVCWebProject.Views.Helpers
+﻿@using MVCWebProject.Utilities.Helpers
 @using MVCWebProject.ViewModels.Users
 @model UsersListingDataViewModel
 <div class="row">
@@ -94,8 +94,8 @@
 <div class="row">
     <div class="col-1-3 right">
         <div class="pagination right">
-            @Html.Paging(Model.PagingList.CurrentPage, Model.PagingList.TotalPage, Model.PagingList.HasPreviousPage, Model.PagingList.HasNextPage, "Index", "Users",
-                       new { searchString = Model.Search, sortOption = Model.SortOption }, null)
+            @Html.Paging(Model.PagingList.CurrentPage, Model.PagingList.TotalPage,"Index", "Users",
+                       new { searchString = Model.Search, sortOption = Model.SortOption })
         </div>
     </div>
 </div>

@@ -11,10 +11,6 @@ namespace MVCWebProject.Utilities
 
         int TotalPage { get; }
 
-        bool HasPreviousPage { get; }
-
-        bool HasNextPage { get; }
-
         List<T> Items { get; }
 
         PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize);
@@ -28,9 +24,7 @@ namespace MVCWebProject.Utilities
 
         public int TotalPage { get; private set; }
 
-        public bool HasPreviousPage { get; private set; }
 
-        public bool HasNextPage { get; private set; }
 
         public List<T> Items { get; private set; }
 
@@ -54,21 +48,17 @@ namespace MVCWebProject.Utilities
             }
 
             CurrentPage = page;
-            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 0;
+            TotalPage = source.Count() > 0 ? (int)Math.Ceiling(source.Count() / (double)pageSize) : 1;
             if (CurrentPage > TotalPage)
             {
                 throw new ArgumentOutOfRangeException("CurrentPage", "Value can not be more than total number of pages");
             }
 
-            HasPreviousPage = page > 1;
-            HasNextPage = page < this.TotalPage;
             Items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             PagingList<T> pagingList = new PagingList<T>
             {
                 CurrentPage = this.CurrentPage,
                 TotalPage = this.TotalPage,
-                HasPreviousPage = this.HasPreviousPage,
-                HasNextPage = this.HasNextPage,
                 Items = this.Items
             };
             return pagingList;

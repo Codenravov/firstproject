@@ -1,27 +1,22 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MVCWebProject.Views.Helpers
+namespace MVCWebProject.Utilities.Helpers
 {
-
-    public static class Paginghelper
+    public static class PagingHelper
     {
         public static MvcHtmlString Paging(
             this HtmlHelper helper,
             int currentPage,
             int totalPage,
-            bool hasPreviousPage,
-            bool hasNextPage,
             string action,
             string controller, 
-            object routeValues, 
-            object htmlAttributes)
+            object routeValues)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
             var ul = new TagBuilder("ul");
-            var htmlAttributesDictionary = new RouteValueDictionary(htmlAttributes);
-            htmlAttributesDictionary.Add("class", "pagination");
-            ul.MergeAttributes(htmlAttributesDictionary);
+
             int previous = currentPage - 1, next = currentPage + 1;
             if (totalPage < 2)
             {
@@ -35,19 +30,18 @@ namespace MVCWebProject.Views.Helpers
             }
             else
             {
-                if (!hasPreviousPage)
+                if (previous < 1)
                 {
                     previous = 1;
                     next = 3;
                 }
 
-                if (!hasNextPage)
+                if (next > totalPage)
                 {
                     previous = currentPage - 2;
                     next = currentPage;
                 }
             }
-
             for (int i = previous; i <= next; i++)
             {
                 var anchor = new TagBuilder("a");
