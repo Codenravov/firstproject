@@ -4,10 +4,10 @@
     @Html.LabelFor(model => model.City)
 </div>
 <div class="col-2-5">
-    @Html.DropDownListFor(model => model.City, Model.Cities as SelectList, "Select City")
+    @Html.DropDownListFor(model => model.City, Model.Cities as SelectList, "Select City", new { id = "ddlCities" })
 </div>
 <div class="col-2-5">
-    <div id="ddlCities"></div>
+    <div id="divValidation"></div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

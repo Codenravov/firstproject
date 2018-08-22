@@ -57,7 +57,7 @@
                     @Html.LabelFor(model => model.Title)
                 </div>
                 <div class="col-2-5">
-                    @Html.DropDownListFor(model => model.Title, Model.Titles as SelectList, "Select Title")
+                    @Html.DropDownListFor(model => model.Title, Model.Titles as SelectList, "Select Title", new { id = "ddlTitles" })
                 </div>
                 <div class="col-2-5">
                     @Html.ValidationMessageFor(model => model.Title, "")
@@ -102,11 +102,18 @@
 </div>
 
 @section scripts{
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script type="text/javascript">
     $(document).ready(function () {
+        var removedTitles = false;
         var removedCountries = false;
+        $("#ddlTitles").change(function () {
+            if (!removedTitles) {
+                $(this).children().first().remove();
+                removedTitles = true;
+            }
+        });
         $("#ddlCountries").change(function () {
             var SelectCountry = $('#ddlCountries').val();
             if (!removedCountries) {
@@ -121,7 +128,7 @@
                 contenttype: 'application/json; charset=utf-8',
                 success: function (partionalView) {
                     $("#divCities").html(partionalView);
-                    $('@Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })').insertAfter('#ddlCities');
+                    $('@Html.ValidationMessageFor(model => model.City, "")').insertAfter('#divValidation');
                     $('form').removeData("validator");
                     $("form").removeData("unobtrusiveValidation");
                     $.validator.unobtrusive.parse(document);
