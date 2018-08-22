@@ -23,8 +23,6 @@ namespace MVCWebProject.Utilities
 
         public int TotalPage { get; private set; }
 
-
-
         public List<T> Items { get; private set; }
 
         public PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize)

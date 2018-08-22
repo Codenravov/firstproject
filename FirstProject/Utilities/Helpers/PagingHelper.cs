@@ -42,6 +42,7 @@ namespace MVCWebProject.Utilities.Helpers
                     next = currentPage;
                 }
             }
+
             for (int i = previous; i <= next; i++)
             {
                 var anchor = new TagBuilder("a");
