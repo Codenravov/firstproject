@@ -3,7 +3,6 @@ using MVCWebProjectDAL.Entities;
 
 namespace MVCWebProjectDAL.Context
 {
-
     public class EntitiesContext : DbContext
     {
         public EntitiesContext()

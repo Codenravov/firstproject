@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace MVCWebProject.Utilities
 {
-
     public interface IPagingList<T>
     {
         int CurrentPage { get; }
@@ -28,7 +27,10 @@ namespace MVCWebProject.Utilities
 
         public List<T> Items { get; private set; }
 
-        public PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize) => this.CreatePage(source.AsQueryable(), page, pageSize);
+        public PagingList<T> CreatePage(IEnumerable<T> source, int page, int pageSize)
+        {
+            return this.CreatePage(source.AsQueryable(), page, pageSize);
+        }
 
         public PagingList<T> CreatePage(IQueryable<T> source, int page, int pageSize)
         {

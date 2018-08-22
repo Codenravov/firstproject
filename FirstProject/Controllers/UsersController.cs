@@ -11,7 +11,6 @@ using MVCWebProjectBLL.Services;
 
 namespace MVCWebProject.Controllers
 {
-
     [ControllerExceptions]
     public class UsersController : Controller
     {
@@ -28,6 +27,7 @@ namespace MVCWebProject.Controllers
             this.pagingList = pagingList;
             this.mapper = mapper;
         }
+
         public ActionResult Index(string searchString = "", int page = UsersControllerConst.StartPage, string sortOption = null)
         {
             var source = this.usersService.GetPeople(searchString, sortOption);
@@ -59,12 +59,14 @@ namespace MVCWebProject.Controllers
                 model.Cities = cities;
                 return PartialView("Cities", model);
             }
+
             if (ModelState.IsValid)
             {
                 var person = this.mapper.Map<UsersCreatViewModel, PersonDTO>(model);
                 this.usersService.SavePerson(person);
                 return RedirectToAction("Index");
             }
+
             return HttpNotFound();
         }
 
@@ -100,6 +102,7 @@ namespace MVCWebProject.Controllers
 
             return View(model);
         }
+
         [HttpGet]
         public ActionResult Delete(int? personId)
         {

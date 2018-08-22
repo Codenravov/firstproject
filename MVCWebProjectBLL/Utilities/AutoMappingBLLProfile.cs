@@ -4,7 +4,6 @@ using MVCWebProjectDAL.Entities;
 
 namespace MVCWebProjectBLL.Utilities
 {
-
     public class AutoMappingBLLProfile : Profile
     {
         public AutoMappingBLLProfile()
