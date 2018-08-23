@@ -12,38 +12,35 @@ namespace MVCWebProject.Utilities.Helpers
             int totalPage,
             string action,
             string controller, 
-            object routeValues)
+            object routeValues, 
+            int maxPagesList = 3)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
             var ul = new TagBuilder("ul");
-
-            int previous = currentPage - 1, next = currentPage + 1;
-            if (totalPage < 2)
+            int firstPage = currentPage - (int)(maxPagesList / 2);
+            if (firstPage <= 1)
             {
-                return MvcHtmlString.Empty;
-            }
-
-            if (totalPage < 3)
-            {
-                previous = 1;
-                next = totalPage;
+                firstPage = 1;
             }
             else
             {
-                if (previous < 1)
+                if (totalPage - firstPage < maxPagesList)
                 {
-                    previous = 1;
-                    next = 3;
-                }
-
-                if (next > totalPage)
-                {
-                    previous = currentPage - 2;
-                    next = currentPage;
+                    firstPage = totalPage - maxPagesList + 1;
+                    if (firstPage <= 1)
+                    {
+                        firstPage = 1;
+                    }
                 }
             }
 
-            for (int i = previous; i <= next; i++)
+            int lastPage = firstPage + maxPagesList - 1;
+            if (lastPage > totalPage)
+            {
+                lastPage = totalPage;
+            }
+
+            for (int i = firstPage; i <= lastPage; i++)
             {
                 var anchor = new TagBuilder("a");
                 anchor.SetInnerText(i.ToString());
