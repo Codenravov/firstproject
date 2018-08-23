@@ -64,14 +64,11 @@
     <Compile Include="Interfaces\ICountryRepository.cs" />
     <Compile Include="Interfaces\IPersonRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\EntityRepository.cs" />
     <Compile Include="Repositories\CityRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
-    <Compile Include="Repositories\UnitOfWork.cs" />
-    <Compile Include="Utilites\AutofacDALModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
