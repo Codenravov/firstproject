@@ -10,7 +10,8 @@ namespace MVCWebProjectDAL.Repositories
 {
     public class PersonRepository : EntityRepository<Person>, IPersonRepository
     {
-        public PersonRepository(EntitiesContext context) : base(context)
+        public PersonRepository(EntitiesContext context)
+            : base(context)
         {
         }
 
@@ -33,12 +34,12 @@ namespace MVCWebProjectDAL.Repositories
 
         public Person GetPersonById(int id)
         {
-            return Get(where: P => P.Id == id);
+            return Get(where: p => p.Id == id);
         }
 
         public void AddOrUpdatePerson(Person person)
         {
-            if (IsExist(where: P => P.Id == person.Id))
+            if (IsExist(where: p => p.Id == person.Id))
             {
                 Update(person);
             }
@@ -52,7 +53,7 @@ namespace MVCWebProjectDAL.Repositories
 
         public void DeletePersonById(int id)
         {
-            Delete(where: P => P.Id == id);
+            Delete(where: p => p.Id == id);
             Save();
         }
     }

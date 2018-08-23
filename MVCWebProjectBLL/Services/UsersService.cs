@@ -3,28 +3,12 @@ using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using MVCWebProjectBLL.DTO;
+using MVCWebProjectBLL.Service;
 using MVCWebProjectDAL.Entities;
 using MVCWebProjectDAL.Interfaces;
 
 namespace MVCWebProjectBLL.Services
 {
-    public interface IUsersService
-    {
-        IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption);
-
-        PersonDTO GetPerson(int id);
-
-        SelectList GetCountries();
-
-        SelectList GetCities(string country);
-
-        void SavePerson(PersonDTO model);
-
-        void UpdatePerson(PersonDTO model);
-
-        void DeletePerson(int id);
-    }
-
     public class UsersService : IUsersService
     {
         private readonly IUnitOfWork dataBase;

@@ -9,7 +9,8 @@ namespace MVCWebProjectDAL.Repositories
 {
     public class CountryRepository : EntityRepository<Country>, ICountryRepository
     {
-        public CountryRepository(EntitiesContext context) : base(context)
+        public CountryRepository(EntitiesContext context)
+            : base(context)
         {
         }
 

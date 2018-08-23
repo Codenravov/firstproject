@@ -26,7 +26,7 @@
         while (fn && parts.length) {
             fn = fn[parts.shift()];
         }
-        if (typeof (fn) === "function") {
+        if (typeof fn === "function") {
             return fn;
         }
         argNames.push(code);

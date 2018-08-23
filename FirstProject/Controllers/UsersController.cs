@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
+using MVCWebProject.Constants;
 using MVCWebProject.Infrastructure;
-using MVCWebProject.Resources.Controllers;
 using MVCWebProject.Utilities;
 using MVCWebProject.ViewModels;
 using MVCWebProject.ViewModels.Users;
 using MVCWebProjectBLL.DTO;
-using MVCWebProjectBLL.Services;
+using MVCWebProjectBLL.Service;
 
 namespace MVCWebProject.Controllers
 {
@@ -112,7 +112,8 @@ namespace MVCWebProject.Controllers
             return PartialView(model);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public ActionResult DeleteConfirmen(UsersDeleteViewModel model)
         {
             this.usersService.DeletePerson(model.Id);

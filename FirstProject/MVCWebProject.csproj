@@ -14,7 +14,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MVCWebProject</RootNamespace>
     <AssemblyName>MVCWebProject</AssemblyName>
-    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
@@ -25,7 +24,6 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MVCWebProject.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +43,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MVCWebProject.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -172,6 +172,7 @@
   <ItemGroup>
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="MVCWebProject.ruleset" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -185,12 +186,10 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\ControllerExceptionsAttribute.cs" />
+    <Compile Include="MvcApplication.asax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Controllers\UsersControllerConst.cs" />
+    <Compile Include="Constants\UsersControllerConst.cs" />
     <Compile Include="Resources\ViewModels\UsersCreatViewModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +203,7 @@
     <Compile Include="Utilities\AutofacConfig.cs" />
     <Compile Include="Utilities\AutoMapperModule.cs" />
     <Compile Include="Utilities\Helpers\PagingHelper.cs" />
+    <Compile Include="Utilities\IPagingList.cs" />
     <Compile Include="Utilities\PagingList.cs" />
     <Compile Include="Utilities\AutoFacPLModule.cs" />
     <Compile Include="Utilities\AutoMappingPLProfile.cs" />
@@ -256,6 +256,10 @@
       <LastGenOutput>UsersViewModel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -295,5 +299,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Project="$(SolutionDir)\StyleCop\StyleCop.Targets" />
 </Project>

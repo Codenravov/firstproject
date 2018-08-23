@@ -9,7 +9,8 @@ namespace MVCWebProjectDAL.Repositories
 {
     public class CityRepository : EntityRepository<City>, ICityRepository
     {
-        public CityRepository(EntitiesContext context) : base(context)
+        public CityRepository(EntitiesContext context)
+            : base(context)
         {
         }
 

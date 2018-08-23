@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace MVCWebProject.Utilities.Helpers
@@ -11,8 +10,8 @@ namespace MVCWebProject.Utilities.Helpers
             int currentPage,
             int totalPage,
             string action,
-            string controller, 
-            object routeValues, 
+            string controller,
+            object routeValues,
             int maxPagesList = 3)
         {
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
@@ -44,8 +43,10 @@ namespace MVCWebProject.Utilities.Helpers
             {
                 var anchor = new TagBuilder("a");
                 anchor.SetInnerText(i.ToString());
-                var routeValuesDictionary = new RouteValueDictionary(routeValues);
-                routeValuesDictionary.Add("Page", i);
+                var routeValuesDictionary = new RouteValueDictionary(routeValues)
+                {
+                    { "Page", i }
+                };
                 anchor.MergeAttribute("href", urlHelper.Action(action, controller, routeValuesDictionary));
                 var li = new TagBuilder("li") { InnerHtml = anchor.ToString() };
                 if (i == currentPage)
