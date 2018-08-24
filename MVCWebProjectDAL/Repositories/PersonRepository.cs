@@ -47,14 +47,11 @@ namespace MVCWebProjectDAL.Repositories
             {
                 Add(person);
             }
-
-            Save();
         }
 
         public void DeletePersonById(int id)
         {
             Delete(where: p => p.Id == id);
-            Save();
         }
     }
 }

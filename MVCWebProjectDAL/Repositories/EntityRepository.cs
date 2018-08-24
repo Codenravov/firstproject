@@ -70,8 +70,9 @@ namespace MVCWebProjectDAL.Repositories
             foreach (T obj in objects)
             {
                 this.dbset.Remove(obj);
-                Save();
             }
+
+            Save();
         }
 
         public IEnumerable<T> GetAll()

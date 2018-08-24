@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\EntitiesContext.cs" />
-    <Compile Include="Context\EntityDbInitializer.cs" />
     <Compile Include="Entities\City.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Person.cs" />

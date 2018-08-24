@@ -7,7 +7,6 @@ namespace MVCWebProjectDAL.Context
     {
         public EntitiesContext()
         {
-            Database.SetInitializer(new EntityDbInitializer());
         }
 
         public EntitiesContext(string connectionString)
