@@ -52,13 +52,13 @@ namespace MVCWebProjectBLL.Services
 
         public SelectList GetCountries()
         {
-            SelectList countries = new SelectList(this.countryRepository.GetCountries(orderBy: x => x.CountryName), "CountryName", "CountryName");
+            SelectList countries = new SelectList(this.countryRepository.GetCountries(orderBy: x => x.CountryName), "Id", "CountyName");
             return countries;
         }
 
-        public SelectList GetCities(string country)
+        public SelectList GetCities(int id)
         {
-            SelectList cities = new SelectList(this.cityRepository.GetCities(x => x.CountryName.Contains(country), orderBy: x => x.CityName), "CityName", "CityName");
+            SelectList cities = new SelectList(this.countryRepository.GetCountry(id).Cities, "Id", "CityName");
             return cities;
         }
 

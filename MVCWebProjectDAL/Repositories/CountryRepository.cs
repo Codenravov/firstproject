@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using MVCWebProjectDAL.Context;
 using MVCWebProjectDAL.Entities;
@@ -17,6 +18,11 @@ namespace MVCWebProjectDAL.Repositories
         public List<Country> GetCountries(Expression<Func<Country, bool>> filter = null, Func<Country, object> orderBy = null)
         {
             return Get(filter, orderBy);
+        }
+
+        public Country GetCountry(int id)
+        {
+            return Get(c => c.Id == id);
         }
     }
 }

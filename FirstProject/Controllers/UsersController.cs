@@ -51,11 +51,11 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(UsersCreatViewModel model, string selectCountry = null)
+        public ActionResult Create(UsersCreatViewModel model, int countryId = 0)
         {
-            if (!string.IsNullOrEmpty(selectCountry))
+            if (countryId != 0)
             {
-                SelectList cities = usersService.GetCities(selectCountry);
+                SelectList cities = usersService.GetCities(countryId);
                 model.Cities = cities;
                 return PartialView("Cities", model);
             }
@@ -76,7 +76,7 @@ namespace MVCWebProject.Controllers
             int id = personId.Value;
             var person = this.usersService.GetPerson(id);
             SelectList counties = this.usersService.GetCountries();
-            SelectList cities = this.usersService.GetCities(person.Country);
+            SelectList cities = this.usersService.GetCities(2);
             var model = this.mapper.Map<PersonDTO, UsersEditViewModel>(person);
             model.Countries = counties;
             model.Cities = cities;
@@ -84,11 +84,11 @@ namespace MVCWebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UsersEditViewModel model, string selectCountry = null)
+        public ActionResult Edit(UsersEditViewModel model, int countryId)
         {
-            if (!string.IsNullOrEmpty(selectCountry))
+            if (countryId != 0)
             {
-                SelectList cities = this.usersService.GetCities(selectCountry);
+                SelectList cities = this.usersService.GetCities(countryId);
                 model.Cities = cities;
                 return PartialView("Cities", model);
             }

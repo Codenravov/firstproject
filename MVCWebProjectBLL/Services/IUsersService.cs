@@ -12,7 +12,7 @@ namespace MVCWebProjectBLL.Service
 
         SelectList GetCountries();
 
-        SelectList GetCities(string country);
+        SelectList GetCities(int id);
 
         void SavePerson(PersonDTO model);
 
