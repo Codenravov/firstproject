@@ -54,13 +54,14 @@ namespace MVCWebProjectDAL.Repositories
         public void Add(T entity)
         {
             this.dbset.Add(entity);
+            Save();
         }
 
         public void Update(T entity)
         {
             this.dbset.Attach(entity);
-
             this.dataContext.Entry(entity).State = EntityState.Modified;
+            Save();
         }
 
         public virtual void Delete(Expression<Func<T, bool>> where)
@@ -69,6 +70,7 @@ namespace MVCWebProjectDAL.Repositories
             foreach (T obj in objects)
             {
                 this.dbset.Remove(obj);
+                Save();
             }
         }
 
