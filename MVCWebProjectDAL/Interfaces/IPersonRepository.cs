@@ -13,7 +13,9 @@ namespace MVCWebProjectDAL.Interfaces
 
         Person GetPersonById(int id);
 
-        void AddOrUpdatePerson(Person person);
+        void AddPerson(Person person);
+
+        void UpdatePerson(Person person);
 
         void DeletePersonById(int id);
     }

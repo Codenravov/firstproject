@@ -77,9 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\PersonDTO.cs" />
-    <Compile Include="Services\IUsersService.cs" />
+    <Compile Include="Services\IUsersServiceBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UsersService.cs" />
+    <Compile Include="Services\UsersServiceBLL.cs" />
     <Compile Include="Utilities\AutofacBLLModule.cs" />
     <Compile Include="Utilities\AutoMappingBLLProfile.cs" />
   </ItemGroup>

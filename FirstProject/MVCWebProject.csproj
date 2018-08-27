@@ -200,6 +200,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersViewModel.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IUsersServicePL.cs" />
+    <Compile Include="Services\UsersServicePL.cs" />
     <Compile Include="Utilities\AutofacConfig.cs" />
     <Compile Include="Utilities\AutoMapperModule.cs" />
     <Compile Include="Utilities\Helpers\PagingHelper.cs" />

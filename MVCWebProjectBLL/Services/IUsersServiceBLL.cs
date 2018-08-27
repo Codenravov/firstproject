@@ -4,7 +4,7 @@ using MVCWebProjectBLL.DTO;
 
 namespace MVCWebProjectBLL.Service
 {
-    public interface IUsersService
+    public interface IUsersServiceBLL
     {
         IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption);
 
@@ -14,7 +14,7 @@ namespace MVCWebProjectBLL.Service
 
         SelectList GetCities(string countryName);
 
-        void SavePerson(PersonDTO model);
+        void AddPerson(PersonDTO model);
 
         void UpdatePerson(PersonDTO model);
 

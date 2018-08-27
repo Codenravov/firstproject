@@ -37,18 +37,14 @@ namespace MVCWebProjectDAL.Repositories
             return Get(where: p => p.Id == id);
         }
 
-        public void AddOrUpdatePerson(Person person)
+        public void AddPerson(Person person)
         {
-            if (IsExist(where: p => p.Id == person.Id))
-            {
-                Update(person);
-            }
-            else
-            {
-                Add(person);
-            }
+            Add(person);
+        }
 
-            Save();
+        public void UpdatePerson(Person person)
+        {
+            Update(person);
         }
 
         public void DeletePersonById(int id)

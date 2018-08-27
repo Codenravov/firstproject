@@ -9,14 +9,14 @@ using MVCWebProjectDAL.Interfaces;
 
 namespace MVCWebProjectBLL.Services
 {
-    public class UsersService : IUsersService
+    public class UsersServiceBLL : IUsersServiceBLL
     {
         private readonly ICityRepository cityRepository;
         private readonly ICountryRepository countryRepository;
         private readonly IPersonRepository personRepository;
         private readonly IMapper mapper;
 
-        public UsersService(
+        public UsersServiceBLL(
             ICityRepository cityRepository,
             ICountryRepository countryRepository,
             IPersonRepository personRepository,
@@ -63,16 +63,16 @@ namespace MVCWebProjectBLL.Services
             return cities;
         }
 
-        public void SavePerson(PersonDTO model)
+        public void AddPerson(PersonDTO model)
         {
             var person = this.mapper.Map<PersonDTO, Person>(model);
-            this.personRepository.AddOrUpdatePerson(person);
+            this.personRepository.AddPerson(person);
         }
 
         public void UpdatePerson(PersonDTO model)
         {
             var person = this.mapper.Map<PersonDTO, Person>(model, this.personRepository.GetPersonById(model.Id));
-            this.personRepository.AddOrUpdatePerson(person);
+            this.personRepository.UpdatePerson(person);
         }
 
         public void DeletePerson(int id)

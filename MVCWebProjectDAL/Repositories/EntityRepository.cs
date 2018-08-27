@@ -46,21 +46,17 @@ namespace MVCWebProjectDAL.Repositories
             return this.dbset.Where(where).FirstOrDefault<T>();
         }
 
-        public bool IsExist(Expression<Func<T, bool>> where = null)
-        {
-            return this.dbset.FirstOrDefault(where) != null ? true : false;
-        }
-
         public void Add(T entity)
         {
             this.dbset.Add(entity);
+            Save();
         }
 
         public void Update(T entity)
         {
             this.dbset.Attach(entity);
-
             this.dataContext.Entry(entity).State = EntityState.Modified;
+            Save();
         }
 
         public virtual void Delete(Expression<Func<T, bool>> where)
@@ -70,16 +66,8 @@ namespace MVCWebProjectDAL.Repositories
             {
                 this.dbset.Remove(obj);
             }
-        }
 
-        public IEnumerable<T> GetAll()
-        {
-            return this.dbset.ToList();
-        }
-
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> where)
-        {
-            return this.dbset.Where(where).ToList();
+            Save();
         }
 
         public void Save()

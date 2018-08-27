@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MVCWebProject.Services;
 using MVCWebProjectBLL.Service;
 using MVCWebProjectBLL.Services;
 using MVCWebProjectBLL.Utilities;
@@ -11,7 +12,8 @@ namespace MVCWebProject.Utilities
         {
             builder.RegisterModule<AutoFacBLLModule>();
             builder.RegisterGeneric(typeof(PagingList<>)).As(typeof(IPagingList<>));
-            builder.RegisterType<UsersService>().As<IUsersService>();
+            builder.RegisterType<UsersServiceBLL>().As<IUsersServiceBLL>();
+            builder.RegisterType<UsersServicePL>().As<IUsersServicePL>();
         }
     }
 }
