@@ -11,26 +11,32 @@ namespace MVCWebProjectBLL.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly IUnitOfWork dataBase;
+        private readonly ICityRepository cityRepository;
+        private readonly ICountryRepository countryRepository;
+        private readonly IPersonRepository personRepository;
         private readonly IMapper mapper;
 
         public UsersService(
-            IUnitOfWork dataBase,
+            ICityRepository cityRepository,
+            ICountryRepository countryRepository,
+            IPersonRepository personRepository,
             IMapper mapper)
         {
-            this.dataBase = dataBase;
+            this.cityRepository = cityRepository;
+            this.countryRepository = countryRepository;
+            this.personRepository = personRepository;
             this.mapper = mapper;
         }
 
         public IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption)
         {
-            string property = this.dataBase.People.GetPersonProperties().First();
-            if (!string.IsNullOrEmpty(sortOption) && this.dataBase.People.GetPersonProperties().Any(x => x == sortOption))
+            string property = this.personRepository.GetPersonProperties().First();
+            if (!string.IsNullOrEmpty(sortOption) && this.personRepository.GetPersonProperties().Any(x => x == sortOption))
             {
                 property = sortOption;
             }
 
-            var source = this.dataBase.People.GetPeople(
+            var source = this.personRepository.GetPeople(
                 p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString),
                 orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
             var people = this.mapper.Map<IEnumerable<Person>, IEnumerable<PersonDTO>>(source);
@@ -39,20 +45,20 @@ namespace MVCWebProjectBLL.Services
 
         public PersonDTO GetPerson(int id)
         {
-            Person person = this.dataBase.People.GetPersonById(id);
+            Person person = this.personRepository.GetPersonById(id);
             var model = this.mapper.Map<Person, PersonDTO>(person);
             return model;
         }
 
         public SelectList GetCountries()
         {
-            SelectList countries = new SelectList(this.dataBase.Countries.GetCountries(orderBy: x => x.CountryName), "CountryName", "CountryName");
+            SelectList countries = new SelectList(this.countryRepository.GetCountries(orderBy: x => x.CountryName), "CountryName", "CountryName");
             return countries;
         }
 
         public SelectList GetCities(string countryName)
         {
-            Country country = this.dataBase.Countries.GetCountry(countryName);
+            Country country = this.countryRepository.GetCountry(countryName);
             SelectList cities = new SelectList(country.Cities, "CityName", "CityName");
             return cities;
         }
@@ -60,18 +66,18 @@ namespace MVCWebProjectBLL.Services
         public void SavePerson(PersonDTO model)
         {
             var person = this.mapper.Map<PersonDTO, Person>(model);
-            this.dataBase.People.AddOrUpdatePerson(person);
+            this.personRepository.AddOrUpdatePerson(person);
         }
 
         public void UpdatePerson(PersonDTO model)
         {
-            var person = this.mapper.Map<PersonDTO, Person>(model, this.dataBase.People.GetPersonById(model.Id));
-            this.dataBase.People.AddOrUpdatePerson(person);
+            var person = this.mapper.Map<PersonDTO, Person>(model, this.personRepository.GetPersonById(model.Id));
+            this.personRepository.AddOrUpdatePerson(person);
         }
 
         public void DeletePerson(int id)
         {
-            this.dataBase.People.DeletePersonById(id);
+            this.personRepository.DeletePersonById(id);
         }
     }
 }

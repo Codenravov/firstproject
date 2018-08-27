@@ -63,7 +63,6 @@
     <Compile Include="Interfaces\ICountryRepository.cs" />
     <Compile Include="Interfaces\IPersonRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Migrations\201808271123082_InitialCreate.cs" />
     <Compile Include="Migrations\201808271123082_InitialCreate.Designer.cs">
       <DependentUpon>201808271123082_InitialCreate.cs</DependentUpon>
@@ -82,7 +81,6 @@
     <Compile Include="Repositories\EntityRepository.cs" />
     <Compile Include="Repositories\CityRepository.cs" />
     <Compile Include="Repositories\PersonRepository.cs" />
-    <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Utilites\AutofacDALModule.cs" />
   </ItemGroup>
   <ItemGroup>
