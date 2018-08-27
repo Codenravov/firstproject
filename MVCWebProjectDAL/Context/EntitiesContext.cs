@@ -6,6 +6,7 @@ namespace MVCWebProjectDAL.Context
     public class EntitiesContext : DbContext
     {
         public EntitiesContext()
+            : base("EntitiesContext")
         {
             Database.SetInitializer(new EntityDbInitializer());
         }

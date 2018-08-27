@@ -65,6 +65,15 @@
     <Compile Include="Interfaces\IPersonRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Migrations\201808271123082_InitialCreate.cs" />
+    <Compile Include="Migrations\201808271123082_InitialCreate.Designer.cs">
+      <DependentUpon>201808271123082_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808271130158_AddStreetToPerson.cs" />
+    <Compile Include="Migrations\201808271130158_AddStreetToPerson.Designer.cs">
+      <DependentUpon>201808271130158_AddStreetToPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\EntityRepository.cs" />
@@ -83,6 +92,14 @@
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201808271123082_InitialCreate.resx">
+      <DependentUpon>201808271123082_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808271130158_AddStreetToPerson.resx">
+      <DependentUpon>201808271130158_AddStreetToPerson.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
