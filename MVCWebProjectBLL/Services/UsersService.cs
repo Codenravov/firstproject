@@ -50,9 +50,10 @@ namespace MVCWebProjectBLL.Services
             return countries;
         }
 
-        public SelectList GetCities(string country)
+        public SelectList GetCities(string countryName)
         {
-            SelectList cities = new SelectList(this.dataBase.Cities.GetCities(x => x.CountryName.Contains(country), orderBy: x => x.CityName), "CityName", "CityName");
+            Country country = this.dataBase.Countries.GetCountry(countryName);
+            SelectList cities = new SelectList(country.Cities, "CityName", "CityName");
             return cities;
         }
 

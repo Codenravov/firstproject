@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\EntitiesContext.cs" />
-    <Compile Include="Context\EntityDbInitializer.cs" />
     <Compile Include="Entities\City.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Person.cs" />
@@ -72,6 +71,10 @@
     <Compile Include="Migrations\201808271130158_AddStreetToPerson.cs" />
     <Compile Include="Migrations\201808271130158_AddStreetToPerson.Designer.cs">
       <DependentUpon>201808271130158_AddStreetToPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808271215575_ConnectCitiesAndCountry.cs" />
+    <Compile Include="Migrations\201808271215575_ConnectCitiesAndCountry.Designer.cs">
+      <DependentUpon>201808271215575_ConnectCitiesAndCountry.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808271130158_AddStreetToPerson.resx">
       <DependentUpon>201808271130158_AddStreetToPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808271215575_ConnectCitiesAndCountry.resx">
+      <DependentUpon>201808271215575_ConnectCitiesAndCountry.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

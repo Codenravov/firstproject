@@ -18,5 +18,10 @@ namespace MVCWebProjectDAL.Repositories
         {
             return Get(filter, orderBy);
         }
+
+        public Country GetCountry(string countryName)
+        {
+            return Get(c => c.CountryName == countryName);
+        }
     }
 }
