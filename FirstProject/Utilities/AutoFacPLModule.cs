@@ -14,6 +14,7 @@ namespace MVCWebProject.Utilities
             builder.RegisterGeneric(typeof(PagingList<>)).As(typeof(IPagingList<>));
             builder.RegisterType<UsersServiceBLL>().As<IUsersServiceBLL>();
             builder.RegisterType<UsersServicePL>().As<IUsersServicePL>();
+            builder.RegisterType<ValidationService>().As<IValidationService>();
         }
     }
 }

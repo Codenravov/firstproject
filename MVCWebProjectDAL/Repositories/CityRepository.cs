@@ -13,5 +13,10 @@ namespace MVCWebProjectDAL.Repositories
             : base(context)
         {
         }
+
+        public List<City> GetCities(Expression<Func<City, bool>> filter = null, Func<City, object> orderBy = null)
+        {
+            return Get(filter, orderBy);
+        }
     }
 }

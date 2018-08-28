@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using MVCWebProject.Infrastructure;
 
 namespace MVCWebProject.ViewModels
 {
@@ -38,10 +39,12 @@ namespace MVCWebProject.ViewModels
 
         [Display(Name = "Country", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [Required(ErrorMessageResourceName = "RequiredErrCountry", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [CountryValidation]
         public string Country { get; set; }
 
         [Display(Name = "City", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [Required(ErrorMessageResourceName = "RequiredErrCity", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [CityValidation]
         public string City { get; set; }
 
         [Display(Name = "Comments", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
