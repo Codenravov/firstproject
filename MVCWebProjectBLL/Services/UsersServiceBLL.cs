@@ -28,7 +28,7 @@ namespace MVCWebProjectBLL.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption)
+        public IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption, bool descending)
         {
             string property = this.personRepository.GetPersonProperties().First();
             if (!string.IsNullOrEmpty(sortOption) && this.personRepository.GetPersonProperties().Any(x => x == sortOption))
@@ -36,10 +36,10 @@ namespace MVCWebProjectBLL.Services
                 property = sortOption;
             }
 
-            var source = this.personRepository.GetPeople(
-                p => (p.FirstName.ToLower() + p.LastName.ToLower()).Contains(searchString),
-                orderBy: s => s.GetType().GetProperty(property).GetValue(s, null));
-            var people = this.mapper.Map<IEnumerable<Person>, IEnumerable<PersonDTO>>(source);
+            var source = this.personRepository.GetPeople(p => (
+            p.FirstName + p.LastName + p.Phone + p.Email + p.Title + p.Country + p.City).ToLower().Contains(searchString));
+            var sortSource = descending ? source.OrderByDescending(s => s.GetType().GetProperty(property).GetValue(s, null)) : source.OrderBy(s => s.GetType().GetProperty(property).GetValue(s, null));
+            var people = this.mapper.Map<IEnumerable<Person>, IEnumerable<PersonDTO>>(sortSource);
             return people;
         }
 

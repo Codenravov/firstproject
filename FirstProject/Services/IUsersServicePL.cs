@@ -10,7 +10,7 @@ namespace MVCWebProject.Services
 {
     public interface IUsersServicePL
     {
-        UsersListingDataViewModel GetListingViewData(string searchString, int page, int pageSize, string sortOption);
+        UsersListingDataViewModel GetListingViewData(string searchString, int page, int pageSize, string sortOption, bool descending);
 
         UsersCreatViewModel GetCreateModel();
 

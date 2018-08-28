@@ -10,6 +10,7 @@
                         @Ajax.ActionLink("First Name", "Index", new
                         {
                             sortOption = "Name",
+                            descending = Model.SortOption == "Name" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })
@@ -18,6 +19,7 @@
                         @Ajax.ActionLink("Phone", "Index", new
                         {
                             sortOption = "Phone",
+                            descending = Model.SortOption == "Phone" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })
@@ -26,6 +28,7 @@
                         @Ajax.ActionLink("Email", "Index", new
                         {
                             sortOption = "Email",
+                            descending = Model.SortOption == "Email" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })
@@ -34,6 +37,7 @@
                         @Ajax.ActionLink("Title", "Index", new
                         {
                             sortOption = "Title",
+                            descending = Model.SortOption == "Title" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })
@@ -42,6 +46,7 @@
                         @Ajax.ActionLink("Country", "Index", new
                         {
                             sortOption = "Country",
+                            descending = Model.SortOption == "Country" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })
@@ -50,6 +55,7 @@
                         @Ajax.ActionLink("City", "Index", new
                         {
                             sortOption = "City",
+                            descending = Model.SortOption == "City" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })

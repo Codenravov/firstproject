@@ -4,11 +4,12 @@ namespace MVCWebProject.ViewModels.Users
 {
     public class UsersListingDataViewModel
     {
-        public UsersListingDataViewModel(string search, int page, string sortOption, IPagingList<UsersListingViewModel> pagingList)
+        public UsersListingDataViewModel(string search, int page, string sortOption, bool descending, IPagingList<UsersListingViewModel> pagingList)
         {
             this.Search = search;
             this.Page = page;
             this.SortOption = sortOption;
+            this.Descending = descending;
             this.PagingList = pagingList;
         }
 
@@ -17,6 +18,8 @@ namespace MVCWebProject.ViewModels.Users
         public int Page { get; }
 
         public string SortOption { get; }
+
+        public bool Descending { get; }
 
         public IPagingList<UsersListingViewModel> PagingList { get; }
     }

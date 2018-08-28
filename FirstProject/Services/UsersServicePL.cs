@@ -29,12 +29,12 @@ namespace MVCWebProject.Services
             this.mapper = mapper;
         }
 
-        public UsersListingDataViewModel GetListingViewData(string searchString, int page, int pageSize, string sortOption)
+        public UsersListingDataViewModel GetListingViewData(string searchString, int page, int pageSize, string sortOption, bool descending)
         {
-            var source = this.usersServiceBLL.GetPeople(searchString, sortOption);
+            var source = this.usersServiceBLL.GetPeople(searchString, sortOption, descending);
             var people = this.mapper.Map<IEnumerable<PersonDTO>, IEnumerable<UsersListingViewModel>>(source);
             var list = pagingList.CreatePage(people, page, pageSize);
-            return new UsersListingDataViewModel(searchString, page, sortOption, list);
+            return new UsersListingDataViewModel(searchString, page, sortOption, descending, list);
         }
 
         public UsersCreatViewModel GetCreateModel()

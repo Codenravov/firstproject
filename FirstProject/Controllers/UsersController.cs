@@ -16,9 +16,9 @@ namespace MVCWebProject.Controllers
             this.usersService = usersService;
         }
 
-        public ActionResult Index(string searchString = "", int page = UsersControllerConst.StartPage, string sortOption = null)
+        public ActionResult Index(string searchString = "", int page = UsersControllerConst.StartPage, string sortOption = null, bool descending = false)
         {
-            var model = this.usersService.GetListingViewData(searchString, page, UsersControllerConst.PageSize, sortOption);
+            var model = this.usersService.GetListingViewData(searchString, page, UsersControllerConst.PageSize, sortOption, descending);
             return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("Listing", model)
                 : View(model);

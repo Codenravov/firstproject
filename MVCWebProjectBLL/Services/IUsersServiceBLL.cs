@@ -6,7 +6,7 @@ namespace MVCWebProjectBLL.Service
 {
     public interface IUsersServiceBLL
     {
-        IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption);
+        IEnumerable<PersonDTO> GetPeople(string searchString, string sortOption, bool descending);
 
         PersonDTO GetPerson(int id);
 
