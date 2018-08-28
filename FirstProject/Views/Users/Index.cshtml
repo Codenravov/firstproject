@@ -28,3 +28,23 @@
 </div>
 <div id="page-footer">
 </div>
+@section scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('th').each(function(col) {
+            $(this).click(function() {
+                if ($(this).is('.th-asc')) {
+                    $(this).removeClass('th-asc');
+                    $(this).addClass('th-desc th-selected');
+                }
+                else {
+                    $(this).addClass('th-asc th-selected');
+                    $(this).removeClass('th-desc');
+                }
+                $(this).siblings().removeClass('th-asc th-selected');
+                $(this).siblings().removeClass('th-desc th-selected');
+            });
+        });
+    });
+    </script>
+}

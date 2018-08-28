@@ -294,13 +294,9 @@ a.button-close:hover,
     width: 100%;
 }
 
-
-/*display: inline-block;
-color: black;
-font-weight: 600;
-text-decoration: none;
-user-select: none;
-padding: .5em 2em;
-outline: none;
-border: 2px solid;
-transition: background-color .3s;*/
+.th-selected {
+    color: #fff;
+    font-weight: bold;
+}
+.th-asc:after { content: "\25B2"; }
+.th-desc:after { content: "\25BC"; }
