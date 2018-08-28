@@ -5,7 +5,7 @@ using MVCWebProject.Utilities;
 
 namespace MVCWebProject
 {
-    public class MvcApplication : HttpApplication
+    public class MVCApplication : HttpApplication
     {
         protected void Application_Start()
         {

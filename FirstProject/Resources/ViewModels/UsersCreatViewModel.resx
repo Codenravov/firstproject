@@ -153,6 +153,15 @@
   <data name="RequiredErrTitle" xml:space="preserve">
     <value>You must select a title</value>
   </data>
+  <data name="ServerErrCity" xml:space="preserve">
+    <value>City is not valid</value>
+  </data>
+  <data name="ServerErrCountry" xml:space="preserve">
+    <value>Country is not valid</value>
+  </data>
+  <data name="ServerErrTitle" xml:space="preserve">
+    <value>Title is not valid</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Select your title</value>
   </data>

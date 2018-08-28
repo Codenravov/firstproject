@@ -1,23 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using MVCWebProject.Constants;
 using MVCWebProject.Infrastructure;
 
 namespace MVCWebProject.ViewModels
 {
     public class UsersCreatViewModel : UsersViewModel
     {
-        private readonly List<SelectListItem> titles = new List<SelectListItem>()
-        {
-            new SelectListItem() { Text = "Miss", Value = "Miss" },
-            new SelectListItem() { Text = "Ms", Value = "Ms" },
-            new SelectListItem() { Text = "Mr", Value = "Mr" },
-            new SelectListItem() { Text = "Sir", Value = "Sir" },
-            new SelectListItem() { Text = "Mrs", Value = "Mrs" },
-            new SelectListItem() { Text = "Dr", Value = "Dr" },
-            new SelectListItem() { Text = "Lady", Value = "Lady" },
-            new SelectListItem() { Text = "Lord", Value = "Lord" }
-        };
+        private readonly SelectList titles = ViewModelsConst.GetTitles;
 
         [Display(Name = "Phone", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [DataType(DataType.PhoneNumber)]
@@ -35,16 +26,17 @@ namespace MVCWebProject.ViewModels
 
         [Display(Name = "Title", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [Required(ErrorMessageResourceName = "RequiredErrTitle", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [TitleValidation(ErrorMessageResourceName = "ServerErrTitle", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Title { get; set; }
 
         [Display(Name = "Country", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [Required(ErrorMessageResourceName = "RequiredErrCountry", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
-        [CountryValidation]
+        [CountryValidation(ErrorMessageResourceName = "ServerErrCountry", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Country { get; set; }
 
         [Display(Name = "City", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [Required(ErrorMessageResourceName = "RequiredErrCity", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
-        [CityValidation]
+        [CityValidation(ErrorMessageResourceName = "ServerErrCity", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string City { get; set; }
 
         [Display(Name = "Comments", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
@@ -56,7 +48,7 @@ namespace MVCWebProject.ViewModels
         {
             get
             {
-                return new SelectList(this.titles, "Text", "Value");
+                return titles;
             }
         }
 

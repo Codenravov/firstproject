@@ -1,23 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web.Mvc;
 using MVCWebProject.Constants;
+using MVCWebProjectBLL.Services;
 
 namespace MVCWebProject.Infrastructure
 {
     public class TitleValidationAttribute : ValidationAttribute
     {
-        //private readonly List<string> titles = UsersControllerConst.Titles;
-        private readonly List<string> titles = new List<string>(new string[] { "Miss", "Ms", "Mr", "Sir", "Mrs", "Dr", "Lady", "Lord" });
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
             {
-                if (titles.Any(t => t != value.ToString()))
+                SelectList titles = ViewModelsConst.GetTitles;
+                foreach (SelectListItem item in titles.Items)
                 {
-                    return new ValidationResult(ErrorMessage);
+                    if (item.Text == value.ToString())
+                    {
+                        return ValidationResult.Success;
+                    }
                 }
+
+                return new ValidationResult(ErrorMessage);
             }
 
             return ValidationResult.Success;

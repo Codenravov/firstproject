@@ -45,8 +45,11 @@ namespace MVCWebProject.Controllers
                 this.usersService.AddPerson(model);
                 return RedirectToAction("Index");
             }
-
-            return HttpNotFound();
+            else
+            {
+                var newModel = this.usersService.GetCreateModel();
+                return View(newModel);
+            }
         }
 
         [HttpGet]
@@ -70,8 +73,11 @@ namespace MVCWebProject.Controllers
                 this.usersService.UpdatePerson(model);
                 return RedirectToAction("Index");
             }
-
-            return View(model);
+            else
+            {
+                var newModel = this.usersService.GetEditModel(model.Id);
+                return View(newModel);
+            }
         }
 
         [HttpGet]

@@ -169,6 +169,33 @@ namespace MVCWebProject.Resources.ViewModels {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City is not valid.
+        /// </summary>
+        public static string ServerErrCity {
+            get {
+                return ResourceManager.GetString("ServerErrCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country is not valid.
+        /// </summary>
+        public static string ServerErrCountry {
+            get {
+                return ResourceManager.GetString("ServerErrCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title is not valid.
+        /// </summary>
+        public static string ServerErrTitle {
+            get {
+                return ResourceManager.GetString("ServerErrTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select your title.
         /// </summary>
         public static string Title {
