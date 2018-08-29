@@ -7,10 +7,10 @@
             <thead>
                 <tr>
                     <th>
-                        @Ajax.ActionLink("First Name", "Index", new
+                        @Ajax.ActionLink("Name", "Index", new
                         {
-                            sortOption = "Name",
-                            descending = Model.SortOption == "Name" ? (Model.Descending ? false : true) : false,
+                            sortOption = "FirstName",
+                            descending = Model.SortOption == "FirstName" ? (Model.Descending ? false : true) : false,
                             searchString = Model.Search,
                             page = Model.Page
                         }, new AjaxOptions { UpdateTargetId = "Listing" })

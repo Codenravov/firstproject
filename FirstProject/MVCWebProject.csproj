@@ -179,6 +179,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\users.create.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -236,6 +237,8 @@
     <Content Include="Views\Users\Comments.cshtml" />
     <Content Include="Views\Users\Cities.cshtml" />
     <Content Include="Views\Exceptions\Exception.cshtml" />
+    <Content Include="Scripts\users.edit.js" />
+    <Content Include="Scripts\users.city.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
