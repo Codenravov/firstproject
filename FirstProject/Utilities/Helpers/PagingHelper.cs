@@ -14,6 +14,11 @@ namespace MVCWebProject.Utilities.Helpers
             object routeValues,
             int maxPagesList = 3)
         {
+            if (totalPage < 2)
+            {
+                return MvcHtmlString.Empty;
+            }
+
             var urlHelper = new UrlHelper(helper.ViewContext.RequestContext, helper.RouteCollection);
             var ul = new TagBuilder("ul");
             int firstPage = currentPage - (int)(maxPagesList / 2);
