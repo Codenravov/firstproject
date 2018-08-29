@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using MVCWebProject.ViewModels;
 
 namespace MVCWebProject.Infrastructure
 {
@@ -7,9 +8,11 @@ namespace MVCWebProject.Infrastructure
         public void OnException(ExceptionContext context)
         {
             var result = new ViewResult { ViewName = "~/Views/Exceptions/Exception.cshtml" };
-            result.ViewData.Add("Action", "Action:" + " " + context.RouteData.Values["action"]);
-            result.ViewData.Add("Exception", "Exception:" + " " + context.Exception);
-            result.ViewData.Add("Message", "Exception message:" + " " + context.Exception.Message);
+            ExceptionViewModel model = new ExceptionViewModel();
+            model.Action = context.RouteData.Values["action"].ToString();
+            model.Exception = context.Exception.ToString();
+            model.Message = context.Exception.Message.ToString();
+            result.ViewData.Model = model;
             context.Result = result;
             context.ExceptionHandled = true;
         }

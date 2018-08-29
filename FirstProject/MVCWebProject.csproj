@@ -214,6 +214,7 @@
     <Compile Include="Utilities\PagingList.cs" />
     <Compile Include="Utilities\AutoFacPLModule.cs" />
     <Compile Include="Utilities\AutoMappingPLProfile.cs" />
+    <Compile Include="ViewModels\ExceptionViewModel.cs" />
     <Compile Include="ViewModels\UsersCommentsViewModel.cs" />
     <Compile Include="ViewModels\UsersCreatViewModel.cs" />
     <Compile Include="ViewModels\UsersDeleteViewModel.cs" />

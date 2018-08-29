@@ -106,6 +106,15 @@ namespace MVCWebProject.Resources.ViewModels {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail length longer than maximum allow 30.
+        /// </summary>
+        public static string LengthErrEmail {
+            get {
+                return ResourceManager.GetString("LengthErrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your phone number (optional).
         /// </summary>
         public static string Phone {

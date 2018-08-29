@@ -132,6 +132,9 @@
   <data name="LengthErrComments" xml:space="preserve">
     <value>Comments length longer than maximum allow 255</value>
   </data>
+  <data name="LengthErrEmail" xml:space="preserve">
+    <value>E-mail length longer than maximum allow 30</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>Your phone number (optional)</value>
   </data>

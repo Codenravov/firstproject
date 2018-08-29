@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using MVCWebProject.Constants;
 using MVCWebProject.Infrastructure;
@@ -22,6 +21,7 @@ namespace MVCWebProject.ViewModels
         [DataType(DataType.EmailAddress)]
         [Required(ErrorMessageResourceName = "RequiredErrEmail", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessageResourceName = "RegularErrEmail", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [StringLength(30, ErrorMessageResourceName = "LengthErrEmail", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Email { get; set; }
 
         [Display(Name = "Title", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
@@ -41,7 +41,7 @@ namespace MVCWebProject.ViewModels
 
         [Display(Name = "Comments", ResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         [DataType(DataType.MultilineText)]
-        [StringLength(256, ErrorMessageResourceName = "LengthErrComments", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
+        [StringLength(255, ErrorMessageResourceName = "LengthErrComments", ErrorMessageResourceType = typeof(Resources.ViewModels.UsersCreatViewModel))]
         public string Comments { get; set; }
 
         public SelectList Titles
