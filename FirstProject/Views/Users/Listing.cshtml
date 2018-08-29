@@ -101,7 +101,7 @@
     <div class="col-1-3 right">
         <div class="pagination right">
             @Html.Paging(Model.PagingList.CurrentPage, Model.PagingList.TotalPage, "Index", "Users",
-                       new { searchString = Model.Search, sortOption = Model.SortOption })
+                       new { searchString = Model.Search, sortOption = Model.SortOption, descending = Model.Descending })
         </div>
     </div>
 </div>
