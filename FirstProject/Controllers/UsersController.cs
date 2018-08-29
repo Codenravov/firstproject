@@ -34,10 +34,17 @@ namespace MVCWebProject.Controllers
         [HttpPost]
         public ActionResult Create(UsersCreatViewModel model, string selectCountry = null)
         {
-            if (!string.IsNullOrEmpty(selectCountry))
+            if (Request.IsAjaxRequest())
             {
-                var modelWithCities = this.usersService.GetCitiesToModel(model, selectCountry);
-                return PartialView("Cities", modelWithCities);
+                if (usersService.CheckCountry(selectCountry))
+                {
+                    var modelWithCities = this.usersService.GetCitiesToModel(model, selectCountry);
+                    return PartialView("Cities", modelWithCities);
+                }
+                else
+                {
+                    Response.StatusCode = 500;
+                }
             }
 
             if (ModelState.IsValid)
@@ -45,7 +52,7 @@ namespace MVCWebProject.Controllers
                 this.usersService.AddPerson(model);
                 return RedirectToAction("Index");
             }
-            else
+
             {
                 var newModel = this.usersService.GetCreateModel();
                 return View(newModel);
@@ -62,10 +69,17 @@ namespace MVCWebProject.Controllers
         [HttpPost]
         public ActionResult Edit(UsersEditViewModel model, string selectCountry = null)
         {
-            if (!string.IsNullOrEmpty(selectCountry))
+            if (Request.IsAjaxRequest())
             {
-                var modelWithCities = this.usersService.GetCitiesToModel(model, selectCountry);
-                return PartialView("Cities", modelWithCities);
+                if (usersService.CheckCountry(selectCountry))
+                {
+                    var modelWithCities = this.usersService.GetCitiesToModel(model, selectCountry);
+                    return PartialView("Cities", modelWithCities);
+                }
+                else
+                {
+                    Response.StatusCode = 500;
+                }
             }
 
             if (ModelState.IsValid)

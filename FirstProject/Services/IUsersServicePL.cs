@@ -29,5 +29,7 @@ namespace MVCWebProject.Services
         void DeletePerson(int id);
 
         UsersCommentsViewModel GetCommentsModel(int id);
+
+        bool CheckCountry(string country);
     }
 }

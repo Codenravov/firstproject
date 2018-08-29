@@ -10,21 +10,25 @@ using MVCWebProject.ViewModels;
 using MVCWebProject.ViewModels.Users;
 using MVCWebProjectBLL.DTO;
 using MVCWebProjectBLL.Service;
+using MVCWebProjectBLL.Services;
 
 namespace MVCWebProject.Services
 {
     public class UsersServicePL : IUsersServicePL
     {
         private readonly IUsersServiceBLL usersServiceBLL;
+        private readonly IValidationService validationService;
         private readonly IPagingList<UsersListingViewModel> pagingList;
         private readonly IMapper mapper;
 
         public UsersServicePL(
             IUsersServiceBLL usersServiceBLL,
+            IValidationService validationService,
             IPagingList<UsersListingViewModel> pagingList,
             IMapper mapper)
         {
             this.usersServiceBLL = usersServiceBLL;
+            this.validationService = validationService;
             this.pagingList = pagingList;
             this.mapper = mapper;
         }
@@ -99,6 +103,11 @@ namespace MVCWebProject.Services
             var person = this.usersServiceBLL.GetPerson(id);
             var model = this.mapper.Map<PersonDTO, UsersCommentsViewModel>(person);
             return model;
+        }
+
+        public bool CheckCountry(string country)
+        {
+            return validationService.CheckCountry(country);
         }
     }
 }

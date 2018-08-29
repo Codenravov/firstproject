@@ -9,7 +9,7 @@
             contenttype: 'application/json; charset=utf-8',
             success: function (partionalView) {
                 $("#divCities").html(partionalView);
-                $('@Html.ValidationMessageFor(model => model.City, "")').insertAfter('#divValidation');
+                $('<span class="field-validation-valid" data-valmsg-for="City" data-valmsg-replace="true"></span>').insertAfter('#divValidation');
                 $('form').removeData("validator");
                 $("form").removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse(document);
